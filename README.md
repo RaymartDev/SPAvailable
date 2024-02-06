@@ -1,5 +1,4 @@
 # SPAvailable
-SPA System
 
 ## Description:
 
