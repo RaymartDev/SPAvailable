@@ -1,2 +1,2 @@
-# spavailable
+# SPAvailable
 SPA System
