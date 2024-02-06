@@ -11,7 +11,7 @@ This project aims to develop a website connecting spa businesses with spa goers.
 - Review System: Spa goers can leave reviews and ratings for the spas they've visited.
 - User Accounts: Separate user accounts for spa owners and spa goers with appropriate access controls and functionalities.
 
-## Technologies:
+### Technologies:
 
 - Front-end: (Vite React, Tailwind CSS, Typescript)
 - Back-end: (Express, Typescript, Prisma ORM)
