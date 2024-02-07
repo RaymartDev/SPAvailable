@@ -27,8 +27,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    tsconfigRootDir: './frontend', // Change to point to the frontend folder
-    project: './tsconfig.json',
+    tsconfigRootDir: __dirname, // Change to point to the frontend folder
+    project: ['./tsconfig.json', './tsconfig.node.json'],
   },
   plugins: [
     '@typescript-eslint',
