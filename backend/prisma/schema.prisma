@@ -10,13 +10,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model user {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
   email String? @unique
   contact String?
   password String?
   birth_date DateTime?
+  spa spa[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model spa {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  email String? @unique
+  contact String?
+  address String?
+  ownerId Int?
+  owner user? @relation(fields: [ownerId], references: [id])
+  services service[]
+  products product[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model service {
+  id Int @id @default(autoincrement())
+  title String @db.VarChar(255)
+  description String?
+  available Boolean
+  spaId Int?
+  spa spa? @relation(fields: [spaId], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model product {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  description String?
+  available Boolean
+  spaId Int?
+  spa spa? @relation(fields: [spaId], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
