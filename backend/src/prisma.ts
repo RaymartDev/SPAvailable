@@ -1,17 +1,18 @@
 import { PrismaClient } from '@prisma/client';
+import { NextFunction } from 'express';
 
 const prisma = new PrismaClient();
 
-async function prismaQuery(callback: (client: PrismaClient) => Promise<void>): Promise<void> {
+async function prismaQuery(callback: (client: PrismaClient) => Promise<void>, next: NextFunction): Promise<void> {
   try {
     await callback(prisma);
   } catch (err) {
-    console.error('Error executing Prisma Query', err);
+    next(err);
   } finally {
     try {
       await prisma.$disconnect();
     } catch (disconnectError) {
-      console.error('Error disconnecting Prisma client:', disconnectError);
+      next(disconnectError);
     }
   }
 }
@@ -19,12 +20,15 @@ async function prismaQuery(callback: (client: PrismaClient) => Promise<void>): P
 /**
  * @param prisma Prisma Client
  * NOTE: This function is only for demo purposes
-async function exampleUsage(prisma: PrismaClient): Promise<void> {
-  const users = await prisma.users.findMany();
-  console.log(users);
-}
-
-prismaQuery(exampleUsage);
+prismaQuery(async (prisma: PrismaClient) => {
+  try {
+    // Perform Prisma queries here
+    const users = await prisma.user.findMany();
+    console.log(users);
+  } catch (error) {
+    console.error('Error executing Prisma query:', error);
+  }
+});
  */
 
 export { prismaQuery };

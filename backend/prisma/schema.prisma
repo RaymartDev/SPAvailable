@@ -13,9 +13,9 @@ datasource db {
 model user {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
-  email String? @unique
+  email String @unique
   contact String?
-  password String?
+  password String
   birth_date DateTime?
   spa spa[]
   created_at DateTime @default(now())
