@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { prismaFetch, prismaQuery } from '../../prisma';
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
+import { 
+  generateHashedPassword,
+  generateToken,
+  matchPassword,
+  validateEmail,
+  validatePhone,
+} from '../../util';
 
 interface UserBody {
   name: string;
@@ -17,17 +23,14 @@ interface UserResponse {
   email: string;
   contact?: string | null;
   birthDate: Date;
+  token: string;
+  active: boolean;
 }
 
 interface LoginBody {
   email: string;
   password: string;
 }
-
-const hashPassword = async (password : string) : Promise<string> => {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(password, salt);
-};
 
 /**
  * @param req Request body should contain User's info
@@ -43,6 +46,19 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
       birthDate,
       password,
     } = req.body;
+    
+    /**
+     * validation
+     */
+    if (!validateEmail(email)) {
+      res.status(400);
+      throw new Error('Invalid email address');
+    }
+
+    if (contact && !validatePhone(contact)) {
+      res.status(400);
+      throw new Error('Invalid phone number');
+    }
 
     /**
      * Check if already registered using email
@@ -85,7 +101,7 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
             email,
             contact,
             birth_date: dateObject,
-            password: await hashPassword(password),
+            password: await generateHashedPassword(password),
           },
         });
       } catch (err) {
@@ -104,6 +120,8 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
         email: userCreated.email,
         contact: userCreated.contact,
         birthDate: userCreated.birth_date,
+        token: generateToken(res, userCreated.email),
+        active: userCreated.active,
       });
     } else {
       res.status(400);
@@ -176,7 +194,7 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
      * If password did not match throw 401 - Unauthorized
      * with a message - Incorrect email or password
      */
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await matchPassword(password, user.password);
     if (!passwordMatch) {
       res.status(401);
       throw new Error('Incorrect email or password');
@@ -191,10 +209,26 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
       email: user.email,
       contact: user.contact,
       birthDate: user.birth_date,
+      token: generateToken(res, user.email),
+      active: user.active,
     });
   } catch (err) {
     next(err);
   }
+};
+
+/**
+ * @param req Express request object
+ * @param res Express response object
+ * logout user
+ */
+export const logout = async (req: Request, res: Response) => {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ message: 'User logged out' });
 };
 
 /**

@@ -17,6 +17,7 @@ model user {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   spa        spa[]
+  active     Boolean   @default(false)
 }
 
 model spa {
@@ -30,7 +31,7 @@ model spa {
   updated_at DateTime  @updatedAt
   products   product[]
   services   service[]
-  owner      user?     @relation(fields: [ownerId], references: [id])
+  owner      user?     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@index([ownerId], map: "spa_ownerId_fkey")
 }
@@ -39,11 +40,11 @@ model service {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
   description String?
-  available   Boolean
+  available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id])
+  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
 
   @@index([spaId], map: "service_spaId_fkey")
 }
@@ -52,11 +53,11 @@ model product {
   id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(255)
   description String?
-  available   Boolean
+  available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id])
+  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
 
   @@index([spaId], map: "product_spaId_fkey")
 }
