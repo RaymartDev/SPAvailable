@@ -8,39 +8,18 @@ import {
   validateEmail,
   validatePhone,
 } from '../../util';
-import { UserRequest } from '../authMiddleware';
-
-interface UserBody {
-  name: string;
-  email: string;
-  contact?: string;
-  birthDate: string;
-  password: string;
-}
-
-interface UserResponse {
-  id: number;
-  name: string;
-  email: string;
-  contact?: string | null;
-  birthDate: Date;
-  active: boolean;
-}
-interface UserAuthResponse extends UserResponse {
-  token: string;
-}
-
-interface LoginBody {
-  email: string;
-  password: string;
-}
+import UserRequest from '../../interfaces/user/UserRequest';
+import UserAuthResponse from '../../interfaces/user/UserAuthResponse';
+import RegisterBody from '../../interfaces/user/RegisterBody';
+import LoginBody from '../../interfaces/user/LoginBody';
+import UserResponse from '../../interfaces/user/UserResponse';
 
 /**
  * @param req Request body should contain User's info
  * @param res Response body should be User's final info
  * @param next Next function 
  */
-export const register = async (req: Request<{}, UserAuthResponse, UserBody>, res: Response<UserAuthResponse>, next: NextFunction) => {
+export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>, res: Response<UserAuthResponse>, next: NextFunction) => {
   try {
     const {
       name,
@@ -240,9 +219,18 @@ export const logout = async (req: Request, res: Response) => {
   res.status(200).json({ message: 'User logged out' });
 };
 
-export const getProfile = async (req: UserRequest, res : Response, next : NextFunction) => {
+export const getProfile = async (req: UserRequest, res : Response<UserResponse>, next : NextFunction) => {
   try {
-    res.status(200).json(req.user);
+    if (req.user) {
+      res.status(200).json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        contact: req.user.contact,
+        birthDate: req.user.birth_date,
+        active: req.user.active,
+      });
+    }
   } catch (err) {
     next(err);
   }

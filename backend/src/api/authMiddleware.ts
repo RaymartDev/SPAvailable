@@ -2,18 +2,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { prismaFetch } from '../prisma';
 import { PrismaClient } from '@prisma/client';
-
-interface UserRequest extends Request {
-  user?: { // Define the structure of the user property
-    id: number;
-    name: string;
-    email: string;
-    contact: string | null;
-    birth_date: Date;
-    active: boolean;
-    // Add other properties as needed
-  }
-}
+import UserRequest from '../interfaces/user/UserRequest';
 
 const protect = async (req: Request, res: Response, next : NextFunction) => {
   let token = req.cookies.jwt;
@@ -60,4 +49,4 @@ const protect = async (req: Request, res: Response, next : NextFunction) => {
   }
 };
 
-export { protect, UserRequest };
+export { protect };
