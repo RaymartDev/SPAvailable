@@ -1,6 +1,6 @@
 import express from 'express';
 import MessageResponse from '../interfaces/MessageResponse';
-import user from './user/user.router'
+import user from './user/user.router';
 
 const router = express.Router();
 

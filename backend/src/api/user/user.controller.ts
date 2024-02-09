@@ -3,13 +3,6 @@ import { prismaFetch, prismaQuery } from '../../prisma';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-/**
- * 
- * @param req Request body should contain User's info
- * @param res Response body should be User's final info
- * @param next Next function 
- */
-
 interface UserBody {
   name: string;
   email: string;
@@ -36,6 +29,11 @@ const hashPassword = async (password : string) : Promise<string> => {
   return bcrypt.hash(password, salt);
 };
 
+/**
+ * @param req Request body should contain User's info
+ * @param res Response body should be User's final info
+ * @param next Next function 
+ */
 export const register = async (req: Request<{}, UserResponse, UserBody>, res: Response<UserResponse>, next: NextFunction) => {
   try {
     const {
@@ -110,6 +108,11 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
   }
 };
 
+/**
+ * @param req Request body should contain Login's info
+ * @param res Response body should be User's final info
+ * @param next Next function 
+ */
 export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Response<UserResponse>, next: NextFunction) => {
   try {
     const {
@@ -188,6 +191,13 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
   }
 };
 
+/**
+ * @param req Express request object
+ * @param res Express response object
+ * @param next Express next object
+ * 
+ * The purpose of this is for development 
+ */
 export const findAll = async (req: Request, res: Response, next: NextFunction) => {
   await prismaQuery(async (prisma: PrismaClient) => {
     try {
