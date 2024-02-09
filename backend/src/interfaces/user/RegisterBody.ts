@@ -2,6 +2,6 @@ export default interface RegisterBody {
   name: string;
   email: string;
   contact?: string;
-  birthDate: string;
+  birth_date: string;
   password: string;
 }

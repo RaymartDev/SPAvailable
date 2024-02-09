@@ -3,6 +3,6 @@ export default interface UserResponse {
   name: string;
   email: string;
   contact?: string | null;
-  birthDate: Date;
+  birth_date: Date;
   active: boolean;
 }

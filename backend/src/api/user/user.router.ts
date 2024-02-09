@@ -4,12 +4,13 @@ import { protect } from '../authMiddleware';
 
 const router = Router();
 
-router.get('/', UserController.findAll);
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.post('/logout', UserController.logout);
 
 // protected routes
-router.get('/profile', protect, UserController.getProfile);
+router.route('/profile')
+  .get(protect, UserController.getProfile)
+  .put(protect, UserController.updateProfile);
 
 export default router;

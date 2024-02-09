@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { prismaFetch, prismaQuery } from '../../prisma';
+import { prismaFetch } from '../../prisma';
 import { PrismaClient } from '@prisma/client';
 import { 
   generateHashedPassword,
@@ -25,14 +25,15 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
       name,
       email,
       contact,
-      birthDate,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      birth_date,
       password,
     } = req.body;
     
     /**
      * validation
      */
-    if (!email || !name || !birthDate || !password) {
+    if (!email || !name || !birth_date || !password) {
       res.status(400);
       next(new Error('Please provide all required fields'));
       return;
@@ -78,8 +79,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
     /**
      * Process birth date
      */
-    // Split the birthDate string into parts
-    const [month, day, year] = birthDate.split('/');
+    const [month, day, year] = birth_date.split('/');
     const dateObject = new Date(`${year}-${month}-${day}`);
     /**
      * Register user
@@ -110,7 +110,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
         name: userCreated.name,
         email: userCreated.email,
         contact: userCreated.contact,
-        birthDate: userCreated.birth_date,
+        birth_date: userCreated.birth_date,
         token: generateToken(res, userCreated.email),
         active: userCreated.active,
       });
@@ -208,7 +208,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       name: user.name,
       email: user.email,
       contact: user.contact,
-      birthDate: user.birth_date,
+      birth_date: user.birth_date,
       token: generateToken(res, user.email),
       active: user.active,
     });
@@ -231,17 +231,17 @@ export const logout = async (req: Request, res: Response) => {
   res.status(200).json({ message: 'User logged out' });
 };
 
+/**
+ * 
+ * @param req User object request
+ * @param res Response express object
+ * @param next Next express object
+ * Get the user's profile
+ */
 export const getProfile = async (req: UserRequest, res : Response<UserResponse>, next : NextFunction) => {
   try {
     if (req.user) {
-      res.status(200).json({
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        contact: req.user.contact,
-        birthDate: req.user.birth_date,
-        active: req.user.active,
-      });
+      res.status(200).json(req.user);
     }
   } catch (err) {
     next(err);
@@ -249,30 +249,63 @@ export const getProfile = async (req: UserRequest, res : Response<UserResponse>,
 };
 
 /**
- * @param req Express request object
- * @param res Express response object
- * @param next Express next object
  * 
- * The purpose of this is for development 
+ * @param req User object request
+ * @param res Response express object
+ * @param next Next express object
+ * Update the user's profile
  */
-export const findAll = async (req: Request, res: Response, next: NextFunction) => {
-  await prismaQuery(async (prisma: PrismaClient) => {
-    try {
-      const users = await prisma.user.findMany({
-        select: {
-          id: false,
-          name: true,
-          email: true,
-          contact: true,
-          birth_date: true,
-          password: false,
-          created_at: false,
-          updated_at: false,
-        },
-      }); 
-      res.status(200).json(users);
-    } catch (err) {
-      next(err);
+export const updateProfile = async (req: UserRequest, res : Response<UserResponse>, next : NextFunction) => {
+  try {
+    if (req.user) {
+      const {
+        email,
+        contact,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        birth_date,
+        password,
+      } = req.body;
+
+      if (email) {
+        delete req.body.email;
+      }
+
+      if (password) {
+        req.body.password = await generateHashedPassword(password);
+      }
+  
+      if (birth_date) {
+        const [month, day, year] = birth_date.split('/');
+        const dateObject = new Date(`${year}-${month}-${day}`);
+        req.body.birth_date = dateObject;
+      }
+  
+      if (contact && !validatePhone(contact)) {
+        delete req.body.contact;
+      }
+  
+      const updatedUser = await prismaFetch(async (prisma : PrismaClient) => {
+        const user = await prisma.user.update({
+          where: {
+            email: req.user && req.user.email,
+          },
+          data: req.body,
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+            birth_date: true,
+            active: true,
+          },
+        });
+        return user;
+      }, next);
+
+      res.status(200).json(updatedUser);
     }
-  }, next);
+
+  } catch (err) {
+    next(err);
+  }
 };

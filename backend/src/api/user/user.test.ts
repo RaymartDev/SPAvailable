@@ -82,7 +82,7 @@ describe('POST /api/v1/user/register', () => {
       .send({
         name: 'Test User',
         email: invalidEmail,
-        birthDate: '1/1/2000',
+        birth_date: '1/1/2000',
         password: 'password123',
       });
 
@@ -99,7 +99,7 @@ describe('POST /api/v1/user/register', () => {
         name: 'Test User',
         email: 'test@example.com',
         contact: invalidPhoneNumber,
-        birthDate: '1/1/2000',
+        birth_date: '1/1/2000',
         password: 'password123',
       });
 
@@ -113,7 +113,7 @@ describe('POST /api/v1/user/register', () => {
       .send({
         name: 'Test User',
         email: 'raymart.sarmiento23@outlook.com',
-        birthDate: '1/1/2000',
+        birth_date: '1/1/2000',
         password: 'password123',
       });
 
@@ -127,7 +127,7 @@ describe('POST /api/v1/user/register', () => {
       .send({
         name: 'Test User',
         email: 'test@example.com',
-        // Missing birthDate, password
+        // Missing birth_date, password
       });
 
     expect(response.status).toBe(400);

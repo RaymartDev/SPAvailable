@@ -15,11 +15,9 @@ export function notFound(req: Request, res: Response, next: NextFunction) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function errorHandler(err: Error, req: Request, res: Response<ErrorResponse>, next: NextFunction) {
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-  const errorStack = process.env.NODE_ENV === 'production' ? '🥞' : pe.render(err);
-  const plainErrorStack = errorStack.replace(/\u001b\[\d+m/g, '');
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? '🥞' : plainErrorStack,
+    stack: process.env.NODE_ENV === 'production' ? '🥞' : process.env.NODE_ENV === 'production' ? '🥞' : pe.render(err).replace(/\u001b\[\d+m/g, ''),
   });
 }
