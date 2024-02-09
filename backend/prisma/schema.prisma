@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,49 +8,55 @@ datasource db {
 }
 
 model user {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  email String @unique
-  contact String?
-  password String
-  birth_date DateTime?
-  spa spa[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  email      String    @unique @db.VarChar(50)
+  contact    String?   @db.VarChar(20)
+  password   String
+  birth_date DateTime  @db.DateTime(2)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  spa        spa[]
 }
 
 model spa {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  email String? @unique
-  contact String?
-  address String?
-  ownerId Int?
-  owner user? @relation(fields: [ownerId], references: [id])
-  services service[]
-  products product[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  email      String?   @db.VarChar(50)
+  contact    String?   @db.VarChar(20)
+  address    String?
+  ownerId    Int?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   product[]
+  services   service[]
+  owner      user?     @relation(fields: [ownerId], references: [id])
+
+  @@index([ownerId], map: "spa_ownerId_fkey")
 }
 
 model service {
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
   description String?
-  available Boolean
-  spaId Int?
-  spa spa? @relation(fields: [spaId], references: [id])
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  available   Boolean
+  spaId       Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  spa         spa?     @relation(fields: [spaId], references: [id])
+
+  @@index([spaId], map: "service_spaId_fkey")
 }
 
 model product {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
   description String?
-  available Boolean
-  spaId Int?
-  spa spa? @relation(fields: [spaId], references: [id])
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  available   Boolean
+  spaId       Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  spa         spa?     @relation(fields: [spaId], references: [id])
+
+  @@index([spaId], map: "product_spaId_fkey")
 }

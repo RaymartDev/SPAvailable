@@ -17,6 +17,21 @@ async function prismaQuery(callback: (client: PrismaClient) => Promise<void>, ne
   }
 }
 
+async function prismaFetch<T>(callback: (client: PrismaClient) => Promise<T>, next: NextFunction): Promise<T | undefined> {
+  try {
+    const result = await callback(prisma);
+    return result;
+  } catch (err) {
+    next(err);
+  } finally {
+    try {
+      await prisma.$disconnect();
+    } catch (disconnectError) {
+      next(disconnectError);
+    }
+  }
+}
+
 /**
  * @param prisma Prisma Client
  * NOTE: This function is only for demo purposes
@@ -31,4 +46,4 @@ prismaQuery(async (prisma: PrismaClient) => {
 });
  */
 
-export { prismaQuery };
+export { prismaQuery, prismaFetch };
