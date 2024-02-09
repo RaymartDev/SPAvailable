@@ -7,7 +7,7 @@ interface UserBody {
   name: string;
   email: string;
   contact?: string;
-  birthDate: Date;
+  birthDate: string;
   password: string;
 }
 
@@ -69,6 +69,12 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
     }
 
     /**
+     * Process birth date
+     */
+    // Split the birthDate string into parts
+    const [month, day, year] = birthDate.split('/');
+    const dateObject = new Date(`${year}-${month}-${day}`);
+    /**
      * Register user
      */
     const userCreated = await prismaFetch(async (prisma : PrismaClient) => {
@@ -78,7 +84,7 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
             name,
             email,
             contact,
-            birth_date: birthDate,
+            birth_date: dateObject,
             password: await hashPassword(password),
           },
         });
