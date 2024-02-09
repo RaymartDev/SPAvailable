@@ -32,6 +32,12 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
     /**
      * validation
      */
+    if (!email || !name || !birthDate || !password) {
+      res.status(400);
+      next(new Error('Please provide all required fields'));
+      return;
+    }
+
     if (!validateEmail(email)) {
       res.status(400);
       next(new Error('Invalid email address'));
@@ -84,7 +90,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
           data: {
             name,
             email,
-            contact,
+            contact: contact || '',
             birth_date: dateObject,
             password: await generateHashedPassword(password),
           },
@@ -128,6 +134,12 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       email,
       password,
     } = req.body;
+
+    if (!email || !password) {
+      res.status(400);
+      next(new Error('Please provide both email and password'));
+      return;
+    }
 
     /**
      * Check if already registered using email
