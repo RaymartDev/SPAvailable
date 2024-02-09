@@ -8,6 +8,7 @@ import {
   validateEmail,
   validatePhone,
 } from '../../util';
+import { UserRequest } from '../authMiddleware';
 
 interface UserBody {
   name: string;
@@ -23,8 +24,10 @@ interface UserResponse {
   email: string;
   contact?: string | null;
   birthDate: Date;
-  token: string;
   active: boolean;
+}
+interface UserAuthResponse extends UserResponse {
+  token: string;
 }
 
 interface LoginBody {
@@ -37,7 +40,7 @@ interface LoginBody {
  * @param res Response body should be User's final info
  * @param next Next function 
  */
-export const register = async (req: Request<{}, UserResponse, UserBody>, res: Response<UserResponse>, next: NextFunction) => {
+export const register = async (req: Request<{}, UserAuthResponse, UserBody>, res: Response<UserAuthResponse>, next: NextFunction) => {
   try {
     const {
       name,
@@ -52,12 +55,14 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
      */
     if (!validateEmail(email)) {
       res.status(400);
-      throw new Error('Invalid email address');
+      next(new Error('Invalid email address'));
+      return;
     }
 
     if (contact && !validatePhone(contact)) {
       res.status(400);
-      throw new Error('Invalid phone number');
+      next(new Error('Invalid phone number'));
+      return;
     }
 
     /**
@@ -81,7 +86,8 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
      */
     if (userExists) {
       res.status(409);
-      throw new Error('User already exists');
+      next(new Error('User already exists'));
+      return;
     }
 
     /**
@@ -125,7 +131,7 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
       });
     } else {
       res.status(400);
-      throw new Error('Invalid user data');
+      next(new Error('Invalid user data'));
     }
   } catch (err) {
     next(err);
@@ -137,7 +143,7 @@ export const register = async (req: Request<{}, UserResponse, UserBody>, res: Re
  * @param res Response body should be User's final info
  * @param next Next function 
  */
-export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Response<UserResponse>, next: NextFunction) => {
+export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: Response<UserAuthResponse>, next: NextFunction) => {
   try {
     const {
       email,
@@ -165,7 +171,8 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
      */
     if (!userExists) {
       res.status(401);
-      throw new Error('Incorrect email or password');
+      next(new Error('Incorrect email or password'));
+      return;
     }
 
     /**
@@ -187,7 +194,8 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
      */
     if (!user) {
       res.status(401);
-      throw new Error('Incorrect email or password');
+      next(new Error('Incorrect email or password'));
+      return;
     }
 
     /**
@@ -197,7 +205,8 @@ export const login = async (req: Request<{}, UserResponse, LoginBody>, res: Resp
     const passwordMatch = await matchPassword(password, user.password);
     if (!passwordMatch) {
       res.status(401);
-      throw new Error('Incorrect email or password');
+      next(new Error('Incorrect email or password'));
+      return;
     }
 
     /**
@@ -229,6 +238,14 @@ export const logout = async (req: Request, res: Response) => {
   });
 
   res.status(200).json({ message: 'User logged out' });
+};
+
+export const getProfile = async (req: UserRequest, res : Response, next : NextFunction) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
