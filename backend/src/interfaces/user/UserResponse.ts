@@ -5,4 +5,5 @@ export default interface UserResponse {
   contact?: string | null;
   birth_date: Date;
   active: boolean;
+  gender: boolean;
 }

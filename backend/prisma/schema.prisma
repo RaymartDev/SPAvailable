@@ -10,6 +10,7 @@ datasource db {
 model user {
   id         Int       @id @default(autoincrement())
   name       String    @db.VarChar(255)
+  gender     Boolean   @default(true)
   email      String    @unique @db.VarChar(50)
   contact    String?   @db.VarChar(20)
   password   String

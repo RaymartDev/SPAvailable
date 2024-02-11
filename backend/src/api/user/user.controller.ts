@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { prismaFetch } from '../../prisma';
+import { prismaFetch, prismaQuery } from '../../prisma';
 import { PrismaClient } from '@prisma/client';
 import { 
   generateHashedPassword,
@@ -7,12 +7,16 @@ import {
   matchPassword,
   validateEmail,
   validatePhone,
+  sendEmail,
+  generateVerificationToken,
 } from '../../util';
 import UserRequest from '../../interfaces/user/UserRequest';
 import UserAuthResponse from '../../interfaces/user/UserAuthResponse';
 import RegisterBody from '../../interfaces/user/RegisterBody';
 import LoginBody from '../../interfaces/user/LoginBody';
 import UserResponse from '../../interfaces/user/UserResponse';
+import jwt from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 
 /**
  * @param req Request body should contain User's info
@@ -28,6 +32,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       birth_date,
       password,
+      gender,
     } = req.body;
     
     /**
@@ -93,6 +98,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
             contact: contact || '',
             birth_date: dateObject,
             password: await generateHashedPassword(password),
+            gender,
           },
         });
       } catch (err) {
@@ -105,6 +111,8 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
      * If user data is not ok throw 400 - Error
      */
     if (userCreated) {
+      sendEmail(userCreated.email, userCreated.name, generateVerificationToken(userCreated.email), next);
+
       res.status(201).json({
         id: userCreated.id,
         name: userCreated.name,
@@ -113,6 +121,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
         birth_date: userCreated.birth_date,
         token: generateToken(res, userCreated.email),
         active: userCreated.active,
+        gender: userCreated.gender,
       });
     } else {
       res.status(400);
@@ -211,6 +220,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       birth_date: user.birth_date,
       token: generateToken(res, user.email),
       active: user.active,
+      gender: user.gender,
     });
   } catch (err) {
     next(err);
@@ -297,6 +307,7 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
             contact: true,
             birth_date: true,
             active: true,
+            gender: true,
           },
         });
         return user;
@@ -305,6 +316,73 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
       res.status(200).json(updatedUser);
     }
 
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * 
+ * @param req Request object request
+ * @param res Response express object
+ * @param next Next express object
+ * Verify the token
+ */
+export const verify = async (req: Request, res : Response, next : NextFunction) => {
+  try {
+    const token = req.query.token as string;
+
+    const decodedToken = jwt.verify(token, `${process.env.SECRET_KEY}`) as JwtPayload;
+    // find user
+    const user = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        const userToFind = await prisma.user.findUnique({
+          where: {
+            email: decodedToken.email,
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+            birth_date: true,
+            password: false,
+            created_at: false,
+            updated_at: false,
+            active: true,
+            gender: true,
+          },
+        });
+        return userToFind || undefined;
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    if (!user || user.active) {
+      return res.status(400).json({ error: 'Failed to verify token' });
+    }
+
+    // Check if token is expired
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
+      return res.status(400).json({ error: 'Token has expired' });
+    }
+
+    // Update user's active status to true
+    await prismaQuery(async (prisma : PrismaClient) => {
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          active: true,
+        },
+      });
+    }, next);
+
+    // Respond with success message
+    return res.status(200).json({ message: 'User verified successfully' });
   } catch (err) {
     next(err);
   }

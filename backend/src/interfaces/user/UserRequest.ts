@@ -8,6 +8,7 @@ export default interface UserRequest extends Request {
     contact: string | null;
     birth_date: Date;
     active: boolean;
+    gender: boolean;
     // Add other properties as needed
   }
 }

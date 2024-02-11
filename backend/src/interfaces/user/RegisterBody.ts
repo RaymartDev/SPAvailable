@@ -4,4 +4,5 @@ export default interface RegisterBody {
   contact?: string;
   birth_date: string;
   password: string;
+  gender: boolean
 }
