@@ -54,7 +54,7 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
 
   // Define email options
   const mailOptions = {
-    from: process.env.EMAIL_ADDRESS,
+    from: `"SPAvailable" <${process.env.EMAIL_ADDRESS}>`,
     to: email,
     subject: 'SPAvailable Verification Email',
     html: `
@@ -72,7 +72,7 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
   };
 
   // Send the email
-  transporter.sendMail(mailOptions, (err) => {
+  transporter.sendMail(mailOptions, (err : Error | null) => {
     if (err) {
       next(err);
       return;
