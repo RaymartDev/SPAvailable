@@ -19,3 +19,15 @@ This project aims to develop a website connecting spa businesses with spa goers.
 - Back-end: (Express, Typescript, Prisma ORM)
 - Database: (PostgreSQL)
 - Mobile: (React-Native)
+
+
+### Environmental Values:
+
+```
+NODE_ENV=development
+PORT=5000
+DATABASE_URL=mysql://prisma:Raymartpogi23@localhost:3306/spa
+SECRET_KEY=SPAvailable2024@
+EMAIL_ADDRESS=raymart.sarmiento23@gmail.com
+EMAIL_PASSWORD=gpfh ejou vxid gxsl
+```

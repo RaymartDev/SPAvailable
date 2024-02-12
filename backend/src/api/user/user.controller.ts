@@ -332,7 +332,7 @@ export const verify = async (req: Request, res : Response, next : NextFunction) 
   try {
     const token = req.query.token as string;
 
-    const decodedToken = jwt.verify(token, `${process.env.SECRET_KEY}`) as JwtPayload;
+    const decodedToken = jwt.verify(token, `${process.env.SECRET_KEY}_VERIFICATION`) as JwtPayload;
     // find user
     const user = await prismaFetch(async (prisma : PrismaClient) => {
       try {

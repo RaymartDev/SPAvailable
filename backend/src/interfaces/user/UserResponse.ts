@@ -1,3 +1,7 @@
+/**
+ * This is the response given if the response is user model
+ */
+
 export default interface UserResponse {
   id: number;
   name: string;

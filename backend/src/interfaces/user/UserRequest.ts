@@ -1,5 +1,9 @@
 import { Request } from 'express';
 
+/**
+ * This Request object is for auth middleware that will be passed on
+ */
+
 export default interface UserRequest extends Request {
   user?: { // Define the structure of the user property
     id: number;
