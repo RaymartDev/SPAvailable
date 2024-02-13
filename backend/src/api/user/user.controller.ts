@@ -98,7 +98,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
             contact: contact || '',
             birth_date: dateObject,
             password: await generateHashedPassword(password),
-            gender: gender === 'male',
+            gender,
           },
         });
       } catch (err) {
@@ -274,6 +274,7 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
         // eslint-disable-next-line @typescript-eslint/naming-convention
         birth_date,
         password,
+        gender,
       } = req.body;
 
       if (email) {
@@ -299,7 +300,10 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
           where: {
             email: req.user && req.user.email,
           },
-          data: req.body,
+          data: {
+            gender: gender === 'male',
+            ...req.body,
+          },
           select: {
             id: true,
             name: true,
