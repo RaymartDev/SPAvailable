@@ -35,7 +35,7 @@ const generateToken = (res : Response, email : string) : string => {
 };
 
 const generateVerificationToken = (email : string) : string => {
-  const token = jwt.sign({ email }, `${process.env.SECRET_KEY}_VERIFICATION`, {
+  const token = jwt.sign({ email }, `${process.env.SECRET_KEY}`, {
     expiresIn: '1d',
   });
   return token;
