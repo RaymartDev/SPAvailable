@@ -112,8 +112,8 @@ const Registration: React.FC = () => {
                                     <input type={(visiblePass === false)? "password": "text"} className="w-full px-1 py-2 bg-transparent" />
                                     <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                                         {
-                                            (visiblePass === false) ? <BsFillEyeFill size={25} onClick={togglePassword}/> :
-                                            <BsFillEyeSlashFill size={25} onClick={togglePassword}/>
+                                            (visiblePass === false) ? <BsFillEyeFill size={25} onClick={toggleRePassword}/> :
+                                            <BsFillEyeSlashFill size={25} onClick={toggleRePassword}/>
                                         }                                       
                                     </div>
                                 </div>                         

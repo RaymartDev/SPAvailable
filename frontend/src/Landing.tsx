@@ -37,12 +37,12 @@ const Landing: React.FC = () => {
                         <div className="mr-2">
                             <img src={Logo} className="size-16 md:size-14" alt="Logo"/>
                         </div>
-                        <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">SPA <h1 className="text-neutral-950">vailable</h1> </h1>
+                        <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">SPA<h1 className="text-neutral-950">vailable</h1> </h1>
                     </div>
                     <div className="flex items-center">
-                        <button onClick={() => setOpenLoginModal(true)} className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50">Login</button>
+                        <button onClick={() => setOpenLoginModal(true)} className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50 duration-200">Login</button>
                         <LoginModal open={openLoginModal} onClose={() => setOpenLoginModal(false)} onSwitchToSignUp={switchToSignUp} />
-                        <button onClick={() => setOpenSignUpModal(true)} className="font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50">Sign Up</button>
+                        <button onClick={() => setOpenSignUpModal(true)} className="font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50 duration-200">Sign Up</button>
                         <SignUpModal open={openSignUpModal} onClose={() => setOpenSignUpModal(false)} onSwitchToLogin={switchToLogIn} />
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 interface SignUpModalProps {
@@ -31,10 +30,6 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ open, onClose, onSwitchToLogi
                         <div className="flex items-center bg-[#DADCE0] w-full  rounded-full p-2">
                             <FcGoogle size={23} className="mr-10" />
                             <button>Continue With Google</button>
-                        </div>
-                        <div className="flex items-center bg-[#DADCE0] mt-5 w-full rounded-full p-2">
-                            <FaApple size={23} className="mr-11" />
-                            <button>Continue With Apple</button>
                         </div>
                     </div>
 

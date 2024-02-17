@@ -17,7 +17,7 @@ const StarRating: React.FC<StarRatingProps> = ({ totalStars }) => {
       {[...Array(totalStars)].map((_, index) => (
         <BsStarFill
           key={index}
-          className={index < rating ? "text-[#41924B]" : "text-gray-400"}
+          className={index < rating ? "text-[#41924B]" : "text-gray-400" }
           onClick={() => handleClick(index)}
           size={30}
         />

@@ -2,7 +2,7 @@ import Logo from "../img/logo.png"
 
 const Navbar = () => {
     return ( 
-        <div className="max-w-screen-2xl mx-auto flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white shadow-lg ">
+        <div className="max-w-screen-2xl mx-auto flex sticky top-0 justify-between items-center py-2 md:py-4 z-30 bg-white shadow-lg ">
             <div className="flex items-center pl-5">
                 <div className="mr-2">
                     <img src={Logo} className="size-16 md:size-14"/>
