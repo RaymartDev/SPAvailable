@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
@@ -10,6 +11,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
 
 function Registration() {
+  const location = useLocation();
+  const email = location.state && location.state.email;
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
@@ -115,6 +119,7 @@ function Registration() {
               </h2>
               <input
                 type="email"
+                value={email}
                 className="w-9/12 border-b-2 px-1 py-2 bg-transparent"
               />
             </div>

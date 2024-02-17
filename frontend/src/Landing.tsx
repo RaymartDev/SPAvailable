@@ -36,7 +36,7 @@ function Landing() {
           <div className="mr-2">
             <img src={Logo} className="size-16 md:size-14" alt="Logo" />
           </div>
-          <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">
+          <h1 className="flex cursor-pointer text-2xl md:text-3xl font-bold text-[#05bc64]">
             SPA
             <h1 className="text-neutral-950">vailable</h1>
           </h1>

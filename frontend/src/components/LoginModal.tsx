@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FcGoogle } from 'react-icons/fc';
-import { FaApple } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
 interface LoginModalProps {
@@ -25,7 +24,7 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
           <div className="flex flex-col justify-center items-center ">
             <h1 className="font-bold text-xl">Log In</h1>
             <p className="mt-2 text-sm">
-              By continuing, you are setting up a Spavailable account and agree
+              By continuing, you are setting up a SPAvailable account and agree
               to our User Agreement and Privacy Policy.
             </p>
           </div>
@@ -34,10 +33,6 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
             <div className="flex items-center bg-[#DADCE0] w-full  rounded-full p-2">
               <FcGoogle size={23} className="mr-10" />
               <button type="button">Continue With Google</button>
-            </div>
-            <div className="flex items-center bg-[#DADCE0] mt-5 w-full rounded-full p-2">
-              <FaApple size={23} className="mr-11" />
-              <button type="button">Continue With Apple</button>
             </div>
           </div>
 

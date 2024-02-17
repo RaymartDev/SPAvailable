@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { FaApple } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 interface SignUpModalProps {
   open: boolean;
@@ -9,6 +11,17 @@ interface SignUpModalProps {
 }
 
 function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
+  const navigate = useNavigate() as NavigateFunction;
+
+  const navigateToRegister = () => {
+    if (email && email.length > 0) {
+      navigate('/register', {
+        state: { email },
+      });
+    }
+  };
+
+  const [email, setEmail] = useState('');
   if (!open) return null;
 
   return (
@@ -34,10 +47,6 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               <FcGoogle size={23} className="mr-10" />
               <button type="button">Continue With Google</button>
             </div>
-            <div className="flex items-center bg-[#DADCE0] mt-5 w-full rounded-full p-2">
-              <FaApple size={23} className="mr-11" />
-              <button type="button">Continue With Apple</button>
-            </div>
           </div>
 
           <div className="flex justify-center items-center mt-8 w-full">
@@ -48,6 +57,8 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
           <div className="flex w-full mt-8">
             <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
@@ -56,6 +67,7 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
           <div className="flex w-full mt-5">
             <button
+              onClick={navigateToRegister}
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
             >
