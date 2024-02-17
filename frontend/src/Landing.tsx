@@ -30,7 +30,7 @@ function Landing() {
   };
 
     return (
-        <>
+       
             <div className="max-w-screen-2xl mx-auto px-4 ">
                 <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
                     <div className="flex items-center">
@@ -193,6 +193,7 @@ function Landing() {
       <Menu />
       <Footer />
     </div>
+    
   );
 }
 

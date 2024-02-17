@@ -5,8 +5,6 @@ import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import Menu from '../../components/Menu';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
 
@@ -20,6 +18,9 @@ function Registration() {
   const [contactNumber, setContactNumber] = useState('');
   const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
   const [isPictureRemoved, setIsPictureRemoved] = useState(false);
+
+  const [password, setPassword] = useState('');
+  const [retypePassword, setRetypePassword] = useState('');
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -53,11 +54,26 @@ function Registration() {
     }
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleRetypePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRetypePassword(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (password !== retypePassword) {
+      alert("Passwords don't match");
+      return;
+    }
+  };
+
   return (
-    <div className="max-w-screen-2xl mx-auto px-4">
+    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
 
-      <div className="flex">
+      <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
             <img
@@ -96,7 +112,7 @@ function Registration() {
 
           <div className="grid grid-cols-2 mx-10 ">
             <div className="card mb-8">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 First Name
               </h2>
               <input
@@ -105,7 +121,7 @@ function Registration() {
               />
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Last Name
               </h2>
               <input
@@ -114,7 +130,7 @@ function Registration() {
               />
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Email
               </h2>
               <input
@@ -124,7 +140,7 @@ function Registration() {
               />
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Contact
               </h2>
               <div className="flex w-9/12 border-b-2">
@@ -139,12 +155,14 @@ function Registration() {
               </div>
             </div>
             <div className="card mb-8 relative">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Password
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visiblePass === false ? 'password' : 'text'}
+                  value={password}
+                  onChange={handlePasswordChange}
                   className="w-full px-1 py-2 bg-transparent"
                 />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
@@ -157,12 +175,14 @@ function Registration() {
               </div>
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Retype Password
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visibleRePass === false ? 'password' : 'text'}
+                  value={retypePassword}
+                  onChange={handleRetypePasswordChange}
                   className="w-full px-1 py-2 bg-transparent"
                 />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
@@ -175,7 +195,7 @@ function Registration() {
               </div>
             </div>
             <div className="card">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Birthday
               </h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
@@ -188,7 +208,7 @@ function Registration() {
               </div>
             </div>
             <div className="card">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+              <h2 className="text-xl font-semibold mb-3">
                 Gender
               </h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
@@ -220,7 +240,8 @@ function Registration() {
             <div className="bg-[#41924B] rounded-full mr-[126px]">
               <button
                 type="button"
-                className="text-slate-50 font-semibold px-16 py-3 text-lg "
+                className="text-slate-50 font-semibold px-16 py-3 text-lg"
+                onClick={handleSubmit}
               >
                 Sign Up
               </button>
@@ -228,10 +249,6 @@ function Registration() {
           </div>
         </div>
       </div>
-
-      <Menu />
-
-      <Footer />
     </div>
   );
 }
