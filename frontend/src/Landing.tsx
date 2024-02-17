@@ -29,23 +29,44 @@ function Landing() {
     setOpenSignUpModal(false);
   };
 
-    return (
-        <>
-            <div className="max-w-screen-2xl mx-auto px-4 ">
-                <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
-                    <div className="flex items-center">
-                        <div className="mr-2">
-                            <img src={Logo} className="size-16 md:size-14" alt="Logo"/>
-                        </div>
-                        <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">SPA <h1 className="text-neutral-950">vailable</h1> </h1>
-                    </div>
-                    <div className="flex items-center">
-                        <button onClick={() => setOpenLoginModal(true)} className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50">Login</button>
-                        <LoginModal open={openLoginModal} onClose={() => setOpenLoginModal(false)} onSwitchToSignUp={switchToSignUp} />
-                        <button onClick={() => setOpenSignUpModal(true)} className="font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50">Sign Up</button>
-                        <SignUpModal open={openSignUpModal} onClose={() => setOpenSignUpModal(false)} onSwitchToLogin={switchToLogIn} />
-                    </div>
-                </div>
+  return (
+    <div className="max-w-screen-2xl mx-auto px-4 ">
+      <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
+        <div className="flex items-center">
+          <div className="mr-2">
+            <img src={Logo} className="size-16 md:size-14" alt="Logo" />
+          </div>
+          <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">
+            SPA <h1 className="text-neutral-950">vailable</h1>{' '}
+          </h1>
+        </div>
+        <div className="flex items-center">
+          <button
+            type="button"
+            onClick={() => setOpenLoginModal(true)}
+            className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
+          >
+            Login
+          </button>
+          <LoginModal
+            open={openLoginModal}
+            onClose={() => setOpenLoginModal(false)}
+            onSwitchToSignUp={switchToSignUp}
+          />
+          <button
+            type="button"
+            onClick={() => setOpenSignUpModal(true)}
+            className="font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
+          >
+            Sign Up
+          </button>
+          <SignUpModal
+            open={openSignUpModal}
+            onClose={() => setOpenSignUpModal(false)}
+            onSwitchToLogin={switchToLogIn}
+          />
+        </div>
+      </div>
 
       <div className="flex relative md:h-[602px]">
         <img src={Suite} alt="Suite" className="object-cover h-full w-full" />
