@@ -2,10 +2,10 @@ import { FaLocationDot } from "react-icons/fa6";
 import StarRating from "./StarRating";
 import Image12 from "../img/image12.png" 
 
-const SpaDetails = () => {
+function SpaDetails() {
     return ( 
         <>
-            <div className="bg-pink-100 pb-10">
+            <div className="bg-slate-50 ">
                 <div className="grid grid-cols-2 items-center justify-center ">
                     <div className="card flex justify-start items-center pl-12 ">
                         <div className="flex flex-col  justify-start border-b-4 border-black pb-20">

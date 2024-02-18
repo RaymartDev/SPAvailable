@@ -7,21 +7,33 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 interface SignUpModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToLogin: () => void; // Callback to switch to login modal
+  onSwitchToLogin: () => void; 
 }
 
 function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
   const navigate = useNavigate() as NavigateFunction;
 
-  const navigateToRegister = () => {
-    if (email && email.length > 0) {
-      navigate('/register', {
-        state: { email },
-      });
-    }
+  const validateEmail = (email: string): boolean => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
   };
 
+  const navigateToRegister = () => {
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+
+    setEmailError('');
+
+    navigate('/register', {
+      state: { email },
+    });
+  };
+  
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+
   if (!open) return null;
 
   return (
@@ -37,7 +49,7 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
           <div className="flex flex-col justify-center items-center ">
             <h1 className="font-bold text-xl">Sign Up</h1>
             <p className="mt-2 text-sm">
-              By continuing, you are setting up a Spavailable account and agree
+              By continuing, you are setting up a SPAvailable account and agree
               to our User Agreement and Privacy Policy.
             </p>
           </div>
@@ -64,7 +76,9 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               className="w-full rounded border-stone-950 border p-2"
             />
           </div>
-
+          {emailError && (
+            <div className="text-red-500 text-sm mt-2">{emailError}</div>
+          )}
           <div className="flex w-full mt-5">
             <button
               onClick={navigateToRegister}
@@ -87,7 +101,6 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               >
                 LOG IN
               </button>{' '}
-              {/* Switch to login modal */}
             </div>
           </div>
         </div>

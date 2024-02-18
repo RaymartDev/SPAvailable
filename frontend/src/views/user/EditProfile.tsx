@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import Menu from '../../components/Menu';
 import DefaultPp from '../../img/defaultPp.png';
 
 function EditProfile() {
@@ -39,7 +37,7 @@ function EditProfile() {
   };
 
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4">
+    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
 
       <div className="flex ">
@@ -164,7 +162,7 @@ function EditProfile() {
             </div>
           </div>
 
-          <div className="flex justify-end pb-40 mx-10 mt-10">
+          <div className="flex justify-end mx-10 mt-10">
             <div className="bg-[#41924B] rounded-full mr-[126px]">
               <button
                 type="button"
@@ -176,8 +174,6 @@ function EditProfile() {
           </div>
         </div>
       </div>
-      <Menu />
-      <Footer />
     </div>
   );
 }

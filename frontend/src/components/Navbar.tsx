@@ -12,7 +12,7 @@ function Navbar() {
           <img alt="logo" src={Logo} className="size-16 md:size-14" />
         </div>
         <h1
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/home')}
           className="flex cursor-pointer text-2xl md:text-3xl font-bold text-[#05bc64]"
         >
           SPA<h1 className="text-neutral-950">vailable</h1>{' '}

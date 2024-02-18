@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FcGoogle } from 'react-icons/fc';
 import { IoClose } from 'react-icons/io5';
 
-interface LoginModalProps {
+interface PasswordModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToSignUp: () => void; // Callback to switch to sign-up modal
 }
-
-function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
+function PasswordModal({ open, onClose }: PasswordModalProps) {
   if (!open) return null;
 
   return (
@@ -29,31 +26,22 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
             </p>
           </div>
 
-          <div className="flex flex-col justify-center items-center mt-10 w-full">
-            <div className="flex items-center bg-[#DADCE0] w-full  rounded-full p-2">
-              <FcGoogle size={23} className="mr-10" />
-              <button type="button">Continue With Google</button>
-            </div>
-          </div>
-
           <div className="flex justify-center items-center mt-8 w-full">
-            <div className="border w-full h-0 border-black" />
-            <h1 className="px-4 font-bold">OR</h1>
-            <div className="border w-full h-0 border-black" />
+            <h1 className="px-4 text-xl font-bold">Input Password</h1>
           </div>
 
           <div className="flex w-full mt-8">
             <input
               type="text"
-              placeholder="Email Address"
-              className="w-full rounded border-stone-950 border p-2"
+              placeholder="Password"
+              className="w-full rounded border-stone-950 border p-2 mt-5"
             />
           </div>
 
           <div className="flex w-full mt-5">
             <button
               type="button"
-              className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
+              className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded mt-10"
             >
               CONTINUE
             </button>
@@ -73,16 +61,6 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
                 ?
               </p>
             </div>
-            <div>
-              <button
-                type="button"
-                onClick={onSwitchToSignUp}
-                className="font-bold text-[#41924B] mt-2"
-              >
-                SIGN UP
-              </button>{' '}
-              {/* Switch to sign up modal */}
-            </div>
           </div>
         </div>
       </div>
@@ -90,4 +68,4 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
   );
 }
 
-export default LoginModal;
+export default PasswordModal;

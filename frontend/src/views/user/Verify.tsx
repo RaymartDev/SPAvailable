@@ -1,15 +1,13 @@
 import { useParams } from 'react-router-dom';
 
 import Navbar from '../../components/Navbar';
-import Menu from '../../components/Menu';
-import Footer from '../../components/Footer';
 import ImageRec from '../../img/imageRec.png';
 
 function Verify() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id } = useParams();
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4">
+    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
       <div className="flex justify-center h-screen bg-white p-5">
         <div className="flex w-full flex-col justify-center items-center">
@@ -38,8 +36,6 @@ function Verify() {
           </div>
         </div>
       </div>
-      <Menu />
-      <Footer />
     </div>
   );
 }

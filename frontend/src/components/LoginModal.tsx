@@ -1,14 +1,36 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoClose } from 'react-icons/io5';
 
 interface LoginModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToSignUp: () => void; // Callback to switch to sign-up modal
+  onContinueToPasswordModal: () => void;
+  onSwitchToSignUp: () => void; 
 }
 
-function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
+function LoginModal({ open, onClose, onSwitchToSignUp, onContinueToPasswordModal }: LoginModalProps) {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleContinueClick = () => {
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+    setEmailError('');
+    onContinueToPasswordModal();
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   if (!open) return null;
 
   return (
@@ -47,13 +69,16 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
-
+          {emailError && <p className="text-red-500 text-sm mt-2">{emailError}</p>}
           <div className="flex w-full mt-5">
             <button
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
+              onClick={handleContinueClick} 
             >
               CONTINUE
             </button>
@@ -81,7 +106,6 @@ function LoginModal({ open, onClose, onSwitchToSignUp }: LoginModalProps) {
               >
                 SIGN UP
               </button>{' '}
-              {/* Switch to sign up modal */}
             </div>
           </div>
         </div>

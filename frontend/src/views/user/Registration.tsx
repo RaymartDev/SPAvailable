@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
@@ -10,7 +9,7 @@ import DefaultPp from '../../img/defaultPp.png';
 
 function Registration() {
   const location = useLocation();
-  const email = location.state && location.state.email;
+  const emailFromState = location.state && location.state.email;
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
@@ -21,6 +20,17 @@ function Registration() {
 
   const [password, setPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState(emailFromState || '');
+  const [gender, setGender] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [genderError, setGenderError] = useState('');
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -56,15 +66,88 @@ function Registration() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setPasswordMismatch(false);
+    setPasswordError('');
   };
 
   const handleRetypePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRetypePassword(e.target.value);
+    setPasswordMismatch(false);
+  };
+
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
+    setFirstNameError('');
+  };
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
+    setLastNameError('');
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    setEmailError('');
+  };
+
+  const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setGender(e.target.value);
+    setGenderError('');
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+  const handleResetAll = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail(emailFromState || '');
+    setGender('');
+    setContactNumber('');
+    setProfilePicture(DefaultPp);
+    setIsPictureRemoved(false);
+    setPassword('');
+    setRetypePassword('');
+    setPasswordMismatch(false);
+    setSelectedDate(null);
+    setFirstNameError('');
+    setLastNameError('');
+    setEmailError('');
+    setPasswordError('');
+    setGenderError('');
   };
 
   const handleSubmit = () => {
+    let hasError = false;
+    if (!firstName) {
+      setFirstNameError('First name is required');
+      hasError = true;
+    }
+    if (!lastName) {
+      setLastNameError('Last name is required');
+      hasError = true;
+    }
+    if (!email) {
+      setEmailError('Email is required');
+      hasError = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Invalid email address');
+      hasError = true;
+    }
+    if (!gender) {
+      setGenderError('Gender is required');
+      hasError = true;
+    }
+    if (!password) {
+      setPasswordError('Password is required');
+      hasError = true;
+    }
     if (password !== retypePassword) {
-      alert("Passwords don't match");
+      setPasswordMismatch(true);
+      hasError = true;
+    }
+    if (hasError) {
       return;
     }
   };
@@ -117,8 +200,11 @@ function Registration() {
               </h2>
               <input
                 type="text"
-                className="w-9/12 border-b-2 px-1 py-2 bg-transparent"
+                value={firstName}
+                onChange={handleFirstNameChange}
+                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${firstNameError ? 'border-red-500' : ''}`}
               />
+              {firstNameError && <p className="text-red-500">{firstNameError}</p>}
             </div>
             <div className="card mb-8">
               <h2 className="text-xl font-semibold mb-3">
@@ -126,8 +212,11 @@ function Registration() {
               </h2>
               <input
                 type="text"
-                className="w-9/12 border-b-2 px-1 py-2 bg-transparent"
+                value={lastName}
+                onChange={handleLastNameChange}
+                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${lastNameError ? 'border-red-500' : ''}`}
               />
+              {lastNameError && <p className="text-red-500">{lastNameError}</p>}
             </div>
             <div className="card mb-8">
               <h2 className="text-xl font-semibold mb-3">
@@ -136,8 +225,10 @@ function Registration() {
               <input
                 type="email"
                 value={email}
-                className="w-9/12 border-b-2 px-1 py-2 bg-transparent"
+                onChange={handleEmailChange}
+                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${emailError ? 'border-red-500' : ''}`}
               />
+              {emailError && <p className="text-red-500">{emailError}</p>}
             </div>
             <div className="card mb-8">
               <h2 className="text-xl font-semibold mb-3">
@@ -154,7 +245,7 @@ function Registration() {
                 />
               </div>
             </div>
-            <div className="card mb-8 relative">
+            <div className={`card mb-8 relative ${passwordMismatch ? 'border-red-500' : ''}`}>
               <h2 className="text-xl font-semibold mb-3">
                 Password
               </h2>
@@ -164,7 +255,7 @@ function Registration() {
                   value={password}
                   onChange={handlePasswordChange}
                   className="w-full px-1 py-2 bg-transparent"
-                />
+                />         
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visiblePass === false ? (
                     <BsFillEyeFill size={25} onClick={togglePassword} />
@@ -173,8 +264,9 @@ function Registration() {
                   )}
                 </div>
               </div>
+              {passwordError && <p className="text-red-500">{passwordError}</p>}
             </div>
-            <div className="card mb-8">
+            <div className={`card mb-8 ${passwordMismatch ? 'border-red-500' : ''}`}>
               <h2 className="text-xl font-semibold mb-3">
                 Retype Password
               </h2>
@@ -193,6 +285,7 @@ function Registration() {
                   )}
                 </div>
               </div>
+              {passwordMismatch && <p className="text-red-500">Password does not match</p>}
             </div>
             <div className="card">
               <h2 className="text-xl font-semibold mb-3">
@@ -203,7 +296,7 @@ function Registration() {
                   className="px-1 py-2 bg-transparent "
                   placeholderText="Select Your Birthday"
                   selected={selectedDate}
-                  onChange={(date: Date) => setSelectedDate(date)}
+                  onChange={handleDateChange}
                 />
               </div>
             </div>
@@ -215,16 +308,18 @@ function Registration() {
                 <select
                   name="gender"
                   id="gender"
-                  className="px-1 py-2 bg-transparent "
+                  value={gender}
+                  onChange={handleGenderChange}
+                  className={`px-1 py-2 bg-transparent ${genderError ? 'border-red-500' : ''}`}
                 >
-                  <option value="" disabled selected>
-                    <p className="text-slate-50">Select Gender</p>
+                  <option value="" disabled>
+                    Select Gender
                   </option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="Other">Prefer Not To Say</option>
                 </select>
               </div>
+              {genderError && <p className="text-red-500">{genderError}</p>}
             </div>
           </div>
 
@@ -233,6 +328,7 @@ function Registration() {
               <button
                 type="button"
                 className="text-lg font-semibold text-neutral-400 rounded-full border-2 px-16 py-3"
+                onClick={handleResetAll}
               >
                 Reset All
               </button>

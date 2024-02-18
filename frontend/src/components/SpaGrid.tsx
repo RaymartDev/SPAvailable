@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Image11 from '../img/image11.png';
 import StarRating from './StarRating';
-import SpaModal from './SpaModal';
 
 function SpaGrid() {
-  const [openSpaModal, setsSpaModal] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <div className="rounded-3xl border-2 p-2 mx-4 mt-4 hover: shadow-lg h-max">
       <div>
@@ -21,12 +19,11 @@ function SpaGrid() {
       <div className="flex items-center justify-center my-5">
         <button
           type="button"
-          onClick={() => setsSpaModal(true)}
+          onClick={() => navigate('/aboutSpa')}
           className="rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-2"
         >
           SEE MORE
         </button>
-        <SpaModal open={openSpaModal} onClose={() => setsSpaModal(false)} />
       </div>
     </div>
   );

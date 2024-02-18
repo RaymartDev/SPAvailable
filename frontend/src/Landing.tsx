@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import LoginModal from './components/LoginModal';
 import SignUpModal from './components/SignUpModal';
+import PasswordModal from './components/PasswordModal';
 import Logo from './img/logo.png';
 import Suite from './img/suite.png';
 import Image1 from './img/image1.png';
@@ -18,6 +19,7 @@ import Footer from './components/Footer';
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 
   const switchToSignUp = () => {
     setOpenLoginModal(false);
@@ -29,6 +31,14 @@ function Landing() {
     setOpenSignUpModal(false);
   };
 
+  const handleContinueToPasswordModal = () => {
+    setPasswordModalOpen(true);
+  };
+
+  const handlePasswordModalClose = () => {
+    setPasswordModalOpen(false);
+  };
+
   return (
     <div className="max-w-screen-2xl mx-auto px-4 ">
       <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
@@ -36,7 +46,7 @@ function Landing() {
           <div className="mr-2">
             <img src={Logo} className="size-16 md:size-14" alt="Logo" />
           </div>
-          <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64]">
+          <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64] cursor-pointer">
             SPA <h1 className="text-neutral-950">vailable</h1>{' '}
           </h1>
         </div>
@@ -51,6 +61,7 @@ function Landing() {
           <LoginModal
             open={openLoginModal}
             onClose={() => setOpenLoginModal(false)}
+            onContinueToPasswordModal={handleContinueToPasswordModal}
             onSwitchToSignUp={switchToSignUp}
           />
           <button
@@ -64,6 +75,11 @@ function Landing() {
             open={openSignUpModal}
             onClose={() => setOpenSignUpModal(false)}
             onSwitchToLogin={switchToLogIn}
+          />
+          
+          <PasswordModal
+            open={passwordModalOpen}
+            onClose={handlePasswordModalClose}
           />
         </div>
       </div>
@@ -86,7 +102,7 @@ function Landing() {
           </div>
           <div className="flex mb-10 text-center  justify-center items-center">
             <p className="w-3/5 md:w-3/5">
-              Spavailable featured establishments provide a comprehensive range
+              SPAvailable featured establishments provide a comprehensive range
               of services and classes aimed at promoting your well-being,
               mindfulness, and beauty. Whether it&apos;s yoga or barre workouts,
               indulgent facials, or advanced treatments like laser hair removal,

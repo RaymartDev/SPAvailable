@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import Image1 from "../img/image1.png"
-import Image2 from "../img/image2.png"
-import Image3 from "../img/image3.png"
+import Image18 from "../img/image18.png"
+import Image19 from "../img/image19.png"
+import Image20 from "../img/image20.png"
 import Image4 from "../img/image4.png"
 import Image5 from "../img/image5.png"
 import Image6 from "../img/image6.png"
@@ -15,21 +15,21 @@ interface Service {
   imageUrl: string;
 }
 
-const servicesData: Service[] = [
+const productsData: Service[] = [
   {
     id: 1,
     title: 'Massage Therapy',
-    imageUrl: Image1
+    imageUrl: Image20
   },
   {
     id: 2,
     title: 'Facial Treatments',
-    imageUrl: Image2
+    imageUrl: Image19
   },
   {
     id: 3,
     title: 'Body Treatments',
-    imageUrl: Image3
+    imageUrl: Image18
   }, 
   {
     id: 4,
@@ -58,29 +58,29 @@ const servicesData: Service[] = [
   }, 
 ];
 
-function Services() {
+function Products() {
 
     const [startIndex, setStartIndex] = useState<number>(0);
 
     const goToNextSlide = () => {
-      setStartIndex((prevIndex) => (prevIndex + 1) % (servicesData.length - 2));
+      setStartIndex((prevIndex) => (prevIndex + 1) % (productsData.length - 2));
     };
   
     const goToPrevSlide = () => {
-      setStartIndex((prevIndex) => (prevIndex === 0 ? servicesData.length - 3 : prevIndex - 1));
+      setStartIndex((prevIndex) => (prevIndex === 0 ? productsData.length - 3 : prevIndex - 1));
     };
   
     return ( 
         <>
-           <div className="bg-slate-50 py-8 max-h-screen px-12">
-                <div className='border-b-4 border-black'>
-                    <h1 className="text-4xl font-semibold text-center mb-8 w-fit">Our Services</h1>
-                    <div className="flex items-center justify-center pb-20">
+           <div className="bg-slate-50 py-8 px-12 max-h-screen">
+                <div>
+                    <h1 className="text-4xl font-semibold text-center mb-8 w-fit">Products</h1>
+                    <div className="flex items-center justify-center">
                         <button onClick={goToPrevSlide} className="mr-4 rounded-full border-2 border-black">
                         <GrFormPrevious size={50}/>
                         </button>
                         <div className="flex gap-4">
-                            {servicesData.slice(startIndex, startIndex + 3).map((service) => (
+                            {productsData.slice(startIndex, startIndex + 3).map((service) => (
                             <div key={service.id} className="service-card flex flex-col items-center justify-center" style={{ width: '400px', height: '400px' }}>
                                 <div className='h-full w-full overflow-hidden'>
                                     <img src={service.imageUrl} alt={service.title} className="w-full h-full object-cover rounded-md " />
@@ -99,4 +99,4 @@ function Services() {
     );
 }
  
-export default Services;
+export default Products;
