@@ -14,6 +14,6 @@ router.route('/profile')
   .put(protect, UserController.updateProfile);
 
 router.get('/verify', UserController.verify);
-router.get('/resend', UserController.resendVerification);
+router.get('/resend', protect, UserController.resendVerification);
 
 export default router;

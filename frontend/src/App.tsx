@@ -6,7 +6,6 @@ import EditProfile from './views/user/EditProfile';
 import Pending from './views/user/Pending';
 import AboutSpa from './views/user/AboutSpa';
 import VerifyPage from './views/user/Verify';
-import Test from './views/user/Test';
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
         <Route path="/user/verify" element={<VerifyPage />} />
 
         <Route path="/spa/about" element={<AboutSpa />} />
-        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

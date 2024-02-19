@@ -57,7 +57,6 @@ function EditProfile() {
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
           <div className="flex flex-col items-center text-slate-50 mb-5">
             <h1 className="text-4xl font-bold">James Allan</h1>
-            <h2 className="text-xl ">@james</h2>
           </div>
           <div className="relative mb-10" id="profilePicture">
             <img
