@@ -181,6 +181,7 @@ function Registration() {
       });
       dispatch(setCredentials({ user: response.data }));
       showSuccessToast('Successfully registered');
+      navigate('/user/pending');
     } catch (err) {
       if (err instanceof AxiosError) {
         showErrorToast(err);

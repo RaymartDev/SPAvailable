@@ -131,7 +131,6 @@ function Landing() {
             open={passwordModalOpen}
             onClose={() => {
               setPasswordModalOpen(false);
-              setUser('');
               setPassword('');
             }}
             handleSubmit={handleSubmit}

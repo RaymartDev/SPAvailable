@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppSelector } from '../../store/store';
+import { useToast } from '../../hooks/useToast';
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function EditProfile() {
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
+  const { showErrorToast } = useToast();
 
   useEffect(() => {
     if (!user) {
@@ -33,8 +35,12 @@ function EditProfile() {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file: File | undefined = event.target.files?.[0];
     if (file) {
+      if (file.size > 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 1MB or less.');
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
