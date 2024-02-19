@@ -7,7 +7,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 interface SignUpModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToLogin: () => void; 
+  onSwitchToLogin: () => void;
 }
 
 function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
@@ -30,7 +30,7 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
       state: { email },
     });
   };
-  
+
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 

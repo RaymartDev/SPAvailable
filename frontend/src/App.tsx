@@ -14,9 +14,12 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/about" element={<AboutSpa />} />
 
-        <Route path="/dashboard" element={<Home />} />
-        <Route path="/profile" element={<EditProfile />} />
-        <Route path="/pending" element={<Verify />} />
+        {/* PROTECTED ROUTES */}
+        <Route path="/user/dashboard" element={<Home />} />
+        <Route path="/user/profile" element={<EditProfile />} />
+        <Route path="/user/pending" element={<Verify />} />
+
+        <Route path="/spa/about" element={<AboutSpa />} />
       </Routes>
     </BrowserRouter>
   );

@@ -67,6 +67,9 @@ function Landing() {
       } else {
         showErrorToast('Unable to login');
       }
+    } finally {
+      setUser('');
+      setPassword('');
     }
   };
 

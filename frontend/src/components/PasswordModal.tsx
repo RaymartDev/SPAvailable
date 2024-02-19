@@ -52,6 +52,7 @@ function PasswordModal({
               type={visiblePass === false ? 'password' : 'text'}
               className="w-full px-1 py-2"
               value={password}
+              placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
