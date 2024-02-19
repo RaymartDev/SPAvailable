@@ -39,10 +39,10 @@ function EditProfile() {
     }
   };
 
-  if (!user) {
-    navigate('/');
-    return null;
-  }
+  //if (!user) {
+  //  navigate('/');
+  //  return null;
+  //}
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
@@ -112,9 +112,9 @@ function EditProfile() {
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Username
+                Email Address
               </h2>
-              <input type="text" className="w-9/12 border-b-2 px-1 py-2" />
+              <input type="text" readOnly={true} disabled={true} className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent" />
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
@@ -155,18 +155,6 @@ function EditProfile() {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="card mb-16 ">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Email Address
-              </h2>
-              <input type="email" className="w-9/12 border-b-2 px-1 py-2" />
-            </div>
-            <div className="card mb-16">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Confirm Email Address
-              </h2>
-              <input type="email" className="w-9/12 border-b-2 px-1 py-2" />
             </div>
           </div>
 
