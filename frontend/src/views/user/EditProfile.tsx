@@ -2,14 +2,18 @@
 import React, { useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import DefaultPp from '../../img/defaultPp.png';
+import UserState from '../../interface/UserState';
 
 function EditProfile() {
+  const navigate = useNavigate();
+  const user = useSelector((state: UserState) => state.user);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
-  const [isPictureRemoved, setIsPictureRemoved] = useState(false);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -21,7 +25,6 @@ function EditProfile() {
 
   const removeProfilePicture = () => {
     setProfilePicture('');
-    setIsPictureRemoved(true);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +38,11 @@ function EditProfile() {
       reader.readAsDataURL(file);
     }
   };
+
+  if (!user) {
+    navigate('/');
+    return null;
+  }
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
@@ -50,7 +58,7 @@ function EditProfile() {
             <img
               alt="profilePicture"
               src={profilePicture || DefaultPp}
-              className={`bg-white border-2 rounded-full object-cover size-60  ${isPictureRemoved ? 'bg-white' : ''}`}
+              className={`bg-white border-2 rounded-full object-cover size-60  ${profilePicture ? 'bg-white' : ''}`}
             />
             <FaTrash
               color="white"

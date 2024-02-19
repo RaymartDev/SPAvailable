@@ -1,11 +1,17 @@
-import { useParams } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import ImageRec from '../../img/imageRec.png';
+import UserState from '../../interface/UserState';
 
 function Verify() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id } = useParams();
+  const navigate = useNavigate();
+  const user = useSelector((state: UserState) => state.user);
+  if (!user || !user.active) {
+    navigate(user ? '/dashboard' : '/');
+    return null;
+  }
+
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />

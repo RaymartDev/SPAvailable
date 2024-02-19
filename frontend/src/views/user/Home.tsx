@@ -1,12 +1,23 @@
 import { IoSearchSharp } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
 import Image17 from '../../img/image17.png';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
+import UserState from '../../interface/UserState';
 
 function MainHome() {
+  const navigate = useNavigate();
+  const user = useSelector((state: UserState) => state.user);
+
+  if (!user) {
+    navigate('/');
+    return null;
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <Navbar />
