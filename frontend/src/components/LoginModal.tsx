@@ -89,11 +89,11 @@ function LoginModal({ open, onClose, onSwitchToSignUp, onContinueToPasswordModal
               <p>
                 Forgot your{' '}
                 <a href="#" className="text-[#41924B]">
-                  username
+                  Email
                 </a>{' '}
                 or{' '}
                 <a href="#" className="text-[#41924B]">
-                  password
+                  Password
                 </a>
                 ?
               </p>

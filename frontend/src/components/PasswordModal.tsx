@@ -1,11 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
+import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 interface PasswordModalProps {
   open: boolean;
   onClose: () => void;
 }
 function PasswordModal({ open, onClose }: PasswordModalProps) {
+
+  const [visiblePass, setVisiblePass] = useState(false);
+
+  const togglePassword = () => {
+    setVisiblePass(!visiblePass);
+  };
+
+
   if (!open) return null;
 
   return (
@@ -30,12 +40,18 @@ function PasswordModal({ open, onClose }: PasswordModalProps) {
             <h1 className="px-4 text-xl font-bold">Input Password</h1>
           </div>
 
-          <div className="flex w-full mt-8">
+          <div className="flex w-full mt-8 relative rounded border-stone-950 border">
             <input
-              type="text"
-              placeholder="Password"
-              className="w-full rounded border-stone-950 border p-2 mt-5"
-            />
+              type={visiblePass === false ? 'password' : 'text'}
+              className="w-full px-1 py-2"
+            />         
+            <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
+              {visiblePass === false ? (
+                <BsFillEyeFill size={25} onClick={togglePassword} />
+              ) : (
+                <BsFillEyeSlashFill size={25} onClick={togglePassword} />
+              )}
+            </div>
           </div>
 
           <div className="flex w-full mt-5">
@@ -52,11 +68,11 @@ function PasswordModal({ open, onClose }: PasswordModalProps) {
               <p>
                 Forgot your{' '}
                 <a href="#" className="text-[#41924B]">
-                  username
+                  Email
                 </a>{' '}
                 or{' '}
                 <a href="#" className="text-[#41924B]">
-                  password
+                  Password
                 </a>
                 ?
               </p>

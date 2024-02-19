@@ -117,12 +117,12 @@ function Landing() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-              <div className="card hover:shadow-lg">
+              <div className="card hover:shadow-lg ">
                 <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
                   <img
                     alt="massage"
                     src={Image1}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Massage</p>
                 </div>
@@ -133,7 +133,7 @@ function Landing() {
                   <img
                     alt="couple"
                     src={Image2}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Couple Massage</p>
                 </div>
@@ -144,7 +144,7 @@ function Landing() {
                   <img
                     alt="Aryurveda"
                     src={Image3}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Ayurveda</p>
                 </div>
@@ -155,7 +155,7 @@ function Landing() {
                   <img
                     alt="Hot Stone Massage"
                     src={Image4}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Hot Stone Massage</p>
                 </div>
@@ -166,7 +166,7 @@ function Landing() {
                   <img
                     alt="Aromatherapy"
                     src={Image5}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Aromatherapy</p>
                 </div>
@@ -176,8 +176,8 @@ function Landing() {
                 <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
                   <img
                     alt="Deep Tissue Massage"
-                    src={Image6}
-                    className="object-cover w-full h-full rounded-3xl"
+                    src={Image6} hover:scale-105 duration-500
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Deep Tissue Massage</p>
                 </div>
@@ -188,7 +188,7 @@ function Landing() {
                   <img
                     alt="Facial"
                     src={Image7}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Facial</p>
                 </div>
@@ -199,7 +199,7 @@ function Landing() {
                   <img
                     alt="Acne Facial"
                     src={Image8}
-                    className="object-cover w-full h-full rounded-3xl"
+                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Acne Facial</p>
                 </div>
