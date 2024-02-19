@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ import Footer from './components/Footer';
 import { setCredentials } from './store/reducer/userSlice';
 import { useToast } from './hooks/useToast';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAppDispatch } from './store/store';
+import { useAppDispatch, useAppSelector } from './store/store';
 
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -50,6 +50,14 @@ function Landing() {
     setPasswordModalOpen(true);
   };
 
+  const userObj = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    if (userObj) {
+      navigate('/user/dashboard');
+    }
+  }, [userObj, navigate]);
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
@@ -60,7 +68,7 @@ function Landing() {
       dispatch(setCredentials({ user: response.data }));
       showSuccessToast('Successfully logged in');
       setPasswordModalOpen(false);
-      navigate(response.data.active ? '/dashboard' : '/pending');
+      navigate(response.data.active ? '/user/dashboard' : '/user/pending');
     } catch (err) {
       if (err instanceof AxiosError) {
         showErrorToast(err);
@@ -97,7 +105,10 @@ function Landing() {
             open={openLoginModal}
             setUser={setUser}
             user={user}
-            onClose={() => setOpenLoginModal(false)}
+            onClose={() => {
+              setOpenLoginModal(false);
+              setUser('');
+            }}
             onContinueToPasswordModal={handleContinueToPasswordModal}
             onSwitchToSignUp={switchToSignUp}
           />
@@ -118,7 +129,11 @@ function Landing() {
             setPassword={setPassword}
             password={password}
             open={passwordModalOpen}
-            onClose={() => setPasswordModalOpen(false)}
+            onClose={() => {
+              setPasswordModalOpen(false);
+              setUser('');
+              setPassword('');
+            }}
             handleSubmit={handleSubmit}
           />
         </div>

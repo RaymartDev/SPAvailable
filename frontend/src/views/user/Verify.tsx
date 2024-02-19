@@ -1,55 +1,64 @@
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable consistent-return */
+import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import ImageRec from '../../img/imageRec.png';
-import { useAppSelector } from '../../store/store';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { useToast } from '../../hooks/useToast';
+import { useAppDispatch } from '../../store/store';
+import { verify } from '../../store/reducer/userSlice';
 
-function Verify() {
+function VerifyPage() {
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.user);
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { showErrorToast, showSuccessToast } = useToast();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get('token');
+
+    const verifyToken = async (tokenToVerify: string) => {
+      try {
+        const response = await axios.get(
+          `/api/v1/user/verify?token=${tokenToVerify}`
+        );
+        if (response.status === 200) {
+          dispatch(verify());
+          showSuccessToast('Successfully verified');
+          const timeoutId = setTimeout(() => {
+            navigate('/user/dashboard');
+          }, 1500);
+          return () => clearTimeout(timeoutId);
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to register');
+        }
+      }
+    };
+
+    if (!token) {
+      // Redirect to home page after 5 seconds
+      const timeoutId = setTimeout(() => {
+        navigate('/');
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
     }
-    if (user.active) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
+
+    verifyToken(token);
+  }, [location.search]);
 
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <Navbar />
-      <div className="flex justify-center h-screen bg-white p-5">
-        <div className="flex w-full flex-col justify-center items-center">
-          <div className="flex flex-col justify-center items-center ">
-            <h1 className="text-6xl mb-10">Verify Your Email</h1>
-            <h2 className="text-2xl ">
-              Check your email & click the link to activate your account.
-            </h2>
-          </div>
-          <div className="my-16">
-            <img alt="" src={ImageRec} className="size-80" />
-          </div>
-          <div className="flex justify-center items-center mb-28">
-            <button
-              type="button"
-              className="bg-[#41924B] rounded-full text-slate-50 font-semibold  py-3 text-lg mr-20 border-black border-[1px] w-64 hover:bg-slate-50 hover:text-[#41924B] duration-300"
-            >
-              Resend Email
-            </button>
-            <button
-              type="button"
-              className="bg-slate-50 rounded-full text-[#41924B] font-semibold py-3 text-lg border-black border-[1px] w-64 hover:bg-[#41924B] hover:text-slate-50 duration-300"
-            >
-              Enter New Email
-            </button>
-          </div>
-        </div>
-      </div>
+    <div>
+      <ToastContainer />
+      <h2>Verification Page</h2>
+      <p>Verifying...</p>
     </div>
   );
 }
 
-export default Verify;
+export default VerifyPage;

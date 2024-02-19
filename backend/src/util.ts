@@ -63,7 +63,7 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
       <p>Dear <b>${name},</b></p>
       <p>Thank you for registering with our service. To complete your registration, please click the button below to verify your email address:</p>
       <p>
-      <a href="localhost/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
+      <a href="localhost:5173/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
       </p>
       <p>If you didn't sign up for an account with us, you can safely ignore this email.</p>
       <p><b>Thank you,<br> SPAvailable Team</b></p>

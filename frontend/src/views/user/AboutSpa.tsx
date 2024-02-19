@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
@@ -20,12 +21,12 @@ function AboutSpa() {
           <div className="mr-2">
             <img src={Logo} className="size-16 md:size-14" alt="Logo" />
           </div>
-          <h1
-            onClick={() => navigate('/home')}
-            className="flex text-2xl md:text-3xl font-bold text-[#05bc64]"
+          <div
+            onClick={() => navigate('/user/dashboard')}
+            className="flex cursor-pointer text-2xl md:text-3xl font-bold text-[#05bc64]"
           >
             SPA<h1 className="text-neutral-950">vailable</h1>{' '}
-          </h1>
+          </div>
         </div>
         <div className="flex items-center">
           <div>

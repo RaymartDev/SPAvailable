@@ -4,10 +4,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
+import { ToastContainer } from 'react-toastify';
+import axios, { AxiosError } from 'axios';
 import Navbar from '../../components/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useToast } from '../../hooks/useToast';
+import { setCredentials } from '../../store/reducer/userSlice';
 
 function Registration() {
   const location = useLocation();
@@ -37,8 +41,11 @@ function Registration() {
   const [passwordError, setPasswordError] = useState('');
   const [genderError, setGenderError] = useState('');
 
+  const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    if (!user) {
+    if (user) {
       navigate('/');
     }
   }, [user, navigate]);
@@ -131,41 +138,64 @@ function Registration() {
     setGenderError('');
   };
 
-  const handleSubmit = () => {
-    let hasError = false;
+  const handleSubmit = async () => {
     if (!firstName) {
       setFirstNameError('First name is required');
-      hasError = true;
     }
     if (!lastName) {
       setLastNameError('Last name is required');
-      hasError = true;
     }
     if (!email) {
       setEmailError('Email is required');
-      hasError = true;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       setEmailError('Invalid email address');
-      hasError = true;
     }
     if (!gender) {
       setGenderError('Gender is required');
-      hasError = true;
     }
     if (!password) {
       setPasswordError('Password is required');
-      hasError = true;
     }
     if (password !== retypePassword) {
       setPasswordMismatch(true);
-      hasError = true;
+    }
+
+    try {
+      const response = await axios.post('/api/v1/user/register', {
+        name: `${firstName} ${lastName}`,
+        email,
+        contact: contactNumber ? `0${contactNumber}` : '',
+        password,
+        birth_date: selectedDate
+          ? selectedDate.toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric',
+            })
+          : new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric',
+            }),
+        gender: gender === 'Male',
+      });
+      dispatch(setCredentials({ user: response.data }));
+      showSuccessToast('Successfully registered');
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to register');
+      }
+    } finally {
+      handleResetAll();
     }
   };
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
-
+      <ToastContainer />
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">

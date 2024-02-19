@@ -14,7 +14,7 @@ function Navbar() {
       navigate('/');
       return;
     }
-    navigate(user.active ? '/dashboard' : '/');
+    navigate(user.active ? '/user/dashboard' : '/user/pending');
   };
 
   return (

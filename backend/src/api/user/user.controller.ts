@@ -364,13 +364,17 @@ export const verify = async (req: Request, res : Response, next : NextFunction) 
     }, next);
 
     if (!user || user.active) {
-      return res.status(400).json({ error: 'Failed to verify token' });
+      res.status(400);
+      next(new Error('Failed to verify token'));
+      return;
     }
 
     // Check if token is expired
     const currentTime = Math.floor(Date.now() / 1000);
     if (decodedToken.exp && decodedToken.exp < currentTime) {
-      return res.status(400).json({ error: 'Token has expired' });
+      res.status(400);
+      next(new Error('Token has expired'));
+      return;
     }
 
     // Update user's active status to true
@@ -387,6 +391,26 @@ export const verify = async (req: Request, res : Response, next : NextFunction) 
 
     // Respond with success message
     return res.status(200).json({ message: 'User verified successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resendVerification = async (req: UserRequest, res : Response, next : NextFunction) => {
+  try {
+    if (!req.user) {
+      res.status(400);
+      next(new Error('User not found'));
+      return;
+    }
+
+    if (req.user.active) {
+      res.status(400);
+      next(new Error('User already verified'));
+      return;
+    }
+    sendEmail(req.user.email, req.user.name, generateVerificationToken(req.user.email), next);
+    res.status(200).json({ message: 'Successfully resent the verification code' });
   } catch (err) {
     next(err);
   }

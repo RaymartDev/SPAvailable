@@ -25,10 +25,10 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
     }
 
     setEmailError('');
-
     navigate('/register', {
       state: { email },
     });
+    setEmail('');
   };
 
   const [email, setEmail] = useState('');

@@ -18,12 +18,13 @@ export const UserSlice = createSlice({
       state.user = action.payload.user;
       localStorage.setItem('userInfo', JSON.stringify(action.payload.user));
     },
-    logout: (state, _action) => {
-      state.user = initialState.user;
+    logout: (state) => {
+      state.user = undefined;
+      localStorage.removeItem('userInfo');
     },
-    verify: (state, action) => {
+    verify: (state) => {
       if (state.user) {
-        state.user.active = action.payload.active;
+        state.user.active = true;
       }
     },
   },

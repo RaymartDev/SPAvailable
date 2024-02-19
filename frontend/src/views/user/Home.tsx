@@ -1,6 +1,7 @@
 import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Navbar from '../../components/Navbar';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
@@ -16,13 +17,17 @@ function MainHome() {
   useEffect(() => {
     if (!user) {
       navigate('/');
+      return;
+    }
+    if (!user.active) {
+      navigate('/user/pending');
     }
   }, [user, navigate]);
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <Navbar />
-
+      <ToastContainer />
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image10} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">
