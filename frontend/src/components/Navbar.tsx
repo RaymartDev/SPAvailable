@@ -30,6 +30,11 @@ function Navbar() {
           SPA<h1 className="text-neutral-950">vailable</h1>{' '}
         </div>
       </div>
+      <div>
+        <button className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50">
+          Log Out
+        </button>
+      </div>
     </div>
   );
 }
