@@ -16,7 +16,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile/edit" element={<EditProfile />} />
         <Route path="/verify/:id" element={<Verify />} />
-        <Route path="/aboutSpa" element={<AboutSpa />} />
+        <Route path="/about" element={<AboutSpa />} />
       </Routes>
     </BrowserRouter>
   );
