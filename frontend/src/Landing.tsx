@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import LoginModal from './components/LoginModal';
 import SignUpModal from './components/SignUpModal';
 import PasswordModal from './components/PasswordModal';
@@ -15,11 +19,21 @@ import Image8 from './img/image8.png';
 import Image9 from './img/image9.png';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
+import { setCredentials } from './store/reducer/userSlice';
+import { useToast } from './hooks/useToast';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAppDispatch } from './store/store';
 
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const { showErrorToast, showSuccessToast } = useToast();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const switchToSignUp = () => {
     setOpenLoginModal(false);
@@ -32,23 +46,41 @@ function Landing() {
   };
 
   const handleContinueToPasswordModal = () => {
+    setOpenLoginModal(false);
     setPasswordModalOpen(true);
   };
 
-  const handlePasswordModalClose = () => {
-    setPasswordModalOpen(false);
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/v1/user/login', {
+        email: user,
+        password,
+      });
+      dispatch(setCredentials({ user: response.data }));
+      showSuccessToast('Successfully logged in');
+      setPasswordModalOpen(false);
+      navigate(response.data.active ? '/dashboard' : '/pending');
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to login');
+      }
+    }
   };
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 ">
+      <ToastContainer />
       <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
         <div className="flex items-center">
           <div className="mr-2">
             <img src={Logo} className="size-16 md:size-14" alt="Logo" />
           </div>
-          <h1 className="flex text-2xl md:text-3xl font-bold text-[#05bc64] cursor-pointer">
+          <div className="flex text-2xl md:text-3xl font-bold text-[#05bc64] cursor-pointer">
             SPA <h1 className="text-neutral-950">vailable</h1>{' '}
-          </h1>
+          </div>
         </div>
         <div className="flex items-center">
           <button
@@ -60,6 +92,8 @@ function Landing() {
           </button>
           <LoginModal
             open={openLoginModal}
+            setUser={setUser}
+            user={user}
             onClose={() => setOpenLoginModal(false)}
             onContinueToPasswordModal={handleContinueToPasswordModal}
             onSwitchToSignUp={switchToSignUp}
@@ -76,10 +110,13 @@ function Landing() {
             onClose={() => setOpenSignUpModal(false)}
             onSwitchToLogin={switchToLogIn}
           />
-          
+
           <PasswordModal
+            setPassword={setPassword}
+            password={password}
             open={passwordModalOpen}
-            onClose={handlePasswordModalClose}
+            onClose={() => setPasswordModalOpen(false)}
+            handleSubmit={handleSubmit}
           />
         </div>
       </div>
@@ -176,7 +213,7 @@ function Landing() {
                 <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
                   <img
                     alt="Deep Tissue Massage"
-                    src={Image6} hover:scale-105 duration-500
+                    src={Image6}
                     className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
                   />
                   <p className="md:text-xl text-lg my-2">Deep Tissue Massage</p>
@@ -230,7 +267,6 @@ function Landing() {
       <Menu />
       <Footer />
     </div>
-    
   );
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoClose } from 'react-icons/io5';
@@ -6,29 +7,37 @@ interface LoginModalProps {
   open: boolean;
   onClose: () => void;
   onContinueToPasswordModal: () => void;
-  onSwitchToSignUp: () => void; 
+  onSwitchToSignUp: () => void;
+  user: string;
+  setUser: (props: string) => void;
 }
 
-function LoginModal({ open, onClose, onSwitchToSignUp, onContinueToPasswordModal }: LoginModalProps) {
-  const [email, setEmail] = useState('');
+function LoginModal({
+  open,
+  onClose,
+  onSwitchToSignUp,
+  onContinueToPasswordModal,
+  user,
+  setUser,
+}: LoginModalProps) {
   const [emailError, setEmailError] = useState('');
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+    setUser(event.target.value);
+  };
+
+  const validateEmail = (emailParam: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(emailParam);
   };
 
   const handleContinueClick = () => {
-    if (!validateEmail(email)) {
+    if (!validateEmail(user)) {
       setEmailError('Please enter a valid email address.');
       return;
     }
     setEmailError('');
     onContinueToPasswordModal();
-  };
-
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
   };
 
   if (!open) return null;
@@ -69,16 +78,18 @@ function LoginModal({ open, onClose, onSwitchToSignUp, onContinueToPasswordModal
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
-              value={email}
+              value={user}
               onChange={handleEmailChange}
             />
           </div>
-          {emailError && <p className="text-red-500 text-sm mt-2">{emailError}</p>}
+          {emailError && (
+            <p className="text-red-500 text-sm mt-2">{emailError}</p>
+          )}
           <div className="flex w-full mt-5">
             <button
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
-              onClick={handleContinueClick} 
+              onClick={handleContinueClick}
             >
               CONTINUE
             </button>

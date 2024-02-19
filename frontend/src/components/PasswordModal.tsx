@@ -6,15 +6,22 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 interface PasswordModalProps {
   open: boolean;
   onClose: () => void;
+  setPassword: (props: string) => void;
+  password: string;
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
-function PasswordModal({ open, onClose }: PasswordModalProps) {
-
+function PasswordModal({
+  open,
+  onClose,
+  password,
+  setPassword,
+  handleSubmit,
+}: PasswordModalProps) {
   const [visiblePass, setVisiblePass] = useState(false);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
   };
-
 
   if (!open) return null;
 
@@ -44,7 +51,9 @@ function PasswordModal({ open, onClose }: PasswordModalProps) {
             <input
               type={visiblePass === false ? 'password' : 'text'}
               className="w-full px-1 py-2"
-            />         
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
               {visiblePass === false ? (
                 <BsFillEyeFill size={25} onClick={togglePassword} />
@@ -58,8 +67,9 @@ function PasswordModal({ open, onClose }: PasswordModalProps) {
             <button
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded mt-10"
+              onClick={handleSubmit}
             >
-              CONTINUE
+              LOGIN
             </button>
           </div>
 

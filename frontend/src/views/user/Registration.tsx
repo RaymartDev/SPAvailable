@@ -1,15 +1,20 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import Navbar from '../../components/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
+import { useAppSelector } from '../../store/store';
 
 function Registration() {
   const location = useLocation();
+  const navigate = useNavigate();
   const emailFromState = location.state && location.state.email;
+
+  const user = useAppSelector((state) => state.user.user);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
@@ -31,6 +36,12 @@ function Registration() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [genderError, setGenderError] = useState('');
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -70,7 +81,9 @@ function Registration() {
     setPasswordError('');
   };
 
-  const handleRetypePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRetypePasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRetypePassword(e.target.value);
     setPasswordMismatch(false);
   };
@@ -147,9 +160,6 @@ function Registration() {
       setPasswordMismatch(true);
       hasError = true;
     }
-    if (hasError) {
-      return;
-    }
   };
 
   return (
@@ -195,21 +205,19 @@ function Registration() {
 
           <div className="grid grid-cols-2 mx-10 ">
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">
-                First Name
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">First Name</h2>
               <input
                 type="text"
                 value={firstName}
                 onChange={handleFirstNameChange}
                 className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${firstNameError ? 'border-red-500' : ''}`}
               />
-              {firstNameError && <p className="text-red-500">{firstNameError}</p>}
+              {firstNameError && (
+                <p className="text-red-500">{firstNameError}</p>
+              )}
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">
-                Last Name
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">Last Name</h2>
               <input
                 type="text"
                 value={lastName}
@@ -219,9 +227,7 @@ function Registration() {
               {lastNameError && <p className="text-red-500">{lastNameError}</p>}
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">
-                Email
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">Email</h2>
               <input
                 type="email"
                 value={email}
@@ -231,9 +237,7 @@ function Registration() {
               {emailError && <p className="text-red-500">{emailError}</p>}
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">
-                Contact
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">Contact</h2>
               <div className="flex w-9/12 border-b-2">
                 <div className="flex w-1/12 items-center">+63</div>
                 <input
@@ -245,17 +249,17 @@ function Registration() {
                 />
               </div>
             </div>
-            <div className={`card mb-8 relative ${passwordMismatch ? 'border-red-500' : ''}`}>
-              <h2 className="text-xl font-semibold mb-3">
-                Password
-              </h2>
+            <div
+              className={`card mb-8 relative ${passwordMismatch ? 'border-red-500' : ''}`}
+            >
+              <h2 className="text-xl font-semibold mb-3">Password</h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visiblePass === false ? 'password' : 'text'}
                   value={password}
                   onChange={handlePasswordChange}
                   className="w-full px-1 py-2 bg-transparent"
-                />         
+                />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visiblePass === false ? (
                     <BsFillEyeFill size={25} onClick={togglePassword} />
@@ -266,10 +270,10 @@ function Registration() {
               </div>
               {passwordError && <p className="text-red-500">{passwordError}</p>}
             </div>
-            <div className={`card mb-8 ${passwordMismatch ? 'border-red-500' : ''}`}>
-              <h2 className="text-xl font-semibold mb-3">
-                Retype Password
-              </h2>
+            <div
+              className={`card mb-8 ${passwordMismatch ? 'border-red-500' : ''}`}
+            >
+              <h2 className="text-xl font-semibold mb-3">Retype Password</h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visibleRePass === false ? 'password' : 'text'}
@@ -285,12 +289,12 @@ function Registration() {
                   )}
                 </div>
               </div>
-              {passwordMismatch && <p className="text-red-500">Password does not match</p>}
+              {passwordMismatch && (
+                <p className="text-red-500">Password does not match</p>
+              )}
             </div>
             <div className="card">
-              <h2 className="text-xl font-semibold mb-3">
-                Birthday
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">Birthday</h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
                 <DatePicker
                   className="px-1 py-2 bg-transparent "
@@ -301,9 +305,7 @@ function Registration() {
               </div>
             </div>
             <div className="card">
-              <h2 className="text-xl font-semibold mb-3">
-                Gender
-              </h2>
+              <h2 className="text-xl font-semibold mb-3">Gender</h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
                 <select
                   name="gender"

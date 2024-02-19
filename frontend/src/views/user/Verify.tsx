@@ -1,16 +1,22 @@
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import ImageRec from '../../img/imageRec.png';
-import UserState from '../../interface/UserState';
+import { useAppSelector } from '../../store/store';
 
 function Verify() {
   const navigate = useNavigate();
-  const user = useSelector((state: UserState) => state.user);
-  if (!user || !user.active) {
-    navigate(user ? '/dashboard' : '/');
-    return null;
-  }
+  const user = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+      return;
+    }
+    if (user.active) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">

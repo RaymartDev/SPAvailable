@@ -1,19 +1,24 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import DefaultPp from '../../img/defaultPp.png';
-import UserState from '../../interface/UserState';
+import { useAppSelector } from '../../store/store';
 
 function EditProfile() {
   const navigate = useNavigate();
-  const user = useSelector((state: UserState) => state.user);
+  const user = useAppSelector((state) => state.user.user);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -39,10 +44,10 @@ function EditProfile() {
     }
   };
 
-  //if (!user) {
-  //  navigate('/');
-  //  return null;
-  //}
+  if (!user) {
+    navigate('/');
+    return null;
+  }
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
@@ -108,13 +113,23 @@ function EditProfile() {
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Full Name
               </h2>
-              <input type="text" className="w-9/12 border-b-2 px-1 py-2 " />
+              <input
+                type="text"
+                value={user.name}
+                className="w-9/12 border-b-2 px-1 py-2 "
+              />
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Email Address
               </h2>
-              <input type="text" readOnly={true} disabled={true} className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent" />
+              <input
+                type="text"
+                readOnly
+                value={user.email}
+                disabled
+                className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
+              />
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">

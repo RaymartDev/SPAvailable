@@ -171,7 +171,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
      */
     if (!userExists) {
       res.status(401);
-      next(new Error('Incorrect email or password'));
+      next(new Error('Invalid Credentials'));
       return;
     }
 
