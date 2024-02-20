@@ -24,6 +24,7 @@ model user {
 model spa {
   id         Int       @id @default(autoincrement())
   name       String    @db.VarChar(255)
+  desc       String    @db.VarChar(255)
   email      String?   @db.VarChar(50)
   contact    String?   @db.VarChar(20)
   address    String?
