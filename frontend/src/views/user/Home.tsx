@@ -54,13 +54,13 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex w-full justify-center items-center p-5 my-10">
+      <div className="flex w-full justify-center items-center p-5 py-10 bg-slate-50">
         <h1 className="w-fit justify-center items-center text-4xl md:text-6xl text-neutral-950 font-bold">
           SPA NEAR ME
         </h1>
       </div>
 
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center bg-slate-50 pb-16">
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-3 my-5 justify-center items-center">
           <SpaGrid />
           <SpaGrid />
@@ -71,7 +71,7 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex relative md:h-[800px] mt-16">
+      <div className="flex relative md:h-[800px] bg-slate-50">
         <img alt="cover" src={Image17} className="object-cover h-full w-full" />
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full z-10">
           <h1 className="font-bold text-slate-50 text-4xl md:text-8xl text-center">

@@ -33,7 +33,7 @@ function AboutSpa() {
             <img
               src={DefaulPp}
               className="size-12 cursor-pointer"
-              onClick={() => navigate('/profile/edit')}
+              onClick={() => navigate('/user/profile')}
             />
           </div>
         </div>
