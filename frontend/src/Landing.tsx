@@ -78,6 +78,7 @@ function Landing() {
     } finally {
       setUser('');
       setPassword('');
+      setPasswordModalOpen(false);
     }
   };
 
