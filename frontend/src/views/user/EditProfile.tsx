@@ -50,10 +50,6 @@ function EditProfile() {
     }
   };
 
-  if (!user) {
-    navigate('/');
-    return null;
-  }
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
@@ -62,7 +58,7 @@ function EditProfile() {
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
           <div className="flex flex-col items-center text-slate-50 mb-5">
-            <h1 className="text-4xl font-bold">James Allan</h1>
+            <h1 className="text-4xl font-bold">{user?.name}</h1>
           </div>
           <div className="relative mb-10" id="profilePicture">
             <img
@@ -120,7 +116,7 @@ function EditProfile() {
               </h2>
               <input
                 type="text"
-                value={user.name}
+                value={user?.name}
                 className="w-9/12 border-b-2 px-1 py-2 "
               />
             </div>
@@ -131,7 +127,7 @@ function EditProfile() {
               <input
                 type="text"
                 readOnly
-                value={user.email}
+                value={user?.email}
                 disabled
                 className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
               />
