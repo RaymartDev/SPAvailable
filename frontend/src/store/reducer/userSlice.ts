@@ -25,6 +25,7 @@ export const UserSlice = createSlice({
     verify: (state) => {
       if (state.user) {
         state.user.active = true;
+        localStorage.setItem('userInfo', JSON.stringify(state.user));
       }
     },
   },

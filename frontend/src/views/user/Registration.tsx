@@ -141,23 +141,31 @@ function Registration() {
   const handleSubmit = async () => {
     if (!firstName) {
       setFirstNameError('First name is required');
+      return;
     }
     if (!lastName) {
       setLastNameError('Last name is required');
+      return;
     }
     if (!email) {
       setEmailError('Email is required');
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
       setEmailError('Invalid email address');
+      return;
     }
     if (!gender) {
       setGenderError('Gender is required');
+      return;
     }
     if (!password) {
       setPasswordError('Password is required');
+      return;
     }
     if (password !== retypePassword) {
       setPasswordMismatch(true);
+      return;
     }
 
     try {
