@@ -7,6 +7,5 @@ export default interface UserState {
     contact: string;
     birth_date: Date;
     active: boolean;
-    created_at: Date;
   };
 }

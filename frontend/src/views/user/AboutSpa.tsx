@@ -11,11 +11,9 @@ import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
 
 function AboutSpa() {
-  
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
-      
-      <NavbarLogged/>
+      <NavbarLogged />
 
       <div className="flex relative h-[450px] md:h-[748px] z-10">
         <img src={Image11} className="object-cover h-full w-full" />

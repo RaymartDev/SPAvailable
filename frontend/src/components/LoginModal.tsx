@@ -97,8 +97,7 @@ function LoginModal({
 
           <div className="flex flex-col w-full items-center mt-5">
             <div className="text-sm">
-              <p>Don't have an account yet?
-              </p>
+              <p>Don&apos;t have an account yet?</p>
             </div>
             <div>
               <button
