@@ -12,7 +12,7 @@ function SpaDetails() {
             <div className="flex items-center mb-5">
               <FaLocationDot size={25} />
               <p className="text-xl ml-2 ">
-                Congressional Road Brgy 171, Caloocan City, Metro Manila
+                Congressional Road Brgy 172, Caloocan City, Metro Manila
               </p>
             </div>
             <div className="flex items-center">
