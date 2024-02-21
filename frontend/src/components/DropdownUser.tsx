@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { MdOutlineFeedback } from 'react-icons/md';
@@ -17,12 +17,6 @@ function DropdownUserMenu() {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -32,18 +26,17 @@ function DropdownUserMenu() {
       try {
         const response = await axios.post('/api/v1/user/logout');
         if (response.status === 200) {
-          dispatch(logout());
           showSuccessToast('Successfully logged out');
+          dispatch(logout());
         }
       } catch (err) {
         if (err instanceof AxiosError) {
           showErrorToast(err);
         } else {
-          showErrorToast('Unable to register');
+          showErrorToast('Unable to logout');
         }
       }
     }
-    navigate('/');
   };
 
   return (

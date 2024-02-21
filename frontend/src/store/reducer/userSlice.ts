@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import UserState from '../../interface/UserState';
 
@@ -14,22 +13,53 @@ export const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<UserState>) => {
-      state.user = action.payload.user;
+    setCredentials: (state: UserState, action: PayloadAction<UserState>) => {
       localStorage.setItem('userInfo', JSON.stringify(action.payload.user));
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     },
     logout: (state) => {
-      state.user = undefined;
       localStorage.removeItem('userInfo');
+      return {
+        ...state,
+        user: undefined,
+      };
     },
-    verify: (state) => {
+    verify: (state: UserState) => {
       if (state.user) {
-        state.user.active = true;
-        localStorage.setItem('userInfo', JSON.stringify(state.user));
+        const newUser = {
+          ...state.user,
+          active: true,
+        };
+        localStorage.setItem('userInfo', JSON.stringify(newUser));
+        return {
+          ...state,
+          user: newUser,
+        };
       }
+      return state; // Return the original state if no user is found
+    },
+    updateInfo: (state: UserState, action) => {
+      if (state.user) {
+        const newUser = {
+          ...state.user,
+          ...action.payload,
+        };
+        if (newUser.password) {
+          delete newUser.password;
+        }
+        localStorage.setItem('userInfo', JSON.stringify(newUser));
+        return {
+          ...state,
+          user: newUser,
+        };
+      }
+      return state;
     },
   },
 });
 
 export default UserSlice.reducer;
-export const { setCredentials, logout, verify } = UserSlice.actions;
+export const { setCredentials, logout, verify, updateInfo } = UserSlice.actions;
