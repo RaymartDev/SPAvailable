@@ -50,7 +50,6 @@ function EditProfile() {
     }
   };
 
-
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
