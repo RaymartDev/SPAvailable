@@ -43,45 +43,41 @@ function PasswordModal({
             </p>
           </div>
 
-          <div className="flex justify-center items-center mt-8 w-full">
+          <div className="flex justify-center items-center my-10 w-full">
             <h1 className="px-4 text-xl font-bold">Input Password</h1>
           </div>
 
-          <div className="flex w-full mt-8 relative rounded border-stone-950 border">
+          <div className="flex w-full relative">
             <input
               type={visiblePass === false ? 'password' : 'text'}
-              className="w-full px-1 py-2"
+              className="w-full rounded border-stone-950 border p-2"
               value={password}
               placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
               {visiblePass === false ? (
-                <BsFillEyeFill size={25} onClick={togglePassword} />
-              ) : (
                 <BsFillEyeSlashFill size={25} onClick={togglePassword} />
+              ) : (
+                <BsFillEyeFill size={25} onClick={togglePassword} />
               )}
             </div>
           </div>
 
-          <div className="flex w-full mt-5">
+          <div className="flex w-full">
             <button
               type="button"
-              className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded mt-10"
+              className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded my-10"
               onClick={handleSubmit}
             >
               LOGIN
             </button>
           </div>
 
-          <div className="flex flex-col w-full items-center mt-5">
+          <div className="flex flex-col w-full items-center">
             <div className="text-sm">
               <p>
                 Forgot your{' '}
-                <a href="#" className="text-[#41924B]">
-                  Email
-                </a>{' '}
-                or{' '}
                 <a href="#" className="text-[#41924B]">
                   Password
                 </a>

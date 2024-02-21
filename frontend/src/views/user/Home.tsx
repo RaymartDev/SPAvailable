@@ -2,7 +2,7 @@ import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import Navbar from '../../components/Navbar';
+import NavbarLogged from '../../components/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
 import Image17 from '../../img/image17.png';
@@ -26,7 +26,7 @@ function MainHome() {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
-      <Navbar />
+      <NavbarLogged />
       <ToastContainer />
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image10} className="object-cover h-full w-full" />
@@ -61,7 +61,7 @@ function MainHome() {
       </div>
 
       <div className="flex flex-col items-center justify-center bg-slate-50 pb-16">
-        <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-3 my-5 justify-center items-center">
+        <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
           <SpaGrid />
           <SpaGrid />
           <SpaGrid />

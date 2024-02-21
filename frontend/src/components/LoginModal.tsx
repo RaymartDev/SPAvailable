@@ -97,16 +97,7 @@ function LoginModal({
 
           <div className="flex flex-col w-full items-center mt-5">
             <div className="text-sm">
-              <p>
-                Forgot your{' '}
-                <a href="#" className="text-[#41924B]">
-                  Email
-                </a>{' '}
-                or{' '}
-                <a href="#" className="text-[#41924B]">
-                  Password
-                </a>
-                ?
+              <p>Don't have an account yet?
               </p>
             </div>
             <div>

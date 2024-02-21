@@ -3,26 +3,19 @@ import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { setCredentials } from './store/reducer/userSlice';
+import { useToast } from './hooks/useToast';
+import { useAppDispatch, useAppSelector } from './store/store';
+import 'react-toastify/dist/ReactToastify.css';
 import LoginModal from './components/LoginModal';
 import SignUpModal from './components/SignUpModal';
 import PasswordModal from './components/PasswordModal';
-import Logo from './img/logo.png';
-import Suite from './img/suite.png';
-import Image1 from './img/image1.png';
-import Image2 from './img/image2.png';
-import Image3 from './img/image3.png';
-import Image4 from './img/image4.png';
-import Image5 from './img/image5.png';
-import Image6 from './img/image6.png';
-import Image7 from './img/image7.png';
-import Image8 from './img/image8.png';
-import Image9 from './img/image9.png';
+import LandingComp from './components/LandingComp';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
-import { setCredentials } from './store/reducer/userSlice';
-import { useToast } from './hooks/useToast';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAppDispatch, useAppSelector } from './store/store';
+import Logo from './img/logo.png';
+import Suite from './img/suite.png';
+import Image9 from './img/image9.png';
 
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -171,94 +164,8 @@ function Landing() {
               </h1>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-              <div className="card hover:shadow-lg ">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="massage"
-                    src={Image1}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Massage</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="couple"
-                    src={Image2}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Couple Massage</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Aryurveda"
-                    src={Image3}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Ayurveda</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Hot Stone Massage"
-                    src={Image4}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Hot Stone Massage</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Aromatherapy"
-                    src={Image5}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Aromatherapy</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Deep Tissue Massage"
-                    src={Image6}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Deep Tissue Massage</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Facial"
-                    src={Image7}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Facial</p>
-                </div>
-              </div>
-
-              <div className="card hover:shadow-lg">
-                <div className="flex flex-col w-full h-full justify-center items-center cursor-pointer p-5">
-                  <img
-                    alt="Acne Facial"
-                    src={Image8}
-                    className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  />
-                  <p className="md:text-xl text-lg my-2">Acne Facial</p>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-10">
+              <LandingComp />
             </div>
           </div>
         </div>

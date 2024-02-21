@@ -57,8 +57,8 @@ function EditProfile() {
 
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
-          <div className="flex flex-col items-center text-slate-50 mb-5">
-            <h1 className="text-4xl font-bold">{user?.name}</h1>
+          <div className="flex flex-col items-center text-slate-50 mb-10">
+            <h1 className="text-3xl font-bold">{user?.name}</h1>
           </div>
           <div className="relative mb-10" id="profilePicture">
             <img
@@ -136,18 +136,16 @@ function EditProfile() {
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Password
               </h2>
-              <div className="flex items-center w-9/12 justify-center border-b-2">
-                <div className="w-full">
-                  <input
-                    type={visiblePass === false ? 'password' : 'text'}
-                    className="w-11/12 px-1 py-2"
-                  />
-                </div>
-                <div>
+              <div className="flex items-center w-9/12 border-b-2 relative">
+                <input
+                  type={visiblePass === false ? 'password' : 'text'}
+                  className="w-full px-1 py-2 bg-transparent"
+                />
+                <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visiblePass === false ? (
-                    <BsFillEyeFill size={25} onClick={togglePassword} />
-                  ) : (
                     <BsFillEyeSlashFill size={25} onClick={togglePassword} />
+                  ) : (
+                    <BsFillEyeFill size={25} onClick={togglePassword} />
                   )}
                 </div>
               </div>
@@ -156,18 +154,16 @@ function EditProfile() {
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Retype Password
               </h2>
-              <div className="flex items-center w-9/12 justify-center border-b-2 ">
-                <div className="w-full">
-                  <input
-                    type={visibleRePass === false ? 'password' : 'text'}
-                    className="w-11/12 px-1 py-2"
-                  />
-                </div>
-                <div>
+              <div className="flex items-center w-9/12 border-b-2 relative">
+                <input
+                  type={visibleRePass === false ? 'password' : 'text'}
+                  className="w-full px-1 py-2 bg-transparent"
+                />
+                <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visibleRePass === false ? (
-                    <BsFillEyeFill size={25} onClick={toggleRePassword} />
-                  ) : (
                     <BsFillEyeSlashFill size={25} onClick={toggleRePassword} />
+                  ) : (
+                    <BsFillEyeFill size={25} onClick={toggleRePassword} />
                   )}
                 </div>
               </div>

@@ -301,9 +301,9 @@ function Registration() {
                 />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visiblePass === false ? (
-                    <BsFillEyeFill size={25} onClick={togglePassword} />
-                  ) : (
                     <BsFillEyeSlashFill size={25} onClick={togglePassword} />
+                  ) : (
+                    <BsFillEyeFill size={25} onClick={togglePassword} />
                   )}
                 </div>
               </div>
@@ -322,9 +322,9 @@ function Registration() {
                 />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
                   {visibleRePass === false ? (
-                    <BsFillEyeFill size={25} onClick={toggleRePassword} />
-                  ) : (
                     <BsFillEyeSlashFill size={25} onClick={toggleRePassword} />
+                  ) : (
+                    <BsFillEyeFill size={25} onClick={toggleRePassword} />
                   )}
                 </div>
               </div>
