@@ -12,11 +12,11 @@ import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
 import { setCredentials } from '../../store/reducer/userSlice';
+import Loader from '../../components/Loader Component/Loader';
 
 function Registration() {
   const location = useLocation();
   const navigate = useNavigate();
-  const emailFromState = location.state && location.state.email;
 
   const user = useAppSelector((state) => state.user.user);
 
@@ -24,22 +24,25 @@ function Registration() {
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [contactNumber, setContactNumber] = useState('');
-  const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
-  const [isPictureRemoved, setIsPictureRemoved] = useState(false);
+  const [profilePicture, setProfilePicture] = useState<string>(
+    location.state.picture || DefaultPp
+  );
 
   const [password, setPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState(emailFromState || '');
+  const [firstName, setFirstName] = useState(location.state.firstName || '');
+  const [lastName, setLastName] = useState(location.state.lastName || '');
+  const [email, setEmail] = useState(location.state.email || '');
   const [gender, setGender] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [genderError, setGenderError] = useState('');
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
@@ -60,7 +63,6 @@ function Registration() {
 
   const removeProfilePicture = () => {
     setProfilePicture('');
-    setIsPictureRemoved(true);
   };
 
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,13 +122,12 @@ function Registration() {
   };
 
   const handleResetAll = () => {
-    setFirstName('');
-    setLastName('');
-    setEmail(emailFromState || '');
+    setFirstName(location.state.firstName || '');
+    setLastName(location.state.lastName || '');
+    setEmail(location.state.email || '');
     setGender('');
     setContactNumber('');
-    setProfilePicture(DefaultPp);
-    setIsPictureRemoved(false);
+    setProfilePicture(location.state.picture || DefaultPp);
     setPassword('');
     setRetypePassword('');
     setPasswordMismatch(false);
@@ -138,7 +139,9 @@ function Registration() {
     setGenderError('');
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
     if (!firstName) {
       setFirstNameError('First name is required');
       return;
@@ -186,6 +189,7 @@ function Registration() {
               year: 'numeric',
             }),
         gender: gender === 'Male',
+        active: !!location.state.email_verified,
       });
       dispatch(setCredentials({ user: response.data }));
       showSuccessToast('Successfully registered');
@@ -198,8 +202,13 @@ function Registration() {
       }
     } finally {
       handleResetAll();
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
@@ -208,14 +217,16 @@ function Registration() {
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
-            <img
-              alt="profilePicture"
-              src={profilePicture || DefaultPp}
-              className={`bg-white border-2 rounded-full object-cover size-60  ${isPictureRemoved ? 'bg-white' : ''}`}
-            />
+            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
+              <img
+                alt="profilePicture"
+                src={profilePicture || DefaultPp}
+                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
+              />
+            </div>
             <FaTrash
-              color="white"
-              className="absolute bottom-5 right-7 cursor-pointer"
+              color="#e74c3c"
+              className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
               size={30}
             />

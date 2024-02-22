@@ -1,6 +1,6 @@
 import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import NavbarLogged from '../../components/NavbarLogged';
 import Image10 from '../../img/image10.png';
@@ -9,10 +9,12 @@ import Image17 from '../../img/image17.png';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import { useAppSelector } from '../../store/store';
+import Loader from '../../components/Loader Component/Loader';
 
 function MainHome() {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.user);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) {
@@ -24,9 +26,13 @@ function MainHome() {
     }
   }, [user, navigate]);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
-      <NavbarLogged />
+      <NavbarLogged setLoading={setLoading} />
       <ToastContainer />
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image10} className="object-cover h-full w-full" />

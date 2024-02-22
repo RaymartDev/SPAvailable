@@ -1,16 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { ToastContainer } from 'react-toastify';
-import Navbar from '../../components/Navbar';
 import ImageRec from '../../img/imageRec.png';
 import { useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
+import NavbarLogged from '../../components/NavbarLogged';
+import Loader from '../../components/Loader Component/Loader';
 
 function Pending() {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.user);
   const { showSuccessToast, showErrorToast } = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) {
@@ -37,9 +39,13 @@ function Pending() {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <Navbar />
+      <NavbarLogged setLoading={setLoading} />
       <ToastContainer />
       <div className="flex justify-center h-screen bg-white p-5">
         <div className="flex w-full flex-col justify-center items-center">

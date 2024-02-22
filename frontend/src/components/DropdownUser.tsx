@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { MdOutlineFeedback } from 'react-icons/md';
@@ -8,8 +8,9 @@ import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout } from '../store/reducer/userSlice';
 import DefaultPp from '../img/defaultPp.png';
 import { useToast } from '../hooks/useToast';
+import DropdownProps from '../interface/DropdownProps';
 
-function DropdownUserMenu() {
+function DropdownUserMenu({ setLoading }: DropdownProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const user = useAppSelector((state) => state.user.user);
@@ -17,33 +18,30 @@ function DropdownUserMenu() {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
     if (user) {
       try {
         const response = await axios.post('/api/v1/user/logout');
         if (response.status === 200) {
-          dispatch(logout());
           showSuccessToast('Successfully logged out');
+          dispatch(logout());
         }
       } catch (err) {
         if (err instanceof AxiosError) {
           showErrorToast(err);
         } else {
-          showErrorToast('Unable to register');
+          showErrorToast('Unable to logout');
         }
+      } finally {
+        setLoading(false);
       }
     }
-    navigate('/');
   };
 
   return (

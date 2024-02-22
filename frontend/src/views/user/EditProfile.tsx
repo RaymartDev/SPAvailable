@@ -3,18 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
+import axios, { AxiosError } from 'axios';
+import { ToastContainer } from 'react-toastify';
 import DefaultPp from '../../img/defaultPp.png';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
+import NavbarLogged from '../../components/NavbarLogged';
+import { updateInfo } from '../../store/reducer/userSlice';
+import Loader from '../../components/Loader Component/Loader';
+import { formatDate } from '../../components/Util/DateUtil';
 
 function EditProfile() {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.user);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
+  const [pass, setPass] = useState<string>('');
+  const [pass2, setPass2] = useState<string>('');
   const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
-  const { showErrorToast } = useToast();
+  const [name, setName] = useState<string>(user?.name ? user.name : '');
+  const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) {
@@ -34,6 +44,44 @@ function EditProfile() {
     setProfilePicture('');
   };
 
+  const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    if (pass !== pass2) {
+      showErrorToast('Password do not match');
+      setLoading(false);
+      return;
+    }
+    if (!name || name.length <= 3) {
+      showErrorToast('Please enter a proper full name');
+      setLoading(false);
+      return;
+    }
+    const toUpdate = {
+      password: pass,
+      name,
+    };
+
+    try {
+      const response = await axios.put('/api/v1/user/profile', toUpdate);
+      if (response.status === 200) {
+        showSuccessToast('Successfully updated profile');
+        dispatch(updateInfo(toUpdate));
+        setName(toUpdate.name);
+        setPass('');
+        setPass2('');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to update profile');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = event.target.files?.[0];
     if (file) {
@@ -50,24 +98,30 @@ function EditProfile() {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <Navbar />
-
+      <NavbarLogged setLoading={setLoading} />
+      <ToastContainer />
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
           <div className="flex flex-col items-center text-slate-50 mb-10">
             <h1 className="text-3xl font-bold">{user?.name}</h1>
           </div>
           <div className="relative mb-10" id="profilePicture">
-            <img
-              alt="profilePicture"
-              src={profilePicture || DefaultPp}
-              className={`bg-white border-2 rounded-full object-cover size-60  ${profilePicture ? 'bg-white' : ''}`}
-            />
+            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
+              <img
+                alt="profilePicture"
+                src={profilePicture || DefaultPp}
+                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
+              />
+            </div>
             <FaTrash
-              color="white"
-              className="absolute bottom-5 right-7 cursor-pointer"
+              color="#e74c3c"
+              className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
               size={30}
             />
@@ -97,7 +151,7 @@ function EditProfile() {
           </div>
           <div className="flex flex-row text-sm text-slate-50">
             <p className="mr-2">Member Since: </p>
-            <p className="font-bold">01 January 2024</p>
+            <p className="font-bold">{formatDate(user?.created_at)}</p>
           </div>
         </div>
 
@@ -115,8 +169,9 @@ function EditProfile() {
               </h2>
               <input
                 type="text"
-                value={user?.name}
-                className="w-9/12 border-b-2 px-1 py-2 "
+                value={name}
+                className="w-9/12 border-b-2 px-1 py-2"
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="card mb-16">
@@ -137,6 +192,8 @@ function EditProfile() {
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
                   type={visiblePass === false ? 'password' : 'text'}
                   className="w-full px-1 py-2 bg-transparent"
                 />
@@ -155,6 +212,8 @@ function EditProfile() {
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
+                  value={pass2}
+                  onChange={(e) => setPass2(e.target.value)}
                   type={visibleRePass === false ? 'password' : 'text'}
                   className="w-full px-1 py-2 bg-transparent"
                 />
@@ -173,7 +232,8 @@ function EditProfile() {
             <div className="bg-[#41924B] rounded-full mr-[126px]">
               <button
                 type="button"
-                className="text-slate-50 font-semibold px-16 py-3 text-lg "
+                className="text-slate-50 font-semibold px-16 py-3 text-lg"
+                onClick={handleUpdate}
               >
                 Update Profile
               </button>

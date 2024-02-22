@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { IoClose } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+import { decodedToken } from './Google/client';
+import { useToast } from '../hooks/useToast';
+import { useAppDispatch } from '../store/store';
+import { setCredentials } from '../store/reducer/userSlice';
 
 interface LoginModalProps {
   open: boolean;
@@ -10,6 +16,7 @@ interface LoginModalProps {
   onSwitchToSignUp: () => void;
   user: string;
   setUser: (props: string) => void;
+  setLoading: (props: boolean) => void;
 }
 
 function LoginModal({
@@ -19,8 +26,12 @@ function LoginModal({
   onContinueToPasswordModal,
   user,
   setUser,
+  setLoading,
 }: LoginModalProps) {
   const [emailError, setEmailError] = useState('');
+  const navigate = useNavigate();
+  const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser(event.target.value);
@@ -61,10 +72,49 @@ function LoginModal({
           </div>
 
           <div className="flex flex-col justify-center items-center mt-10 w-full">
-            <div className="flex items-center bg-[#DADCE0] w-full  rounded-full p-2">
-              <FcGoogle size={23} className="mr-10" />
-              <button type="button">Continue With Google</button>
-            </div>
+            <GoogleLogin
+              locale="en_US"
+              text="signin_with"
+              onSuccess={async (credentialResponse) => {
+                const decoded = decodedToken(credentialResponse.credential);
+                if (decoded) {
+                  setLoading(true);
+                  try {
+                    const response = await axios.post(
+                      '/api/v1/user/login/google',
+                      {
+                        email: decoded.email,
+                        verified: decoded.email_verified,
+                      }
+                    );
+                    dispatch(setCredentials({ user: response.data }));
+                    showSuccessToast('Successfully logged in');
+                    navigate(
+                      response.data.active ? '/user/dashboard' : '/user/pending'
+                    );
+                  } catch (err) {
+                    if (err instanceof AxiosError) {
+                      showErrorToast(err);
+                    } else {
+                      showErrorToast('Unable to login');
+                    }
+                  } finally {
+                    setLoading(false);
+                    onClose();
+                  }
+                } else {
+                  showErrorToast('Something went wrong');
+                }
+              }}
+              onError={() => {
+                showErrorToast('Registration failed');
+              }}
+              width={300}
+              shape="circle"
+              logo_alignment="center"
+              theme="filled_black"
+              size="large"
+            />
           </div>
 
           <div className="flex justify-center items-center mt-8 w-full">

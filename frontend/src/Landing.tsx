@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 import Logo from './img/logo.png';
 import Suite from './img/suite.png';
 import Image9 from './img/image9.png';
+import Loader from './components/Loader Component/Loader';
 
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -24,6 +25,7 @@ function Landing() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const { showErrorToast, showSuccessToast } = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -53,6 +55,7 @@ function Landing() {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post('/api/v1/user/login', {
         email: user,
@@ -72,8 +75,13 @@ function Landing() {
       setUser('');
       setPassword('');
       setPasswordModalOpen(false);
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 ">
@@ -105,6 +113,7 @@ function Landing() {
             }}
             onContinueToPasswordModal={handleContinueToPasswordModal}
             onSwitchToSignUp={switchToSignUp}
+            setLoading={setLoading}
           />
           <button
             type="button"
