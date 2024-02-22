@@ -126,6 +126,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
         token: generateToken(res, userCreated.email),
         active: userCreated.active,
         gender: userCreated.gender,
+        created_at: userCreated.created_at,
       });
     } else {
       res.status(400);
@@ -209,6 +210,7 @@ export const loginWithGoogle = async (req: Request, res: Response<UserAuthRespon
       token: generateToken(res, user.email),
       active: user.active,
       gender: user.gender,
+      created_at: user.created_at,
     });
   } catch (err) {
     next(err);
@@ -304,6 +306,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       token: generateToken(res, user.email),
       active: user.active,
       gender: user.gender,
+      created_at: user.created_at,
     });
   } catch (err) {
     next(err);

@@ -11,6 +11,7 @@ import { useToast } from '../../hooks/useToast';
 import NavbarLogged from '../../components/NavbarLogged';
 import { updateInfo } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
+import { formatDate } from '../../components/Util/DateUtil';
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -150,7 +151,7 @@ function EditProfile() {
           </div>
           <div className="flex flex-row text-sm text-slate-50">
             <p className="mr-2">Member Since: </p>
-            <p className="font-bold">01 January 2024</p>
+            <p className="font-bold">{formatDate(user?.created_at)}</p>
           </div>
         </div>
 

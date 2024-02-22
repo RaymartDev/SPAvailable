@@ -10,4 +10,5 @@ export default interface UserResponse {
   birth_date: Date;
   active: boolean;
   gender: boolean;
+  created_at?: Date;
 }
