@@ -25,7 +25,7 @@ function LandingComp() {
       {items.map((item, index) => (
         <div
           key={index}
-          className="rounded-3xl border-2 p-2 mx-4 mt-8 hover:shadow-lg s"
+          className="rounded-3xl border-2 p-2 mx-4 mt-8 hover:shadow-lg"
         >
           <div className="flex flex-col h-full justify-center items-center cursor-pointer p-5 ">
             <img

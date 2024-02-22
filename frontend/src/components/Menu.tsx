@@ -1,4 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 function Menu() {
+  const navigate = useNavigate();
+
+  const clickAboutUs = () => {
+    navigate('/aboutUs');
+  };
+
+  const clickTermsAndCondition = () => {
+    navigate('/termsAndCondition');
+  };
+
   return (
     <div className="flex flex-col pl-5 py-5 bg-slate-50">
       <div className="border-b-2 border-black">
@@ -8,6 +20,7 @@ function Menu() {
         <button
           type="button"
           className="text-xl mb-3 hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"
+          onClick={clickAboutUs}
         >
           About Us
         </button>
@@ -20,6 +33,7 @@ function Menu() {
         <button
           type="button"
           className="text-xl hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"
+          onClick={clickTermsAndCondition}
         >
           Terms and Condition
         </button>

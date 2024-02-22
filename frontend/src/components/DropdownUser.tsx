@@ -61,8 +61,8 @@ function DropdownUserMenu() {
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-[400px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 py-10 flex flex-col gap-y-5">
-          <div className="flex items-center w-full pl-5 py-5 border-2 rounded-lg shadow-lg bg-slate-50">
+        <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 py-8 flex flex-col gap-y-5">
+          <div className="flex items-center w-full pl-5 py-5 border-2 rounded-lg shadow-2xl bg-slate-50">
             <img
               src={DefaultPp}
               alt="User Avatar"

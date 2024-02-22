@@ -6,6 +6,7 @@ import NavbarLogged from '../../components/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
 import Services from '../../components/Services';
 import Products from '../../components/Products';
+import MapLocation from '../../components/MapLocation';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
@@ -29,6 +30,8 @@ function AboutSpa() {
       <Services />
 
       <Products />
+
+      <MapLocation />
 
       <Menu />
 
