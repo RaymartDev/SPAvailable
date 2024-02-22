@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { ToastContainer } from 'react-toastify';
 import ImageRec from '../../img/imageRec.png';
 import { useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
@@ -46,7 +45,6 @@ function Pending() {
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <NavbarLogged setLoading={setLoading} />
-      <ToastContainer />
       <div className="flex justify-center h-screen bg-white p-5">
         <div className="flex w-full flex-col justify-center items-center">
           <div className="flex flex-col justify-center items-center ">

@@ -10,17 +10,14 @@ import Image8 from '../img/image8.png';
 
 function OurTeam() {
   const items = [
-    {
-      image: Image1,
-      title: 'Project Manager/Backend Developer/Database Designer',
-    },
+    { image: Image1, title: 'Project Manager' },
     { image: Image2, title: 'Software Engineer' },
     { image: Image3, title: 'Frontend Developer' },
-    { image: Image4, title: 'Documentator' },
-    { image: Image5, title: 'Mobile Developer' },
-    { image: Image6, title: 'UI' },
-    { image: Image7, title: 'UI' },
-    { image: Image8, title: 'UI' },
+    { image: Image4, title: 'Mobile App Developer' },
+    { image: Image5, title: 'Documentator' },
+    { image: Image6, title: 'UI / UX' },
+    { image: Image7, title: 'UI / UX' },
+    { image: Image8, title: 'UI / UX' },
   ];
 
   return (

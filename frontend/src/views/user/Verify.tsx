@@ -3,7 +3,6 @@
 import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { useToast } from '../../hooks/useToast';
 import { useAppDispatch } from '../../store/store';
 import { verify } from '../../store/reducer/userSlice';
@@ -54,7 +53,6 @@ function VerifyPage() {
 
   return (
     <div>
-      <ToastContainer />
       <h2>Verification Page</h2>
       <p>Verifying...</p>
     </div>

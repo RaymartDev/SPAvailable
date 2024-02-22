@@ -4,14 +4,13 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import { ToastContainer } from 'react-toastify';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
 import NavbarLogged from '../../components/NavbarLogged';
 import { updateInfo } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
-import { formatDate } from '../../components/Util/DateUtil';
+import { formatDate } from '../../components/Util/dateUtil';
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -105,11 +104,10 @@ function EditProfile() {
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <NavbarLogged setLoading={setLoading} />
-      <ToastContainer />
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
           <div className="flex flex-col items-center text-slate-50 mb-10">
-            <h1 className="text-3xl font-bold">{user?.name}</h1>
+            <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>
           <div className="relative mb-10" id="profilePicture">
             <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">

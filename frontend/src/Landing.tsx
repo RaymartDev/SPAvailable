@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { setCredentials } from './store/reducer/userSlice';
 import { useToast } from './hooks/useToast';
 import { useAppDispatch, useAppSelector } from './store/store';
-import 'react-toastify/dist/ReactToastify.css';
 import LoginModal from './components/LoginModal';
 import SignUpModal from './components/SignUpModal';
 import PasswordModal from './components/PasswordModal';
@@ -85,7 +83,6 @@ function Landing() {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 ">
-      <ToastContainer />
       <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
         <div className="flex items-center">
           <div className="mr-2">

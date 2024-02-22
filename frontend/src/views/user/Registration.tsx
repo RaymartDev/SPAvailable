@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-import { ToastContainer } from 'react-toastify';
 import axios, { AxiosError } from 'axios';
 import Navbar from '../../components/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -213,7 +212,6 @@ function Registration() {
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
-      <ToastContainer />
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">

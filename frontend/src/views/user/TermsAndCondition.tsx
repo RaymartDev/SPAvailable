@@ -23,19 +23,6 @@ function TermsAndCondition() {
       </div>
       <div className="flex flex-col bg-[#CCD3CA] justify-center items-start p-10 gap-y-5 rounded-xl">
         <div>
-          <h1 className="font-semibold text-xl">Appointment Booking:</h1>
-          <p>
-            a. Our platform allows users to schedule appointments for spa
-            services at participating spas listed on our website.
-          </p>
-          <p>
-            b. Appointments can be made based on availability provided by the
-            respective spas. We do not guarantee the availability of specific
-            appointment times.
-          </p>
-        </div>
-
-        <div>
           <h1 className="font-semibold text-xl">User Responsibilities:</h1>
           <p>
             a. Users are responsible for providing accurate and up-to-date
@@ -117,7 +104,7 @@ function TermsAndCondition() {
         <h1 className="font-semibold text-center text-xl">
           By using our platform to schedule spa appointments, you agree to abide
           by these Terms and Conditions. If you have any questions or concerns,
-          please contact us at [contact information].
+          please contact us at (+63) 967-947-2818.
         </h1>
       </div>
       <Menu />
