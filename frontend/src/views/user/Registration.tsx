@@ -27,7 +27,6 @@ function Registration() {
   const [profilePicture, setProfilePicture] = useState<string>(
     location.state.picture || DefaultPp
   );
-  const [isPictureRemoved, setIsPictureRemoved] = useState(false);
 
   const [password, setPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
@@ -64,7 +63,6 @@ function Registration() {
 
   const removeProfilePicture = () => {
     setProfilePicture('');
-    setIsPictureRemoved(true);
   };
 
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,7 +128,6 @@ function Registration() {
     setGender('');
     setContactNumber('');
     setProfilePicture(location.state.picture || DefaultPp);
-    setIsPictureRemoved(false);
     setPassword('');
     setRetypePassword('');
     setPasswordMismatch(false);
@@ -224,7 +221,7 @@ function Registration() {
               <img
                 alt="profilePicture"
                 src={profilePicture || DefaultPp}
-                className={`w-full h-full object-cover rounded-full object-center  ${isPictureRemoved ? 'bg-white' : ''}`}
+                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
               />
             </div>
             <FaTrash
