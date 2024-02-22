@@ -4,11 +4,11 @@ function Menu() {
   const navigate = useNavigate();
 
   const clickAboutUs = () => {
-    navigate('/aboutUs');
+    navigate('/about');
   };
 
   const clickTermsAndCondition = () => {
-    navigate('/termsAndCondition');
+    navigate('/terms');
   };
 
   return (
@@ -23,12 +23,6 @@ function Menu() {
           onClick={clickAboutUs}
         >
           About Us
-        </button>
-        <button
-          type="button"
-          className="text-xl mb-3 hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"
-        >
-          Privacy
         </button>
         <button
           type="button"

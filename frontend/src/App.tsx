@@ -10,6 +10,8 @@ const EditProfile = lazy(() => import('./views/user/EditProfile'));
 const Pending = lazy(() => import('./views/user/Pending'));
 const AboutSpa = lazy(() => import('./views/user/AboutSpa'));
 const VerifyPage = lazy(() => import('./views/user/Verify'));
+const AboutUs = lazy(() => import('./views/user/AboutUs'));
+const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 
 function App() {
   return (
@@ -28,7 +30,15 @@ function App() {
           path="/about"
           element={
             <Suspense fallback={<Loader />}>
-              <AboutSpa />
+              <AboutUs />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <Suspense fallback={<Loader />}>
+              <Terms />
             </Suspense>
           }
         />
