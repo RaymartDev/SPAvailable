@@ -33,6 +33,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
       birth_date,
       password,
       gender,
+      active,
     } = req.body;
     
     /**
@@ -99,6 +100,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
             birth_date: dateObject,
             password: await generateHashedPassword(password),
             gender,
+            active: active ?? false,
           },
         });
       } catch (err) {
@@ -111,7 +113,9 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
      * If user data is not ok throw 400 - Error
      */
     if (userCreated) {
-      sendEmail(userCreated.email, userCreated.name, generateVerificationToken(userCreated.email), next);
+      if (!userCreated.active) {
+        sendEmail(userCreated.email, userCreated.name, generateVerificationToken(userCreated.email), next);
+      }
 
       res.status(201).json({
         id: userCreated.id,
@@ -127,6 +131,85 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
       res.status(400);
       next(new Error('Invalid user data'));
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const loginWithGoogle = async (req: Request, res: Response<UserAuthResponse>, next: NextFunction) => {
+  try {
+    const {
+      email,
+      verified,
+    } = req.body;
+
+    if (!email || !verified) {
+      res.status(400);
+      next(new Error('Please provide make sure you are google verified'));
+      return;
+    }
+
+    /**
+     * Check if already registered using email
+     */
+    const userExists = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        return await prisma.user.findUnique({
+          where: {
+            email,
+          },
+        });
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    /**
+     * If user did not exists throw 401 - Unauthorized
+     * with a message - Incorrect email or password
+     */
+    if (!userExists) {
+      res.status(401);
+      next(new Error('No account associated with this email'));
+      return;
+    }
+
+    /**
+     * Get the user
+     */
+    const user = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        return await prisma.user.findUnique({
+          where: { email },
+        });
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    /**
+     * If user did not exists throw 401 - Unauthorized
+     * with a message - Incorrect email or password
+     */
+    if (!user) {
+      res.status(401);
+      next(new Error('No account associated with this email'));
+      return;
+    }
+
+    /**
+     * Return the user found with the correct email and password
+     */
+    res.status(200).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      contact: user.contact,
+      birth_date: user.birth_date,
+      token: generateToken(res, user.email),
+      active: user.active,
+      gender: user.gender,
+    });
   } catch (err) {
     next(err);
   }

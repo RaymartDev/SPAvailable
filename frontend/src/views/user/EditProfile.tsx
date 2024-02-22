@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
 import NavbarLogged from '../../components/NavbarLogged';
 import { updateInfo } from '../../store/reducer/userSlice';
+import Loader from '../../components/Loader Component/Loader';
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function EditProfile() {
   const [name, setName] = useState<string>(user?.name ? user.name : '');
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) {
@@ -41,13 +43,17 @@ function EditProfile() {
     setProfilePicture('');
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
     if (pass !== pass2) {
       showErrorToast('Password do not match');
+      setLoading(false);
       return;
     }
     if (!name || name.length <= 3) {
       showErrorToast('Please enter a proper full name');
+      setLoading(false);
       return;
     }
     const toUpdate = {
@@ -70,6 +76,8 @@ function EditProfile() {
       } else {
         showErrorToast('Unable to update profile');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -89,9 +97,13 @@ function EditProfile() {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <NavbarLogged />
+      <NavbarLogged setLoading={setLoading} />
       <ToastContainer />
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">

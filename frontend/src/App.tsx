@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from './components/Loader Component/Loader';
-
+import Landing from './Landing';
 // Lazy loading the route components
-const Landing = lazy(() => import('./Landing'));
+
 const Home = lazy(() => import('./views/user/Home'));
 const Registration = lazy(() => import('./views/user/Registration'));
 const EditProfile = lazy(() => import('./views/user/EditProfile'));
@@ -15,14 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Landing />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<Landing />} />
         <Route
           path="/register"
           element={

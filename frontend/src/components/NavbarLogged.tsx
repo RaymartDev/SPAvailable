@@ -4,8 +4,9 @@
 import { useNavigate } from 'react-router-dom';
 import Logo from '../img/logo.png';
 import DropdownUserMenu from './DropdownUser';
+import DropdownProps from '../interface/DropdownProps';
 
-function NavbarLogged() {
+function NavbarLogged({ setLoading }: DropdownProps) {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +24,7 @@ function NavbarLogged() {
         </div>
       </div>
       <div className="flex items-center">
-        <DropdownUserMenu />
+        <DropdownUserMenu setLoading={setLoading} />
       </div>
     </div>
   );

@@ -8,8 +8,9 @@ import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout } from '../store/reducer/userSlice';
 import DefaultPp from '../img/defaultPp.png';
 import { useToast } from '../hooks/useToast';
+import DropdownProps from '../interface/DropdownProps';
 
-function DropdownUserMenu() {
+function DropdownUserMenu({ setLoading }: DropdownProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const user = useAppSelector((state) => state.user.user);
@@ -21,7 +22,9 @@ function DropdownUserMenu() {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
     if (user) {
       try {
         const response = await axios.post('/api/v1/user/logout');
@@ -35,6 +38,8 @@ function DropdownUserMenu() {
         } else {
           showErrorToast('Unable to logout');
         }
+      } finally {
+        setLoading(false);
       }
     }
   };

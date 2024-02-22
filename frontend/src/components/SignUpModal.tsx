@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { IoClose } from 'react-icons/io5';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import { decodedToken } from './Google/client';
+import { useToast } from '../hooks/useToast';
 
 interface SignUpModalProps {
   open: boolean;
@@ -12,6 +14,7 @@ interface SignUpModalProps {
 
 function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
   const navigate = useNavigate() as NavigateFunction;
+  const { showErrorToast } = useToast();
 
   const validateEmail = (email: string): boolean => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,14 +56,37 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               to our User Agreement and Privacy Policy.
             </p>
           </div>
-
           <div className="flex flex-col justify-center items-center mt-10 w-full">
-            <div className="flex items-center bg-[#DADCE0] w-full  rounded-full p-2">
-              <FcGoogle size={23} className="mr-10" />
-              <button type="button">Continue With Google</button>
-            </div>
+            <GoogleLogin
+              locale="en_US"
+              text="signup_with"
+              onSuccess={(credentialResponse) => {
+                const decoded = decodedToken(credentialResponse.credential);
+                if (decoded) {
+                  navigate('/register', {
+                    state: {
+                      email: decoded.email,
+                      name: decoded.name,
+                      email_verified: decoded.email_verified,
+                      picture: decoded.picture,
+                      firstName: decoded.given_name,
+                      lastName: decoded.family_name,
+                    },
+                  });
+                } else {
+                  navigate('/register');
+                }
+              }}
+              onError={() => {
+                showErrorToast('Registration failed');
+              }}
+              width={300}
+              shape="circle"
+              logo_alignment="center"
+              theme="filled_black"
+              size="large"
+            />
           </div>
-
           <div className="flex justify-center items-center mt-8 w-full">
             <div className="border w-full h-0 border-black" />
             <h1 className="px-4 font-bold">OR</h1>

@@ -6,6 +6,7 @@ const router = Router();
 
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
+router.post('/login/google', UserController.loginWithGoogle);
 router.post('/logout', UserController.logout);
 
 // protected routes
