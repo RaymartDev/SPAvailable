@@ -14,6 +14,7 @@ const VerifyPage = lazy(() => import('./views/user/Verify'));
 const AboutUs = lazy(() => import('./views/user/AboutUs'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
+const Test = lazy(() => import('./views/user/Test'));
 
 function App() {
   return (
@@ -60,6 +61,15 @@ function App() {
           element={
             <Suspense fallback={<Loader />}>
               <PrivacyPolicy />
+              <ToastContainer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <Suspense fallback={<Loader />}>
+              <Test />
               <ToastContainer />
             </Suspense>
           }

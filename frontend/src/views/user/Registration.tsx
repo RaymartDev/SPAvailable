@@ -227,7 +227,7 @@ function Registration() {
               />
             </div>
             <FaTrash
-              color="#e74c3c"
+              color="white"
               className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
               size={30}
