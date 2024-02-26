@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useNavigate } from 'react-router-dom';
-import Logo from '../img/logo.png';
-import DropdownUserMenu from './DropdownUser';
-import DropdownProps from '../interface/DropdownProps';
+import Logo from '../../img/logo.png';
+import DropdownProps from '../../interface/DropdownProps';
+import DropdownUserMenu from '../DropdownUser';
 
-function NavbarLogged({ setLoading }: DropdownProps) {
+function NavbarLogged({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
 
   return (
@@ -24,7 +24,7 @@ function NavbarLogged({ setLoading }: DropdownProps) {
         </div>
       </div>
       <div className="flex items-center">
-        <DropdownUserMenu setLoading={setLoading} />
+        <DropdownUserMenu setLoading={setLoading} user={user} />
       </div>
     </div>
   );

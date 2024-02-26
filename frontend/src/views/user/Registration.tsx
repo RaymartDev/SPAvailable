@@ -5,13 +5,14 @@ import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import axios, { AxiosError } from 'axios';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
 import { setCredentials } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
+import { formatDate2Digit } from '../../components/Util/dateUtil';
 
 function Registration() {
   const location = useLocation();
@@ -74,6 +75,10 @@ function Registration() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 1MB or less.');
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
@@ -176,19 +181,10 @@ function Registration() {
         email,
         contact: contactNumber ? `0${contactNumber}` : '',
         password,
-        birth_date: selectedDate
-          ? selectedDate.toLocaleDateString('en-US', {
-              month: '2-digit',
-              day: '2-digit',
-              year: 'numeric',
-            })
-          : new Date().toLocaleDateString('en-US', {
-              month: '2-digit',
-              day: '2-digit',
-              year: 'numeric',
-            }),
+        birth_date: formatDate2Digit(selectedDate),
         gender: gender === 'Male',
         active: !!location.state.email_verified,
+        profile: profilePicture,
       });
       dispatch(setCredentials({ user: response.data }));
       showSuccessToast('Successfully registered');
@@ -217,7 +213,7 @@ function Registration() {
           <div className="relative mb-10" id="profilePicture">
             <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
               <img
-                alt="profilePicture"
+                alt="Profile"
                 src={profilePicture || DefaultPp}
                 className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
               />
@@ -243,6 +239,14 @@ function Registration() {
             >
               UPLOAD
             </label>
+          </div>
+          <div className="text-center rounded-lg py-3 px-5 text-sm bg-[#F1F6FA] mb-10">
+            <p className="mb-2">
+              Upload an avatar. Larger image will be resized automatically
+            </p>
+            <p>
+              Maximum upload size is <b>1 MB</b>
+            </p>
           </div>
         </div>
 
@@ -278,6 +282,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">Email</h2>
               <input
                 type="email"
+                disabled={location.state.google}
                 value={email}
                 onChange={handleEmailChange}
                 className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${emailError ? 'border-red-500' : ''}`}

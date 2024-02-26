@@ -11,4 +11,5 @@ export default interface RegisterBody {
   password: string;
   gender: boolean;
   active?: boolean;
+  profile?: string;
 }

@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
 import { useState } from 'react';
-import NavbarLogged from '../../components/NavbarLogged';
+import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
 import Services from '../../components/Services';
 import Products from '../../components/Products';
@@ -12,9 +12,11 @@ import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
 import Loader from '../../components/Loader Component/Loader';
+import { useAppSelector } from '../../store/store';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
+  const user = useAppSelector((state) => state.user.user);
 
   if (loading) {
     return <Loader />;
@@ -22,7 +24,7 @@ function AboutSpa() {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
-      <NavbarLogged setLoading={setLoading} />
+      <NavbarLogged setLoading={setLoading} user={user} />
 
       <div className="flex relative h-[450px] md:h-[748px] z-10">
         <img src={Image11} className="object-cover h-full w-full" />

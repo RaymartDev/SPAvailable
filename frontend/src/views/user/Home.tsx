@@ -1,7 +1,7 @@
 import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import NavbarLogged from '../../components/NavbarLogged';
+import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
 import Image17 from '../../img/image17.png';
@@ -31,7 +31,7 @@ function MainHome() {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
-      <NavbarLogged setLoading={setLoading} />
+      <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image10} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">

@@ -1,55 +1,41 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { GoogleLogin } from '@react-oauth/google';
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
-import { decodedToken } from './Google/client';
-import { useToast } from '../hooks/useToast';
-import { useAppDispatch } from '../store/store';
-import { setCredentials } from '../store/reducer/userSlice';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import { decodedToken } from '../Google/client';
+import { useToast } from '../../hooks/useToast';
 
-interface LoginModalProps {
+interface SignUpModalProps {
   open: boolean;
   onClose: () => void;
-  onContinueToPasswordModal: () => void;
-  onSwitchToSignUp: () => void;
-  user: string;
-  setUser: (props: string) => void;
-  setLoading: (props: boolean) => void;
+  onSwitchToLogin: () => void;
 }
 
-function LoginModal({
-  open,
-  onClose,
-  onSwitchToSignUp,
-  onContinueToPasswordModal,
-  user,
-  setUser,
-  setLoading,
-}: LoginModalProps) {
-  const [emailError, setEmailError] = useState('');
-  const navigate = useNavigate();
-  const { showErrorToast, showSuccessToast } = useToast();
-  const dispatch = useAppDispatch();
+function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
+  const navigate = useNavigate() as NavigateFunction;
+  const { showErrorToast } = useToast();
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser(event.target.value);
+  const validateEmail = (email: string): boolean => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
   };
 
-  const validateEmail = (emailParam: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(emailParam);
-  };
-
-  const handleContinueClick = () => {
-    if (!validateEmail(user)) {
+  const navigateToRegister = () => {
+    if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address.');
       return;
     }
+
     setEmailError('');
-    onContinueToPasswordModal();
+    navigate('/register', {
+      state: { email },
+    });
+    setEmail('');
   };
+
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   if (!open) return null;
 
@@ -64,46 +50,32 @@ function LoginModal({
 
         <div className="flex flex-col justify-center items-center w-[300px] h-fit mt-5">
           <div className="flex flex-col justify-center items-center ">
-            <h1 className="font-bold text-xl">Log In</h1>
+            <h1 className="font-bold text-xl">Sign Up</h1>
             <p className="mt-2 text-sm">
               By continuing, you are setting up a SPAvailable account and agree
               to our User Agreement and Privacy Policy.
             </p>
           </div>
-
           <div className="flex flex-col justify-center items-center mt-10 w-full">
             <GoogleLogin
               locale="en_US"
-              text="signin_with"
-              onSuccess={async (credentialResponse) => {
+              text="signup_with"
+              onSuccess={(credentialResponse) => {
                 const decoded = decodedToken(credentialResponse.credential);
                 if (decoded) {
-                  setLoading(true);
-                  try {
-                    const response = await axios.post(
-                      '/api/v1/user/login/google',
-                      {
-                        email: decoded.email,
-                        verified: decoded.email_verified,
-                      }
-                    );
-                    dispatch(setCredentials({ user: response.data }));
-                    showSuccessToast('Successfully logged in');
-                    navigate(
-                      response.data.active ? '/user/dashboard' : '/user/pending'
-                    );
-                  } catch (err) {
-                    if (err instanceof AxiosError) {
-                      showErrorToast(err);
-                    } else {
-                      showErrorToast('Unable to login');
-                    }
-                  } finally {
-                    setLoading(false);
-                    onClose();
-                  }
+                  navigate('/register', {
+                    state: {
+                      email: decoded.email,
+                      name: decoded.name,
+                      email_verified: decoded.email_verified,
+                      picture: decoded.picture.replace('s96-c', 's192-c'),
+                      firstName: decoded.given_name,
+                      lastName: decoded.family_name,
+                      google: true,
+                    },
+                  });
                 } else {
-                  showErrorToast('Something went wrong');
+                  navigate('/register');
                 }
               }}
               onError={() => {
@@ -116,7 +88,6 @@ function LoginModal({
               size="large"
             />
           </div>
-
           <div className="flex justify-center items-center mt-8 w-full">
             <div className="border w-full h-0 border-black" />
             <h1 className="px-4 font-bold">OR</h1>
@@ -125,21 +96,21 @@ function LoginModal({
 
           <div className="flex w-full mt-8">
             <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
-              value={user}
-              onChange={handleEmailChange}
             />
           </div>
           {emailError && (
-            <p className="text-red-500 text-sm mt-2">{emailError}</p>
+            <div className="text-red-500 text-sm mt-2">{emailError}</div>
           )}
           <div className="flex w-full mt-5">
             <button
+              onClick={navigateToRegister}
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
-              onClick={handleContinueClick}
             >
               CONTINUE
             </button>
@@ -147,15 +118,15 @@ function LoginModal({
 
           <div className="flex flex-col w-full items-center mt-5">
             <div className="text-sm">
-              <p>Don&apos;t have an account yet?</p>
+              <p>Already have an account?</p>
             </div>
             <div>
               <button
                 type="button"
-                onClick={onSwitchToSignUp}
                 className="font-bold text-[#41924B] mt-2"
+                onClick={onSwitchToLogin}
               >
-                SIGN UP
+                LOG IN
               </button>{' '}
             </div>
           </div>
@@ -165,4 +136,4 @@ function LoginModal({
   );
 }
 
-export default LoginModal;
+export default SignUpModal;

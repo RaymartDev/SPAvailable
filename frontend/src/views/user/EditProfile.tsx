@@ -7,7 +7,7 @@ import axios, { AxiosError } from 'axios';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
-import NavbarLogged from '../../components/NavbarLogged';
+import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import { updateInfo } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
 import { formatDate } from '../../components/Util/dateUtil';
@@ -19,7 +19,9 @@ function EditProfile() {
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [pass, setPass] = useState<string>('');
   const [pass2, setPass2] = useState<string>('');
-  const [profilePicture, setProfilePicture] = useState<string>(DefaultPp);
+  const [profilePicture, setProfilePicture] = useState<string>(
+    user?.profile || DefaultPp
+  );
   const [name, setName] = useState<string>(user?.name ? user.name : '');
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
@@ -59,6 +61,7 @@ function EditProfile() {
     const toUpdate = {
       password: pass,
       name,
+      profile: profilePicture,
     };
 
     try {
@@ -103,7 +106,7 @@ function EditProfile() {
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <NavbarLogged setLoading={setLoading} />
+      <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex ">
         <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
           <div className="flex flex-col items-center text-slate-50 mb-10">

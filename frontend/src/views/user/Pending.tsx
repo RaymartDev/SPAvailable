@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import ImageRec from '../../img/imageRec.png';
 import { useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
-import NavbarLogged from '../../components/NavbarLogged';
+import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Loader from '../../components/Loader Component/Loader';
 
 function Pending() {
@@ -44,7 +44,7 @@ function Pending() {
 
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
-      <NavbarLogged setLoading={setLoading} />
+      <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex justify-center h-screen bg-white p-5">
         <div className="flex w-full flex-col justify-center items-center">
           <div className="flex flex-col justify-center items-center ">

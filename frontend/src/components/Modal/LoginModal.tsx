@@ -1,41 +1,55 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
-import { decodedToken } from './Google/client';
-import { useToast } from '../hooks/useToast';
+import { useNavigate } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+import { decodedToken } from '../Google/client';
+import { useToast } from '../../hooks/useToast';
+import { useAppDispatch } from '../../store/store';
+import { setCredentials } from '../../store/reducer/userSlice';
 
-interface SignUpModalProps {
+interface LoginModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToLogin: () => void;
+  onContinueToPasswordModal: () => void;
+  onSwitchToSignUp: () => void;
+  user: string;
+  setUser: (props: string) => void;
+  setLoading: (props: boolean) => void;
 }
 
-function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
-  const navigate = useNavigate() as NavigateFunction;
-  const { showErrorToast } = useToast();
+function LoginModal({
+  open,
+  onClose,
+  onSwitchToSignUp,
+  onContinueToPasswordModal,
+  user,
+  setUser,
+  setLoading,
+}: LoginModalProps) {
+  const [emailError, setEmailError] = useState('');
+  const navigate = useNavigate();
+  const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
 
-  const validateEmail = (email: string): boolean => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUser(event.target.value);
   };
 
-  const navigateToRegister = () => {
-    if (!validateEmail(email)) {
+  const validateEmail = (emailParam: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(emailParam);
+  };
+
+  const handleContinueClick = () => {
+    if (!validateEmail(user)) {
       setEmailError('Please enter a valid email address.');
       return;
     }
-
     setEmailError('');
-    navigate('/register', {
-      state: { email },
-    });
-    setEmail('');
+    onContinueToPasswordModal();
   };
-
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
 
   if (!open) return null;
 
@@ -50,31 +64,46 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
         <div className="flex flex-col justify-center items-center w-[300px] h-fit mt-5">
           <div className="flex flex-col justify-center items-center ">
-            <h1 className="font-bold text-xl">Sign Up</h1>
+            <h1 className="font-bold text-xl">Log In</h1>
             <p className="mt-2 text-sm">
               By continuing, you are setting up a SPAvailable account and agree
               to our User Agreement and Privacy Policy.
             </p>
           </div>
+
           <div className="flex flex-col justify-center items-center mt-10 w-full">
             <GoogleLogin
               locale="en_US"
-              text="signup_with"
-              onSuccess={(credentialResponse) => {
+              text="signin_with"
+              onSuccess={async (credentialResponse) => {
                 const decoded = decodedToken(credentialResponse.credential);
                 if (decoded) {
-                  navigate('/register', {
-                    state: {
-                      email: decoded.email,
-                      name: decoded.name,
-                      email_verified: decoded.email_verified,
-                      picture: decoded.picture,
-                      firstName: decoded.given_name,
-                      lastName: decoded.family_name,
-                    },
-                  });
+                  setLoading(true);
+                  try {
+                    const response = await axios.post(
+                      '/api/v1/user/login/google',
+                      {
+                        email: decoded.email,
+                        verified: decoded.email_verified,
+                      }
+                    );
+                    dispatch(setCredentials({ user: response.data }));
+                    showSuccessToast('Successfully logged in');
+                    navigate(
+                      response.data.active ? '/user/dashboard' : '/user/pending'
+                    );
+                  } catch (err) {
+                    if (err instanceof AxiosError) {
+                      showErrorToast(err);
+                    } else {
+                      showErrorToast('Unable to login');
+                    }
+                  } finally {
+                    setLoading(false);
+                    onClose();
+                  }
                 } else {
-                  navigate('/register');
+                  showErrorToast('Something went wrong');
                 }
               }}
               onError={() => {
@@ -87,6 +116,7 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               size="large"
             />
           </div>
+
           <div className="flex justify-center items-center mt-8 w-full">
             <div className="border w-full h-0 border-black" />
             <h1 className="px-4 font-bold">OR</h1>
@@ -95,21 +125,21 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
           <div className="flex w-full mt-8">
             <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
+              value={user}
+              onChange={handleEmailChange}
             />
           </div>
           {emailError && (
-            <div className="text-red-500 text-sm mt-2">{emailError}</div>
+            <p className="text-red-500 text-sm mt-2">{emailError}</p>
           )}
           <div className="flex w-full mt-5">
             <button
-              onClick={navigateToRegister}
               type="button"
               className="bg-[#41924B] w-full text-slate-50 font-semibold p-3 rounded"
+              onClick={handleContinueClick}
             >
               CONTINUE
             </button>
@@ -117,15 +147,15 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
           <div className="flex flex-col w-full items-center mt-5">
             <div className="text-sm">
-              <p>Already have an account?</p>
+              <p>Don&apos;t have an account yet?</p>
             </div>
             <div>
               <button
                 type="button"
+                onClick={onSwitchToSignUp}
                 className="font-bold text-[#41924B] mt-2"
-                onClick={onSwitchToLogin}
               >
-                LOG IN
+                SIGN UP
               </button>{' '}
             </div>
           </div>
@@ -135,4 +165,4 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
   );
 }
 
-export default SignUpModal;
+export default LoginModal;
