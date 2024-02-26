@@ -219,7 +219,7 @@ function Registration() {
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
-            <div className="size-56 rounded-full overflow-hidden flex justify-center items-center">
+            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
               <img
                 alt="Profile"
                 src={profilePicture || DefaultPp}
@@ -227,7 +227,7 @@ function Registration() {
               />
             </div>
             <FaTrash
-              color="white"
+              color="red"
               className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
               size={30}

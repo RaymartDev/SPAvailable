@@ -113,7 +113,7 @@ function EditProfile() {
             <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>
           <div className="relative mb-10" id="profilePicture">
-            <div className="size-56 rounded-full overflow-hidden flex justify-center items-center">
+            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
               <img
                 alt="profilePicture"
                 src={profilePicture || DefaultPp}
@@ -121,7 +121,7 @@ function EditProfile() {
               />
             </div>
             <FaTrash
-              color="white"
+              color="red"
               className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
               size={30}
