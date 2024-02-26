@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import { decodedToken } from './Google/client';
-import { useToast } from '../hooks/useToast';
-import { useAppDispatch } from '../store/store';
-import { setCredentials } from '../store/reducer/userSlice';
+import { decodedToken } from '../Google/client';
+import { useToast } from '../../hooks/useToast';
+import { useAppDispatch } from '../../store/store';
+import { setCredentials } from '../../store/reducer/userSlice';
 
 interface LoginModalProps {
   open: boolean;

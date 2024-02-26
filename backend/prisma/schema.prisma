@@ -14,6 +14,7 @@ model user {
   email      String    @unique @db.VarChar(50)
   contact    String?   @db.VarChar(20)
   password   String
+  profile    String?    @db.MediumText
   birth_date DateTime  @db.Date
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

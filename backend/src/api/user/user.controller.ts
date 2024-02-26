@@ -34,6 +34,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
       password,
       gender,
       active,
+      profile,
     } = req.body;
     
     /**
@@ -101,6 +102,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
             password: await generateHashedPassword(password),
             gender,
             active: active ?? false,
+            profile,
           },
         });
       } catch (err) {
@@ -127,6 +129,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
         active: userCreated.active,
         gender: userCreated.gender,
         created_at: userCreated.created_at,
+        profile: userCreated.profile,
       });
     } else {
       res.status(400);
@@ -211,6 +214,7 @@ export const loginWithGoogle = async (req: Request, res: Response<UserAuthRespon
       active: user.active,
       gender: user.gender,
       created_at: user.created_at,
+      profile: user.profile, 
     });
   } catch (err) {
     next(err);
@@ -307,6 +311,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       active: user.active,
       gender: user.gender,
       created_at: user.created_at,
+      profile: user.profile,
     });
   } catch (err) {
     next(err);
@@ -398,6 +403,7 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
             birth_date: true,
             active: true,
             gender: true,
+            profile: true,
           },
         });
         return user;

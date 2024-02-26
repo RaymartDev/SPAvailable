@@ -4,16 +4,15 @@ import axios, { AxiosError } from 'axios';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { IoIosLogOut } from 'react-icons/io';
-import { useAppSelector, useAppDispatch } from '../store/store';
+import { useAppDispatch } from '../store/store';
 import { logout } from '../store/reducer/userSlice';
 import DefaultPp from '../img/defaultPp.png';
 import { useToast } from '../hooks/useToast';
 import DropdownProps from '../interface/DropdownProps';
 
-function DropdownUserMenu({ setLoading }: DropdownProps) {
+function DropdownUserMenu({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const user = useAppSelector((state) => state.user.user);
   const { showSuccessToast, showErrorToast } = useToast();
 
   const dispatch = useAppDispatch();
@@ -53,18 +52,18 @@ function DropdownUserMenu({ setLoading }: DropdownProps) {
       >
         <h1 className="font-semibold mr-2 text-lg">{user?.name}</h1>
         <img
-          src={DefaultPp}
+          src={user?.profile || DefaultPp}
           alt="User Avatar"
-          className="size-10 rounded-full"
+          className="size-12 rounded-full object-cover object-center"
         />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 pb-5 flex flex-col gap-y-5">
           <div className="flex items-center w-full pl-5 py-5 border-2 rounded-lg shadow-2xl bg-slate-50">
             <img
-              src={DefaultPp}
+              src={user?.profile || DefaultPp}
               alt="User Avatar"
-              className="w-8 h-8 rounded-full object-cover text size-8"
+              className="size-12 rounded-full object-cover object-center"
             />
             <h1 className="ml-2 font-semibold text-lg text-neutral-950">
               {user?.name}

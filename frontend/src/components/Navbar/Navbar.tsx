@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../store/store';
-import Logo from '../img/logo.png';
+import Logo from '../../img/logo.png';
+import { useAppSelector } from '../../store/store';
 
 function Navbar() {
   const navigate = useNavigate();

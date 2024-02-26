@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 

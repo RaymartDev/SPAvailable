@@ -8,5 +8,6 @@ export default interface UserState {
     birth_date: Date;
     active: boolean;
     created_at?: string;
+    profile?: string;
   };
 }

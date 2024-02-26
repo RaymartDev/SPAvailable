@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
-import { decodedToken } from './Google/client';
-import { useToast } from '../hooks/useToast';
+import { decodedToken } from '../Google/client';
+import { useToast } from '../../hooks/useToast';
 
 interface SignUpModalProps {
   open: boolean;
@@ -76,9 +76,10 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
                       email: decoded.email,
                       name: decoded.name,
                       email_verified: decoded.email_verified,
-                      picture: decoded.picture,
+                      picture: decoded.picture.replace('s96-c', 's192-c'),
                       firstName: decoded.given_name,
                       lastName: decoded.family_name,
+                      google: true,
                     },
                   });
                 } else {

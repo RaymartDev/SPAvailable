@@ -40,7 +40,7 @@ function Menu() {
           className="text-xl hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"
           onClick={clickTermsAndCondition}
         >
-          Terms and Condition
+          Terms and Conditions
         </button>
       </div>
     </div>

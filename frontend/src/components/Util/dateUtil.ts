@@ -26,4 +26,19 @@ const formatDate = (dateString: string | undefined = undefined): string => {
   return formattedDate;
 };
 
-export { formatDate };
+const formatDate2Digit = (date: Date | null): string => {
+  if (date) {
+    return date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    });
+  }
+  return new Date().toLocaleDateString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+  });
+};
+
+export { formatDate, formatDate2Digit };
