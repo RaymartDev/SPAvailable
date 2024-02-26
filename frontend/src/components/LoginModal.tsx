@@ -63,11 +63,19 @@ function LoginModal({
         </div>
 
         <div className="flex flex-col justify-center items-center w-[300px] h-fit mt-5">
-          <div className="flex flex-col justify-center items-center ">
+          <div className="flex flex-col justify-center items-center">
             <h1 className="font-bold text-xl">Log In</h1>
             <p className="mt-2 text-sm">
               By continuing, you are setting up a SPAvailable account and agree
-              to our User Agreement and Privacy Policy.
+              to our{' '}
+              <a href="/terms" className="text-[#4285F4]">
+                Terms and Condition
+              </a>{' '}
+              and{' '}
+              <a href="/privacy-policy" className="text-[#4285F4]">
+                Privacy Policy
+              </a>
+              .
             </p>
           </div>
 

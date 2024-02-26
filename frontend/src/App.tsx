@@ -12,6 +12,7 @@ const Pending = lazy(() => import('./views/user/Pending'));
 const AboutSpa = lazy(() => import('./views/user/AboutSpa'));
 const VerifyPage = lazy(() => import('./views/user/Verify'));
 const AboutUs = lazy(() => import('./views/user/AboutUs'));
+const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 
 function App() {
@@ -50,6 +51,15 @@ function App() {
           element={
             <Suspense fallback={<Loader />}>
               <Terms />
+              <ToastContainer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/privacy-policy"
+          element={
+            <Suspense fallback={<Loader />}>
+              <PrivacyPolicy />
               <ToastContainer />
             </Suspense>
           }

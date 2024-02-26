@@ -53,7 +53,15 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
             <h1 className="font-bold text-xl">Sign Up</h1>
             <p className="mt-2 text-sm">
               By continuing, you are setting up a SPAvailable account and agree
-              to our User Agreement and Privacy Policy.
+              to our{' '}
+              <a href="/terms" className="text-[#4285F4]">
+                Terms and Condition
+              </a>{' '}
+              and{' '}
+              <a href="/privacy-policy" className="text-[#4285F4]">
+                Privacy Policy
+              </a>
+              .
             </p>
           </div>
           <div className="flex flex-col justify-center items-center mt-10 w-full">

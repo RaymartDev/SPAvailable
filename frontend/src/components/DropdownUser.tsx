@@ -55,11 +55,11 @@ function DropdownUserMenu({ setLoading }: DropdownProps) {
         <img
           src={DefaultPp}
           alt="User Avatar"
-          className="size-12 rounded-full"
+          className="size-10 rounded-full"
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 py-8 flex flex-col gap-y-5">
+        <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 pb-5 flex flex-col gap-y-5">
           <div className="flex items-center w-full pl-5 py-5 border-2 rounded-lg shadow-2xl bg-slate-50">
             <img
               src={DefaultPp}

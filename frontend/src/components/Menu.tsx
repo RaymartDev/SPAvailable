@@ -11,6 +11,10 @@ function Menu() {
     navigate('/terms');
   };
 
+  const clickPrivacyPolicy = () => {
+    navigate('/privacy-policy');
+  };
+
   return (
     <div className="flex flex-col pl-5 py-5 bg-slate-50">
       <div className="border-b-2 border-black">
@@ -23,6 +27,13 @@ function Menu() {
           onClick={clickAboutUs}
         >
           About Us
+        </button>
+        <button
+          type="button"
+          className="text-xl mb-3 hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"
+          onClick={clickPrivacyPolicy}
+        >
+          Privacy Policy
         </button>
         <button
           type="button"

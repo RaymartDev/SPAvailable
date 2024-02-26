@@ -7,7 +7,7 @@ function TermsAndCondition() {
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <Navbar />
-      <div className="flex bg-[#41924B] h-52 items-center px-10">
+      <div className="flex bg-[#41924B] h-52 items-center justify-center px-10">
         <h1 className="font-bold text-center text-4xl md:text-6xl text-slate-50 w-fit">
           Terms and Condition
         </h1>

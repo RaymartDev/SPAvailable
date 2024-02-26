@@ -35,7 +35,7 @@ function MainHome() {
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image10} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">
-          <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl d">
+          <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl">
             Find your perfect spa
           </h1>
           <div className="flex mt-20">

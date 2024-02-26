@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'poppins': ['Poppins'],
+      'mont': ['Montserrat'],
+      'pd': ['Playfair Display']
+    },
   },
 
   plugins: [],
