@@ -59,13 +59,13 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 pb-5 flex flex-col gap-y-5">
-          <div className="flex items-center w-full pl-5 py-5 border-2 rounded-lg shadow-2xl bg-slate-50">
+          <div className="flex items-center w-full pl-5 py-3 border-2 rounded-lg shadow-2xl bg-slate-50">
             <img
               src={user?.profile || DefaultPp}
               alt="User Avatar"
-              className="size-12 rounded-full object-cover object-center"
+              className="size-10 rounded-full object-cover object-center"
             />
-            <h1 className="ml-2 font-semibold text-lg text-neutral-950">
+            <h1 className="ml-2 font-semibold text-md text-neutral-950">
               {user?.name}
             </h1>
           </div>
@@ -78,7 +78,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               <div className="bg-slate-50 rounded-full p-2 shadow-xl ">
                 <CgProfile color="black" size={25} />
               </div>
-              <h1 className="text-lg ml-2">Profile</h1>
+              <h1 className="text-md ml-2">Profile</h1>
             </button>
 
             <button
@@ -89,7 +89,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               <div className="bg-slate-50  rounded-full p-2">
                 <MdOutlineFeedback color="black" size={25} />
               </div>
-              <h1 className="text-lg ml-2">Feedback</h1>
+              <h1 className="text-md ml-2">Feedback</h1>
             </button>
 
             <hr className="my-2" />
@@ -102,7 +102,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               <div className="bg-slate-50  rounded-full p-2">
                 <IoIosLogOut color="black" size={25} />
               </div>
-              <h1 className="text-lg ml-2">Logout</h1>
+              <h1 className="text-md ml-2">Logout</h1>
             </button>
           </div>
         </div>
