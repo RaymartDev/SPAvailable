@@ -166,11 +166,6 @@ function Registration() {
       setLoading(false);
       return;
     }
-    if (!gender) {
-      setGenderError('Gender is required');
-      setLoading(false);
-      return;
-    }
     if (!password) {
       setPasswordError('Password is required');
       setLoading(false);
@@ -178,6 +173,12 @@ function Registration() {
     }
     if (password !== retypePassword) {
       setPasswordMismatch(true);
+      setLoading(false);
+      return;
+    }
+
+    if (!gender) {
+      setGenderError('Gender is required');
       setLoading(false);
       return;
     }
