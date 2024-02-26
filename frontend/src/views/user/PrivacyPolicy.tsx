@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import Navbar from '../../components/Navbar';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
+import Navbar from '../../components/Navbar/Navbar';
 
 function PrivacyPolicy() {
   return (
