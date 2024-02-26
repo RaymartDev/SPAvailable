@@ -20,7 +20,7 @@ function SpaGrid() {
         <button
           type="button"
           onClick={() => navigate('/spa/about')}
-          className="rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-2"
+          className="rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px]"
         >
           SEE MORE
         </button>

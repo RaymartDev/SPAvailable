@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import Image1 from '../img/image1.png';
-import Image2 from '../img/image2.png';
+import Raymart from '../img/MART.png';
+import Juliet from '../img/BAUTISTA.png';
 import Image3 from '../img/image3.png';
 import Image4 from '../img/image4.png';
 import Image5 from '../img/image5.png';
@@ -10,8 +10,8 @@ import Image8 from '../img/image8.png';
 
 function OurTeam() {
   const items = [
-    { image: Image1, title: 'Project Manager' },
-    { image: Image2, title: 'Software Engineer' },
+    { image: Raymart, title: 'Project Manager' },
+    { image: Juliet, title: 'Software Engineer' },
     { image: Image3, title: 'Frontend Developer' },
     { image: Image4, title: 'Mobile App Developer' },
     { image: Image5, title: 'Documentator' },
