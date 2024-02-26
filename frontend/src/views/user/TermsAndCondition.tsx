@@ -47,21 +47,6 @@ function TermsAndCondition() {
         </div>
 
         <div>
-          <h1 className="font-semibold text-xl">
-            Cancellation and Rescheduling:
-          </h1>
-          <p>
-            a. Users are responsible for managing their appointments and
-            adhering to the cancellation and rescheduling policies of the
-            respective spa.
-          </p>
-          <p>
-            b. Cancellation or rescheduling fees, if any, are determined by the
-            individual spas and may vary.
-          </p>
-        </div>
-
-        <div>
           <h1 className="font-semibold text-xl">Liability:</h1>
           <p>
             a. While we strive to provide accurate information and facilitate

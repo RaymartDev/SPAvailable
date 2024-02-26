@@ -2,7 +2,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { decodedToken } from '../Google/client';
 import { useToast } from '../../hooks/useToast';
@@ -68,13 +68,13 @@ function LoginModal({
             <p className="mt-2 text-sm">
               By continuing, you are setting up a SPAvailable account and agree
               to our{' '}
-              <a href="/terms" className="text-[#4285F4]">
+              <Link to="/terms" className="text-[#4285F4]">
                 Terms and Condition
-              </a>{' '}
+              </Link>{' '}
               and{' '}
-              <a href="/privacy-policy" className="text-[#4285F4]">
+              <Link to="/privacy-policy" className="text-[#4285F4]">
                 Privacy Policy
-              </a>
+              </Link>
               .
             </p>
           </div>
