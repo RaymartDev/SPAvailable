@@ -34,9 +34,9 @@ const generateToken = (res : Response, email : string) : string => {
   return token;
 };
 
-const generateVerificationToken = (email : string) : string => {
+const generateVerificationToken = (email : string, expiry: string = '1d') : string => {
   const token = jwt.sign({ email }, `${process.env.SECRET_KEY}`, {
-    expiresIn: '1d',
+    expiresIn: expiry,
   });
   return token;
 };
@@ -80,6 +80,50 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
   });
 };
 
+const sendEmailPWReset = (email : string, name : string, token : string, next : NextFunction) => {
+
+  // transporter
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_ADDRESS,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  // Define email options
+  const mailOptions = {
+    from: `"SPAvailable" <${process.env.EMAIL_ADDRESS}>`,
+    to: email,
+    subject: 'SPAvailable Password Reset',
+    html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>Password Reset</h2>
+      <p>Dear <b>${name},</b></p>
+      <p>We received a request to reset your password. If you did not request this, please ignore this email.</p>
+      <p>To reset your password, please click the button below:</p>
+      <p>
+      <a href="http://localhost:5173/user/reset?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Reset Password</a>
+      </p>
+      <p>If the button above does not work, you can also copy and paste the following link into your browser:</p>
+      <p>http://localhost:5173/user/reset?token=${token}</p>
+      <p>This link will expire in 5 minutes for security reasons.</p>
+      <p>If you did not request a password reset or need further assistance, please contact our support team.</p>
+      <p><b>Thank you,<br> SPAvailable Team</b></p>
+  </div>
+  `,
+  };
+
+
+  // Send the email
+  transporter.sendMail(mailOptions, (err : Error | null) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+};
+
 export { 
   generateHashedPassword,
   matchPassword,
@@ -88,4 +132,5 @@ export {
   generateToken,
   sendEmail,
   generateVerificationToken,
+  sendEmailPWReset,
 };

@@ -88,14 +88,11 @@ function LoginModal({
                 if (decoded) {
                   setLoading(true);
                   try {
-                    const response = await axios.post(
-                      '/api/v1/user/login/google',
-                      {
-                        email: decoded.email,
-                        verified: decoded.email_verified,
-                      }
-                    );
-                    dispatch(setCredentials({ user: response.data }));
+                    const response = await axios.post('/api/v1/user/login', {
+                      email: decoded.email,
+                      verified: decoded.email_verified,
+                    });
+                    dispatch(setCredentials(response.data));
                     showSuccessToast('Successfully logged in');
                     navigate(
                       response.data.active ? '/user/dashboard' : '/user/pending'

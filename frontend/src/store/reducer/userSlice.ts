@@ -1,59 +1,50 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import UserState from '../../interface/UserState';
 
-const userInfoFromLocalStorage = localStorage.getItem('userInfo');
-const initialState: UserState = {
-  user: userInfoFromLocalStorage
-    ? JSON.parse(userInfoFromLocalStorage)
-    : undefined,
-};
+const userInfoFromLocalStorage: string | null =
+  localStorage.getItem('userInfo');
+const initialState: UserState = userInfoFromLocalStorage
+  ? JSON.parse(userInfoFromLocalStorage)
+  : {};
 
 export const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setCredentials: (state: UserState, action: PayloadAction<UserState>) => {
-      localStorage.setItem('userInfo', JSON.stringify(action.payload.user));
+    setCredentials: (state, action: PayloadAction<UserState>) => {
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
       return {
         ...state,
-        user: action.payload.user,
+        ...action.payload,
       };
     },
-    logout: (state) => {
+    logout: (_state) => {
       localStorage.removeItem('userInfo');
-      return {
-        ...state,
-        user: undefined,
-      };
+      return undefined;
     },
-    verify: (state: UserState) => {
-      if (state.user) {
+    verify: (state) => {
+      if (state) {
         const newUser = {
-          ...state.user,
+          ...state,
           active: true,
         };
         localStorage.setItem('userInfo', JSON.stringify(newUser));
-        return {
-          ...state,
-          user: newUser,
-        };
+        return newUser;
       }
       return state; // Return the original state if no user is found
     },
-    updateInfo: (state: UserState, action) => {
-      if (state.user) {
+    updateInfo: (state, action) => {
+      if (state) {
         const newUser = {
-          ...state.user,
+          ...state,
           ...action.payload,
         };
         if (newUser.password) {
           delete newUser.password;
         }
         localStorage.setItem('userInfo', JSON.stringify(newUser));
-        return {
-          ...state,
-          user: newUser,
-        };
+        return newUser;
       }
       return state;
     },

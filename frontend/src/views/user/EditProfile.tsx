@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -13,8 +12,7 @@ import Loader from '../../components/Loader Component/Loader';
 import { formatDate } from '../../components/Util/dateUtil';
 
 function EditProfile() {
-  const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [pass, setPass] = useState<string>('');
@@ -26,12 +24,6 @@ function EditProfile() {
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);

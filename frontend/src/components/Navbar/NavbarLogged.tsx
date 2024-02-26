@@ -2,12 +2,23 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Logo from '../../img/logo.png';
 import DropdownProps from '../../interface/DropdownProps';
-import DropdownUserMenu from '../DropdownUser';
+import DropdownUserMenu from './DropdownUser';
 
 function NavbarLogged({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id) {
+      navigate('/');
+      return;
+    }
+    if (!user?.active) {
+      navigate('/user/pending');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="max-w-screen-2xl mx-auto flex sticky top-0 justify-between items-center py-2 md:py-4 px-4 z-20 bg-white shadow-lg ">

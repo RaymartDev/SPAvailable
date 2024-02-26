@@ -6,7 +6,6 @@ const router = Router();
 
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
-router.post('/login/google', UserController.loginWithGoogle);
 router.post('/logout', UserController.logout);
 
 // protected routes
@@ -16,5 +15,9 @@ router.route('/profile')
 
 router.get('/verify', UserController.verify);
 router.get('/resend', protect, UserController.resendVerification);
+
+router.route('/reset')
+  .post(UserController.sendForgotPassword)
+  .get(UserController.verifyReset);
 
 export default router;
