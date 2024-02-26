@@ -9,6 +9,7 @@ import {
   validatePhone,
   sendEmail,
   generateVerificationToken,
+  sendEmailPWReset,
 } from '../../util';
 import UserRequest from '../../interfaces/user/UserRequest';
 import UserAuthResponse from '../../interfaces/user/UserAuthResponse';
@@ -457,7 +458,7 @@ export const sendForgotPassword = async (req : Request, res : Response, next : N
       return;
     }
 
-    sendEmail(email, searchUser.name, generateVerificationToken(email, '5m'), next);
+    sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '5m'), next);
     res.status(200).json({ message: 'Successfully resent the verification code' });
   } catch (err) {
     next(err);
