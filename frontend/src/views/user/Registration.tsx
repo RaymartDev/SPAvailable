@@ -148,30 +148,37 @@ function Registration() {
     setLoading(true);
     if (!firstName) {
       setFirstNameError('First name is required');
+      setLoading(false);
       return;
     }
     if (!lastName) {
       setLastNameError('Last name is required');
+      setLoading(false);
       return;
     }
     if (!email) {
       setEmailError('Email is required');
+      setLoading(false);
       return;
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
       setEmailError('Invalid email address');
+      setLoading(false);
       return;
     }
     if (!gender) {
       setGenderError('Gender is required');
+      setLoading(false);
       return;
     }
     if (!password) {
       setPasswordError('Password is required');
+      setLoading(false);
       return;
     }
     if (password !== retypePassword) {
       setPasswordMismatch(true);
+      setLoading(false);
       return;
     }
 
