@@ -9,6 +9,7 @@ import {
   validatePhone,
   sendEmail,
   generateVerificationToken,
+  sendEmailPWReset,
 } from '../../util';
 import UserRequest from '../../interfaces/user/UserRequest';
 import UserAuthResponse from '../../interfaces/user/UserAuthResponse';
@@ -140,87 +141,6 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
   }
 };
 
-export const loginWithGoogle = async (req: Request, res: Response<UserAuthResponse>, next: NextFunction) => {
-  try {
-    const {
-      email,
-      verified,
-    } = req.body;
-
-    if (!email || !verified) {
-      res.status(400);
-      next(new Error('Please provide make sure you are google verified'));
-      return;
-    }
-
-    /**
-     * Check if already registered using email
-     */
-    const userExists = await prismaFetch(async (prisma : PrismaClient) => {
-      try {
-        return await prisma.user.findUnique({
-          where: {
-            email,
-          },
-        });
-      } catch (err) {
-        next(err);
-      }
-    }, next);
-
-    /**
-     * If user did not exists throw 401 - Unauthorized
-     * with a message - Incorrect email or password
-     */
-    if (!userExists) {
-      res.status(401);
-      next(new Error('No account associated with this email'));
-      return;
-    }
-
-    /**
-     * Get the user
-     */
-    const user = await prismaFetch(async (prisma : PrismaClient) => {
-      try {
-        return await prisma.user.findUnique({
-          where: { email },
-        });
-      } catch (err) {
-        next(err);
-      }
-    }, next);
-
-    /**
-     * If user did not exists throw 401 - Unauthorized
-     * with a message - Incorrect email or password
-     */
-    if (!user) {
-      res.status(401);
-      next(new Error('No account associated with this email'));
-      return;
-    }
-
-    /**
-     * Return the user found with the correct email and password
-     */
-    res.status(200).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      contact: user.contact,
-      birth_date: user.birth_date,
-      token: generateToken(res, user.email),
-      active: user.active,
-      gender: user.gender,
-      created_at: user.created_at,
-      profile: user.profile, 
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
 /**
  * @param req Request body should contain Login's info
  * @param res Response body should be User's final info
@@ -231,9 +151,10 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
     const {
       email,
       password,
+      verified,
     } = req.body;
 
-    if (!email || !password) {
+    if (!email || (!password && !verified)) {
       res.status(400);
       next(new Error('Please provide both email and password'));
       return;
@@ -291,11 +212,13 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
      * If password did not match throw 401 - Unauthorized
      * with a message - Incorrect email or password
      */
-    const passwordMatch = await matchPassword(password, user.password);
-    if (!passwordMatch) {
-      res.status(401);
-      next(new Error('Incorrect email or password'));
-      return;
+    if (!verified && password) {
+      const passwordMatch = await matchPassword(password, user.password);
+      if (!passwordMatch) {
+        res.status(401);
+        next(new Error('Incorrect email or password'));
+        return;
+      }
     }
 
     /**
@@ -497,12 +420,87 @@ export const resendVerification = async (req: UserRequest, res : Response, next 
     }
 
     if (req.user.active) {
-      res.status(400);
+      res.status(404);
       next(new Error('User already verified'));
       return;
     }
     sendEmail(req.user.email, req.user.name, generateVerificationToken(req.user.email), next);
     res.status(200).json({ message: 'Successfully resent the verification code' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const sendForgotPassword = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const { email } = req.body;
+
+    const searchUser = await prismaFetch(async (prisma: PrismaClient) => {
+      try {
+        const userToFind = await prisma.user.findUnique({
+          where: {
+            email,
+          },
+          select: {
+            id: true,
+            name: true,
+          },
+        });
+        return userToFind || undefined;
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    if (!searchUser) {
+      res.status(404);
+      next(new Error('No account associated with this email'));
+      return;
+    }
+
+    sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '5m'), next);
+    res.status(200).json({ message: 'Successfully resent the verification code' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const verifyReset = async (req: Request, res : Response, next : NextFunction) => {
+  try {
+    const token = req.query.token as string;
+
+    const decodedToken = jwt.verify(token, `${process.env.SECRET_KEY}`) as JwtPayload;
+    // find user
+    const user = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        const userToFind = await prisma.user.findUnique({
+          where: {
+            email: decodedToken.email,
+          },
+          select: {
+            id: true,
+          },
+        });
+        return userToFind || undefined;
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    if (!user) {
+      res.status(400);
+      next(new Error('Failed to verify token'));
+      return;
+    }
+
+    // Check if token is expired
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
+      res.status(400);
+      next(new Error('Token has expired'));
+      return;
+    }
+    return res.status(200).json({ message: 'Reset password token is valid' });
   } catch (err) {
     next(err);
   }

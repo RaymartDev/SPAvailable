@@ -1,4 +1,5 @@
 export default interface LoginBody {
   email: string;
-  password: string;
+  password?: string;
+  verified?: boolean;
 }

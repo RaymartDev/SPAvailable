@@ -1,6 +1,5 @@
 import { IoSearchSharp } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
@@ -11,19 +10,8 @@ import { useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
 
 function MainHome() {
-  const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
-    }
-    if (!user.active) {
-      navigate('/user/pending');
-    }
-  }, [user, navigate]);
 
   if (loading) {
     return <Loader />;

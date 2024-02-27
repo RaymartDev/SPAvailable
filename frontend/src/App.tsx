@@ -15,6 +15,7 @@ const AboutUs = lazy(() => import('./views/user/AboutUs'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const Test = lazy(() => import('./views/user/Test'));
+const NotFound = lazy(() => import('./views/user/404/NotFound'));
 
 function App() {
   return (
@@ -124,6 +125,16 @@ function App() {
         />
 
         <Route path="/loader" element={<Loader />} />
+
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<Loader />}>
+              <NotFound />
+              <ToastContainer />
+            </Suspense>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

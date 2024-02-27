@@ -16,7 +16,7 @@ import { useAppSelector } from '../../store/store';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user);
 
   if (loading) {
     return <Loader />;

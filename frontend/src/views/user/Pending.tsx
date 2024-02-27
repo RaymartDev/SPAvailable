@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 import ImageRec from '../../img/imageRec.png';
 import { useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
@@ -8,20 +8,10 @@ import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Loader from '../../components/Loader Component/Loader';
 
 function Pending() {
+  const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.user);
   const { showSuccessToast, showErrorToast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
-    }
-    if (user.active) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
 
   const handleResend = async () => {
     try {
@@ -37,6 +27,12 @@ function Pending() {
       }
     }
   };
+
+  useEffect(() => {
+    if (user?.active) {
+      navigate('/user/dashboard');
+    }
+  }, [user, navigate]);
 
   if (loading) {
     return <Loader />;

@@ -43,10 +43,10 @@ function Landing() {
     setPasswordModalOpen(true);
   };
 
-  const userObj = useAppSelector((state) => state.user.user);
+  const userObj = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (userObj) {
+    if (userObj?.id) {
       navigate('/user/dashboard');
     }
   }, [userObj, navigate]);
@@ -59,7 +59,7 @@ function Landing() {
         email: user,
         password,
       });
-      dispatch(setCredentials({ user: response.data }));
+      dispatch(setCredentials(response.data));
       showSuccessToast('Successfully logged in');
       setPasswordModalOpen(false);
       navigate(response.data.active ? '/user/dashboard' : '/user/pending');

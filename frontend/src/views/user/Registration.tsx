@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
@@ -8,7 +8,7 @@ import axios, { AxiosError } from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppDispatch } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
 import { setCredentials } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
@@ -17,8 +17,6 @@ import { formatDate2Digit } from '../../components/Util/dateUtil';
 function Registration() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const user = useAppSelector((state) => state.user.user);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
@@ -46,12 +44,6 @@ function Registration() {
 
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
@@ -194,7 +186,7 @@ function Registration() {
         active: !!location.state.email_verified,
         profile: profilePicture,
       });
-      dispatch(setCredentials({ user: response.data }));
+      dispatch(setCredentials(response.data));
       showSuccessToast('Successfully registered');
       navigate('/user/pending');
     } catch (err) {

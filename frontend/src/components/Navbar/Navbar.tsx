@@ -7,14 +7,14 @@ import { useAppSelector } from '../../store/store';
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user);
 
   const handleClick = () => {
-    if (!user) {
-      navigate('/');
+    if (user?.id) {
+      navigate(user.active ? '/user/dashboard' : '/user/pending');
       return;
     }
-    navigate(user.active ? '/user/dashboard' : '/user/pending');
+    navigate('/');
   };
 
   return (

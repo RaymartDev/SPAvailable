@@ -4,11 +4,11 @@ import axios, { AxiosError } from 'axios';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { IoIosLogOut } from 'react-icons/io';
-import { useAppDispatch } from '../store/store';
-import { logout } from '../store/reducer/userSlice';
-import DefaultPp from '../img/defaultPp.png';
-import { useToast } from '../hooks/useToast';
-import DropdownProps from '../interface/DropdownProps';
+import { useAppDispatch } from '../../store/store';
+import { logout } from '../../store/reducer/userSlice';
+import DefaultPp from '../../img/defaultPp.png';
+import { useToast } from '../../hooks/useToast';
+import DropdownProps from '../../interface/DropdownProps';
 
 function DropdownUserMenu({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
