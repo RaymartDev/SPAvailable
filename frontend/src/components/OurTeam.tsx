@@ -1,20 +1,20 @@
 /* eslint-disable react/no-array-index-key */
 import Raymart from '../img/MART.png';
 import Juliet from '../img/BAUTISTA.png';
-import Image3 from '../img/image3.png';
-import Image4 from '../img/image4.png';
-import Image5 from '../img/image5.png';
+import Lloyd from '../img/LLOYD.jpg';
+import Adoc from '../img/ADOC.png';
+import Bucad from '../img/BUCAD.png';
 import Image6 from '../img/image6.png';
 import Image7 from '../img/image7.png';
 import Image8 from '../img/image8.png';
 
 function OurTeam() {
   const items = [
-    { image: Raymart, title: 'Project Manager' },
+    { image: Raymart, title: 'Project Manager / Backend Developer' },
     { image: Juliet, title: 'Software Engineer' },
-    { image: Image3, title: 'Frontend Developer' },
-    { image: Image4, title: 'Mobile App Developer' },
-    { image: Image5, title: 'Documentator' },
+    { image: Lloyd, title: 'Frontend Developer' },
+    { image: Adoc, title: 'Mobile App Developer' },
+    { image: Bucad, title: 'Documentator' },
     { image: Image6, title: 'UI / UX' },
     { image: Image7, title: 'UI / UX' },
     { image: Image8, title: 'UI / UX' },
