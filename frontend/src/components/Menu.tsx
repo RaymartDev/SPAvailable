@@ -16,11 +16,11 @@ function Menu() {
   };
 
   return (
-    <div className="flex flex-col pl-5 py-10 bg-white">
-      <div className="border-b-2 border-black">
+    <div className="flex flex-col px-5 py-10 bg-white">
+      <div className="border-b-2 border-black ">
         <h1 className="text-2xl font-bold pb-3">ABOUT</h1>
       </div>
-      <div className="flex flex-col items-start pt-5 ">
+      <div className="flex flex-col items-center pt-5 md:items-start">
         <button
           type="button"
           className="text-xl mb-3 hover:bg-[#41924B] hover:text-slate-50 rounded-lg px-5 py-2 duration-200"

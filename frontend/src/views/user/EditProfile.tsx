@@ -97,14 +97,14 @@ function EditProfile() {
   }
 
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
+    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 md:overflow-hidden">
       <NavbarLogged setLoading={setLoading} user={user} />
-      <div className="flex ">
-        <div className="flex flex-col w-4/12 h-screen p-10 bg-[#41924B] items-center">
-          <div className="flex flex-col items-center text-slate-50 mb-10">
+      <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col gap-y-10 md:w-4/12 md:h-screen p-10 bg-[#41924B] items-center">
+          <div className="flex text-slate-50">
             <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>
-          <div className="relative mb-10" id="profilePicture">
+          <div className="relative" id="profilePicture">
             <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
               <img
                 alt="profilePicture"
@@ -119,7 +119,7 @@ function EditProfile() {
               size={30}
             />
           </div>
-          <div className="mb-10">
+          <div>
             <input
               type="file"
               accept="image/*"
@@ -134,12 +134,12 @@ function EditProfile() {
               UPLOAD
             </label>
           </div>
-          <div className="text-center rounded-lg py-3 px-5 text-sm bg-[#F1F6FA] mb-10">
+          <div className="text-center rounded-lg py-3 px-5 text-sm bg-[#F1F6FA]">
             <p className="mb-2">
-              Upload a new avatar. Larger image will be resized automatically
+              Upload a new avatar. Larger image will be resized automatically.
             </p>
             <p>
-              Maximum upload size is <b>1 MB</b>
+              Maximum upload size is <b>1 MB</b>.
             </p>
           </div>
           <div className="flex flex-row text-sm text-slate-50">

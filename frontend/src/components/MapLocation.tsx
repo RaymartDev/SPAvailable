@@ -4,7 +4,7 @@ import { IoLocationOutline } from 'react-icons/io5';
 
 function MapLocation() {
   return (
-    <div className="bg-slate-50 py-8 px-12 max-h-screen ">
+    <div className="bg-white py-8 px-12 max-h-screen ">
       <div className="flex flex-col gap-y-4">
         <h1 className="text-4xl font-semibold text-center w-fit">
           Mandarin Spa of Caloocan City

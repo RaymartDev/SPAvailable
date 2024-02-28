@@ -27,7 +27,7 @@ function TermsModal({ open, onClose }: TermsModalProps) {
         <div className="flex flex-col overflow-y-scroll h-full px-10 text-sm">
           <div className="flex flex-col gap-y-3">
             <div className="pb-3">
-              <p className="text-md text-left">
+              <p className="text-md text-balance indent-5">
                 Welcome to SPAvailable. These Terms and Conditions govern your
                 use our online platform for scheduling spa appointments. By
                 accessing or using any part of our website, you agree to be

@@ -1,19 +1,27 @@
-import { FaLocationDot } from 'react-icons/fa6';
+import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
 import StarRating from './StarRating';
 import Image12 from '../img/image12.png';
 
 function SpaDetails() {
   return (
-    <div className="bg-slate-50 ">
+    <div className="bg-white ">
       <div className="grid grid-cols-2 items-center justify-center ">
         <div className="card flex justify-start items-center pl-12 ">
           <div className="flex flex-col  justify-start border-b-4 border-black pb-20">
             <h1 className="text-5xl font-bold mb-5">Mandarin Spa</h1>
             <div className="flex items-center mb-5">
-              <FaLocationDot size={25} />
+              <div>
+                <IoLocationOutline size={25} />
+              </div>
               <p className="text-xl ml-2 ">
                 Congressional Road Brgy 172, Caloocan City, Metro Manila
               </p>
+            </div>
+            <div className="flex items-center mb-5">
+              <div>
+                <IoTimeOutline size={25} />
+              </div>
+              <p className="text-xl ml-2 ">Opens Mon-Sun 8am-6pm</p>
             </div>
             <div className="flex items-center">
               <p className="text-2xl mr-2 font-semibold">5.0</p>

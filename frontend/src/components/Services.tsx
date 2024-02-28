@@ -72,7 +72,7 @@ function Services() {
   };
 
   return (
-    <div className="bg-slate-50 py-8 max-h-screen px-12">
+    <div className="bg-white py-8 max-h-screen px-12">
       <div className="border-b-4 border-black">
         <h1 className="text-4xl font-semibold text-center mb-8 w-fit">
           Our Services

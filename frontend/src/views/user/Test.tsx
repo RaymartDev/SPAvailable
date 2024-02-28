@@ -2,10 +2,12 @@ import { useState } from 'react';
 import Logo from '../../img/logo.png';
 import TermsModal from '../../components/Modal/TermsModal';
 import ForgotPModal from '../../components/Modal/ForgotPModal';
+import RatingModal from '../../components/Modal/RatingModal';
 
 function Test() {
   const [openTermsModal, setOpenTermsModal] = useState(false);
   const [openPrivacyModal, setOpenPrivacyModal] = useState(false);
+  const [openRatingModal, setOpenRatingModal] = useState(false);
 
   return (
     <div className="max-w-screen-2xl mx-auto flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white shadow-lg ">
@@ -43,6 +45,19 @@ function Test() {
           user=""
           onClose={() => {
             setOpenPrivacyModal(false);
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => setOpenRatingModal(true)}
+          className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
+        >
+          Rating
+        </button>
+        <RatingModal
+          open={openRatingModal}
+          onClose={() => {
+            setOpenRatingModal(false);
           }}
         />
       </div>
