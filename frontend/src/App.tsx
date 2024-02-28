@@ -12,6 +12,8 @@ const Pending = lazy(() => import('./views/user/Pending'));
 const AboutSpa = lazy(() => import('./views/user/AboutSpa'));
 const VerifyPage = lazy(() => import('./views/user/Verify'));
 const AboutUs = lazy(() => import('./views/user/AboutUs'));
+const Product = lazy(() => import('./views/user/Product'));
+const Service = lazy(() => import('./views/user/Service'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const Test = lazy(() => import('./views/user/Test'));
@@ -119,6 +121,26 @@ function App() {
           element={
             <Suspense fallback={<Loader />}>
               <AboutSpa />
+              <ToastContainer />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/spa/product"
+          element={
+            <Suspense fallback={<Loader />}>
+              <Product />
+              <ToastContainer />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/spa/service"
+          element={
+            <Suspense fallback={<Loader />}>
+              <Service />
               <ToastContainer />
             </Suspense>
           }

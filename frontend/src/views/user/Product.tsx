@@ -1,15 +1,14 @@
 import { IoSearchSharp } from 'react-icons/io5';
 import { useState } from 'react';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
-import Image10 from '../../img/image10.png';
-import SpaGrid from '../../components/SpaGrid';
-import Image17 from '../../img/image17.png';
+import Image22 from '../../img/image22.png';
+import ProductComp from '../../components/ProductComp';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import { useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
 
-function MainHome() {
+function Product() {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,10 +20,10 @@ function MainHome() {
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex relative h-[450px] md:h-[598px]">
-        <img alt="cover" src={Image10} className="object-cover h-full w-full" />
+        <img alt="cover" src={Image22} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">
           <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl">
-            Find your perfect spa
+            PRODUCT
           </h1>
           <div className="flex mt-20">
             <div className="flex flex-col items-center md:flex-row">
@@ -38,7 +37,7 @@ function MainHome() {
               <div className="flex items-center justify-center rounded-full bg-[#41924B] py-3 px-5 font-semibold text-slate-50 md:w-[221px]">
                 <IoSearchSharp size={20} className="mr-1" />
                 <button type="button" className="font-semibold text-slate-50">
-                  FIND SPA
+                  SEARCH
                 </button>
               </div>
             </div>
@@ -46,24 +45,9 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex w-full justify-center items-center px-5 pt-10 pb-5 bg-white">
-        <h1 className="w-fit justify-center items-center text-4xl md:text-6xl text-neutral-950 font-bold">
-          SPA NEAR ME
-        </h1>
-      </div>
-
-      <div className="flex flex-col items-center justify-center bg-white pb-16">
+      <div className="flex flex-col items-center justify-center bg-white">
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
-          <SpaGrid />
-        </div>
-      </div>
-
-      <div className="flex relative md:h-[800px] bg-white">
-        <img alt="cover" src={Image17} className="object-cover h-full w-full" />
-        <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full z-10">
-          <h1 className="font-bold text-slate-50 text-4xl md:text-8xl text-center">
-            SPAVAILABLE
-          </h1>
+          <ProductComp />
         </div>
       </div>
 
@@ -73,4 +57,4 @@ function MainHome() {
   );
 }
 
-export default MainHome;
+export default Product;
