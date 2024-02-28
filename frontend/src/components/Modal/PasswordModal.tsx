@@ -86,9 +86,9 @@ function PasswordModal({
             <div className="text-sm">
               <p>
                 Forgot your{' '}
-                <a href="#" className="text-[#41924B]">
+                <button type="button" className="text-[#41924B]">
                   Password
-                </a>
+                </button>
                 ?
               </p>
             </div>

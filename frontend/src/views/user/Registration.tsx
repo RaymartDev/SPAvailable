@@ -222,7 +222,7 @@ function Registration() {
               color="red"
               className="absolute bottom-0 right-4 cursor-pointer"
               onClick={removeProfilePicture}
-              size={30}
+              size={25}
             />
           </div>
           <div className="mb-10">

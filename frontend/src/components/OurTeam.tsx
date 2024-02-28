@@ -30,8 +30,8 @@ function OurTeam() {
           <div className="flex flex-col h-full justify-center items-center cursor-pointer p-5 ">
             <div className="w-full h-full mb-2 flex items-center justify-center">
               <div
-                className="rounded-full overflow-hidden"
-                style={{ width: '300px', height: '290px' }} // Adjust width and height as needed
+                className="rounded-full overflow-hidden border-[#41924B] border-4"
+                style={{ width: '300px', height: '290px' }}
               >
                 <img
                   src={item.image}
@@ -41,7 +41,9 @@ function OurTeam() {
               </div>
             </div>
             <div className="h-1/5">
-              <p className="md:text-xl text-l text-center mt-5">{item.title}</p>
+              <p className="md:text-xl text-lg text-center mt-5">
+                {item.title}
+              </p>
             </div>
           </div>
         </div>

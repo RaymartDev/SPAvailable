@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Logo from '../../img/logo.png';
 import TermsModal from '../../components/Modal/TermsModal';
-import PrivacyModal from '../../components/Modal/PrivacyModal';
+import ForgotPModal from '../../components/Modal/ForgotPModal';
 
 function Test() {
   const [openTermsModal, setOpenTermsModal] = useState(false);
@@ -36,10 +36,11 @@ function Test() {
           onClick={() => setOpenPrivacyModal(true)}
           className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
         >
-          Privacy
+          Forgot Password
         </button>
-        <PrivacyModal
+        <ForgotPModal
           open={openPrivacyModal}
+          user=""
           onClose={() => {
             setOpenPrivacyModal(false);
           }}

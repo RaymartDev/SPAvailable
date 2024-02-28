@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { IoClose } from 'react-icons/io5';
 
-interface LoginModalProps {
+interface TermsModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-function TermsModal({ open, onClose }: LoginModalProps) {
+function TermsModal({ open, onClose }: TermsModalProps) {
   if (!open) return null;
 
   return (
@@ -20,14 +20,14 @@ function TermsModal({ open, onClose }: LoginModalProps) {
 
         <div className="flex flex-col justify-center items-center w-[300px] h-fit pb-5">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-xl">Terms and Condition</h1>
+            <h1 className="font-bold text-2xl">Terms and Condition</h1>
           </div>
         </div>
 
         <div className="flex flex-col overflow-y-scroll h-full px-10 text-sm">
-          <div>
-            <div className="">
-              <p className="">
+          <div className="flex flex-col gap-y-3">
+            <div className="pb-3">
+              <p className="text-md text-left">
                 Welcome to SPAvailable. These Terms and Conditions govern your
                 use our online platform for scheduling spa appointments. By
                 accessing or using any part of our website, you agree to be
@@ -36,87 +36,99 @@ function TermsModal({ open, onClose }: LoginModalProps) {
                 website or use any services.
               </p>
             </div>
-            <h1 className="font-semibold">User Responsibilities:</h1>
-            <p>
-              a. Users are responsible for providing accurate and up-to-date
-              information when scheduling appointments
-            </p>
-            <p>
-              b. Users must adhere to the cancellation and rescheduling policies
-              of the respective spa where the appointment is booked.
-            </p>
-          </div>
 
-          <div>
-            <h1 className="font-semibold">Payment:</h1>
-            <p>
-              a. Payment for spa services is typically made directly to the spa
-              at the time of the appointment, unless otherwise specified.
-            </p>
-            <p>
-              b. We do not handle payments for spa services booked through our
-              platform.
-            </p>
-          </div>
+            <div>
+              <h1 className="font-semibold text-lg">User Responsibilities:</h1>
+              <p>
+                a. Users are responsible for providing accurate and up-to-date
+                information when scheduling appointments
+              </p>
+              <p>
+                b. Users must adhere to the cancellation and rescheduling
+                policies of the respective spa where the appointment is booked.
+              </p>
+            </div>
 
-          <div>
-            <h1 className="font-semibold">Cancellation and Rescheduling:</h1>
-            <p>
-              a. Users are responsible for managing their appointments and
-              adhering to the cancellation and rescheduling policies of the
-              respective spa.
-            </p>
-            <p>
-              b. Cancellation or rescheduling fees, if any, are determined by
-              the individual spas and may vary.
-            </p>
-          </div>
+            <div>
+              <h1 className="font-semibold text-lg">Payment:</h1>
+              <p>
+                a. Payment for spa services is typically made directly to the
+                spa at the time of the appointment, unless otherwise specified.
+              </p>
+              <p>
+                b. We do not handle payments for spa services booked through our
+                platform.
+              </p>
+            </div>
 
-          <div>
-            <h1 className="font-semibold">Liability:</h1>
-            <p>
-              a. While we strive to provide accurate information and facilitate
-              appointment bookings, we shall not be held liable for any
-              discrepancies, errors, or issues arising from appointments booked
-              through our platform.
-            </p>
-            <p>
-              b. Users are solely responsible for their interactions with the
-              spas listed on our website.
-            </p>
-          </div>
+            <div>
+              <h1 className="font-semibold text-lg">
+                Cancellation and Rescheduling:
+              </h1>
+              <p>
+                a. Users are responsible for managing their appointments and
+                adhering to the cancellation and rescheduling policies of the
+                respective spa.
+              </p>
+              <p>
+                b. Cancellation or rescheduling fees, if any, are determined by
+                the individual spas and may vary.
+              </p>
+            </div>
 
-          <div>
-            <h1 className="font-semibold">Privacy:</h1>
-            <p>
-              a. We respect your privacy and will handle your personal
-              information in accordance with our Privacy Policy.
-            </p>
-            <p>
-              b. By using our platform, you consent to the collection and use of
-              your information as described in our Privacy Policy.
-            </p>
-          </div>
+            <div>
+              <h1 className="font-semibold text-lg">Liability:</h1>
+              <p>
+                a. While we strive to provide accurate information and
+                facilitate appointment bookings, we shall not be held liable for
+                any discrepancies, errors, or issues arising from appointments
+                booked through our platform.
+              </p>
+              <p>
+                b. Users are solely responsible for their interactions with the
+                spas listed on our website.
+              </p>
+            </div>
 
-          <div>
-            <h1 className="font-semibold">Changes to Terms:</h1>
-            <p>
-              a. We reserve the right to modify or update these Terms and
-              Conditions at any time without prior notice. Changes will be
-              effective immediately upon posting to our website.
-            </p>
-            <p>
-              b. It is your responsibility to review these Terms periodically
-              for any updates.
-            </p>
-          </div>
-          <div className="flex justify-between p-5">
-            <button type="button" className="bg-green-500 px-5 py-3 rounded-lg">
-              Accept
-            </button>
-            <button type="button" className="bg-red-500 px-5 py-3 rounded-lg">
-              Decline
-            </button>
+            <div>
+              <h1 className="font-semibold text-lg">Privacy:</h1>
+              <p>
+                a. We respect your privacy and will handle your personal
+                information in accordance with our Privacy Policy.
+              </p>
+              <p>
+                b. By using our platform, you consent to the collection and use
+                of your information as described in our Privacy Policy.
+              </p>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-lg">Changes to Terms:</h1>
+              <p>
+                a. We reserve the right to modify or update these Terms and
+                Conditions at any time without prior notice. Changes will be
+                effective immediately upon posting to our website.
+              </p>
+              <p>
+                b. It is your responsibility to review these Terms periodically
+                for any updates.
+              </p>
+            </div>
+
+            <div className="flex justify-between p-5">
+              <button
+                type="button"
+                className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50"
+              >
+                Accept
+              </button>
+              <button
+                type="button"
+                className="bg-red-500 py-3 rounded-lg w-28 text-slate-50"
+              >
+                Decline
+              </button>
+            </div>
           </div>
         </div>
       </div>

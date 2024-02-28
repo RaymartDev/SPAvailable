@@ -16,7 +16,7 @@ function Menu() {
   };
 
   return (
-    <div className="flex flex-col pl-5 py-5 bg-slate-50">
+    <div className="flex flex-col pl-5 py-10 bg-white">
       <div className="border-b-2 border-black">
         <h1 className="text-2xl font-bold pb-3">ABOUT</h1>
       </div>
