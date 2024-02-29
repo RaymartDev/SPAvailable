@@ -105,11 +105,11 @@ function EditProfile() {
             <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>
           <div className="relative" id="profilePicture">
-            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
+            <div className="size-48 rounded-full overflow-hidden flex justify-center items-center border-4 p-1">
               <img
                 alt="profilePicture"
                 src={profilePicture || DefaultPp}
-                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
+                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture || DefaultPp ? 'bg-white' : ''}`}
               />
             </div>
             <FaTrash

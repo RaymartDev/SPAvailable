@@ -211,7 +211,7 @@ function Registration() {
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
-            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center">
+            <div className="size-40 rounded-full overflow-hidden flex justify-center items-center border-2 p-1">
               <img
                 alt="Profile"
                 src={profilePicture || DefaultPp}

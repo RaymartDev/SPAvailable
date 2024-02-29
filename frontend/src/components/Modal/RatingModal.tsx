@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
-import StarRating from '../StarRating';
+import ModalStar from './ModalStar';
 
 interface RatingModalProps {
   open: boolean;
@@ -15,7 +15,6 @@ function RatingModal({ open, onClose }: RatingModalProps) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const input = e.target.value;
-    // Check if the input is less than or equal to the character limit
     if (input.length <= 300) {
       setFeedback(input);
     }
@@ -23,7 +22,7 @@ function RatingModal({ open, onClose }: RatingModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
-      <div className="flex flex-col items-center w-[464px] h-[450px] bg-slate-50 rounded-2xl pb-10">
+      <div className="flex flex-col items-center w-[464px] h-[475px] bg-slate-50 rounded-2xl pb-10 text-black">
         <div className="flex justify-end items-start w-full h-fit">
           <button type="button" onClick={onClose} className="m-3">
             <IoClose size={30} />
@@ -44,7 +43,7 @@ function RatingModal({ open, onClose }: RatingModalProps) {
               </h1>
             </div>
             <div className="flex items-center justify-center">
-              <StarRating totalStars={5} />
+              <ModalStar totalStars={5} />
             </div>
             <div className="flex justify-center items-center">
               <h1 className="text-lg font-semibold">

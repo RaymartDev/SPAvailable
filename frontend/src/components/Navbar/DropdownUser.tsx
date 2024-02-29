@@ -9,11 +9,13 @@ import { logout } from '../../store/reducer/userSlice';
 import DefaultPp from '../../img/defaultPp.png';
 import { useToast } from '../../hooks/useToast';
 import DropdownProps from '../../interface/DropdownProps';
+import RatingModal from '../Modal/RatingModal';
 
 function DropdownUserMenu({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
+  const [openRatingModal, setOpenRatingModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -54,7 +56,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
         <img
           src={user?.profile || DefaultPp}
           alt="User Avatar"
-          className="size-12 rounded-full object-cover object-center"
+          className="size-12 rounded-full object-cover object-center border-2 border-[#41924B] p-1"
         />
       </button>
       {isOpen && (
@@ -63,7 +65,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
             <img
               src={user?.profile || DefaultPp}
               alt="User Avatar"
-              className="size-10 rounded-full object-cover object-center"
+              className="size-12 rounded-full object-cover object-center"
             />
             <h1 className="ml-2 font-semibold text-md text-neutral-950">
               {user?.name}
@@ -84,13 +86,19 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
             <button
               type="button"
               className="flex items-center py-2 pl-2 hover:bg-gray-100 hover:text-neutral-950 w-full rounded-md"
-              onClick={() => navigate('/user/profile')}
+              onClick={() => setOpenRatingModal(true)}
             >
               <div className="bg-slate-50  rounded-full p-2">
                 <MdOutlineFeedback color="black" size={25} />
               </div>
               <h1 className="text-md ml-2">Feedback</h1>
             </button>
+            <RatingModal
+              open={openRatingModal}
+              onClose={() => {
+                setOpenRatingModal(false);
+              }}
+            />
 
             <hr className="my-2" />
 

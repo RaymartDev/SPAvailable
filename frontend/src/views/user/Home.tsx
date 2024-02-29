@@ -1,5 +1,4 @@
-import { IoSearchSharp } from 'react-icons/io5';
-import { useState } from 'react';
+import { useDeferredValue, useState } from 'react';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
@@ -12,6 +11,8 @@ import Loader from '../../components/Loader Component/Loader';
 function MainHome() {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
+  const [searchSpa, setSearchSpa] = useState('');
+  const searchValue = useDeferredValue(searchSpa);
 
   if (loading) {
     return <Loader />;
@@ -31,15 +32,11 @@ function MainHome() {
               <div>
                 <input
                   type="search"
-                  className="rounded-full py-3 px-5 w-full md:w-[450px] mr-5 my-3"
+                  className="rounded-full py-3 px-5 w-full md:w-[450px] mr-5 my-3 border-4 border-[#41924B]"
+                  placeholder="Search Spa"
+                  value={searchSpa}
+                  onChange={(e) => setSearchSpa(e.target.value)}
                 />
-              </div>
-
-              <div className="flex items-center justify-center rounded-full bg-[#41924B] py-3 px-5 font-semibold text-slate-50 md:w-[221px]">
-                <IoSearchSharp size={20} className="mr-1" />
-                <button type="button" className="font-semibold text-slate-50">
-                  FIND SPA
-                </button>
               </div>
             </div>
           </div>
@@ -54,7 +51,7 @@ function MainHome() {
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
-          <SpaGrid />
+          <SpaGrid searchSpa={searchValue} />
         </div>
       </div>
 
