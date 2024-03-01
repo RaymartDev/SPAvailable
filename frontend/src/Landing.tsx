@@ -182,6 +182,7 @@ function Landing() {
               onClose={() => {
                 setForgotPModalOpen(false);
                 setPassword('');
+                setUser('');
               }}
             />
           )}
