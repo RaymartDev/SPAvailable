@@ -15,11 +15,13 @@ import Logo from './img/logo.png';
 import Suite from './img/suite.png';
 import Image9 from './img/image9.png';
 import Loader from './components/Loader Component/Loader';
+import ForgotPModal from './components/Modal/ForgotPModal';
 
 function Landing() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const [forgotPModal, setForgotPModalOpen] = useState(false);
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const { showErrorToast, showSuccessToast } = useToast();
@@ -50,6 +52,36 @@ function Landing() {
       navigate('/user/dashboard');
     }
   }, [userObj, navigate]);
+
+  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = async (
+    e
+  ) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const response = await axios.post('/api/v1/user/login', {
+          email: user,
+          password,
+        });
+        dispatch(setCredentials(response.data));
+        showSuccessToast('Successfully logged in');
+        setPasswordModalOpen(false);
+        navigate(response.data.active ? '/user/dashboard' : '/user/pending');
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to login');
+        }
+      } finally {
+        setUser('');
+        setPassword('');
+        setPasswordModalOpen(false);
+        setLoading(false);
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -119,22 +151,40 @@ function Landing() {
           >
             Sign Up
           </button>
-          <SignUpModal
-            open={openSignUpModal}
-            onClose={() => setOpenSignUpModal(false)}
-            onSwitchToLogin={switchToLogIn}
-          />
+          {openSignUpModal && (
+            <SignUpModal
+              onClose={() => setOpenSignUpModal(false)}
+              onSwitchToLogin={switchToLogIn}
+            />
+          )}
 
-          <PasswordModal
-            setPassword={setPassword}
-            password={password}
-            open={passwordModalOpen}
-            onClose={() => {
-              setPasswordModalOpen(false);
-              setPassword('');
-            }}
-            handleSubmit={handleSubmit}
-          />
+          {passwordModalOpen && (
+            <PasswordModal
+              setPassword={setPassword}
+              password={password}
+              onClose={() => {
+                setPasswordModalOpen(false);
+                setPassword('');
+              }}
+              handleSubmit={handleSubmit}
+              handleKeyPress={handleKeyPress}
+              handleForgotPassword={() => {
+                setPasswordModalOpen(false);
+                setPassword('');
+                setForgotPModalOpen(true);
+              }}
+            />
+          )}
+
+          {forgotPModal && (
+            <ForgotPModal
+              email={user}
+              onClose={() => {
+                setForgotPModalOpen(false);
+                setPassword('');
+              }}
+            />
+          )}
         </div>
       </div>
 

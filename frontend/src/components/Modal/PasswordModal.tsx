@@ -1,29 +1,28 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 interface PasswordModalProps {
-  open: boolean;
   onClose: () => void;
   setPassword: (props: string) => void;
   password: string;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleForgotPassword: () => void;
 }
 function PasswordModal({
-  open,
   onClose,
   password,
   setPassword,
   handleSubmit,
+  handleKeyPress,
+  handleForgotPassword,
 }: PasswordModalProps) {
   const [visiblePass, setVisiblePass] = useState(false);
 
   const togglePassword = () => {
     setVisiblePass(!visiblePass);
   };
-
-  if (!open) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20 ">
@@ -62,6 +61,7 @@ function PasswordModal({
               value={password}
               placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
             <div className="absolute right-0 top-0 bottom-0 flex items-center px-2">
               {visiblePass === false ? (
@@ -86,7 +86,11 @@ function PasswordModal({
             <div className="text-sm">
               <p>
                 Forgot your{' '}
-                <button type="button" className="text-[#41924B]">
+                <button
+                  onClick={handleForgotPassword}
+                  type="button"
+                  className="text-[#41924B]"
+                >
                   Password
                 </button>
                 ?

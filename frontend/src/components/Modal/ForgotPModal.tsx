@@ -4,28 +4,25 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 interface ForgotPModalProps {
-  open: boolean;
   onClose: () => void;
-  user: string;
+  email: string;
 }
 
-function ForgotPModal({ open, onClose, user }: ForgotPModalProps) {
+function ForgotPModal({ onClose, email }: ForgotPModalProps) {
   const [emailError, setEmailError] = useState('');
-
+  const [emailVal, setEmail] = useState(email || '');
   const validateEmail = (emailParam: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(emailParam);
   };
 
   const handleContinueClick = () => {
-    if (!validateEmail(user)) {
+    if (!validateEmail(emailVal)) {
       setEmailError('Please enter a valid email address.');
       return;
     }
     setEmailError('');
   };
-
-  if (!open) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
@@ -58,6 +55,8 @@ function ForgotPModal({ open, onClose, user }: ForgotPModalProps) {
                 type="text"
                 placeholder="Email Address"
                 className="w-full rounded border-stone-950 border px-2 py-3"
+                value={emailVal}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}

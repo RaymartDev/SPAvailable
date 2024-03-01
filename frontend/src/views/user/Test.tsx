@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import Logo from '../../img/logo.png';
-import TermsModal from '../../components/Modal/TermsModal';
-import ForgotPModal from '../../components/Modal/ForgotPModal';
 import RatingModal from '../../components/Modal/RatingModal';
 
 function Test() {
-  const [openTermsModal, setOpenTermsModal] = useState(false);
-  const [openPrivacyModal, setOpenPrivacyModal] = useState(false);
   const [openRatingModal, setOpenRatingModal] = useState(false);
 
   return (
@@ -20,33 +16,6 @@ function Test() {
         </div>
       </div>
       <div>
-        <button
-          type="button"
-          onClick={() => setOpenTermsModal(true)}
-          className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
-        >
-          Terms
-        </button>
-        <TermsModal
-          open={openTermsModal}
-          onClose={() => {
-            setOpenTermsModal(false);
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => setOpenPrivacyModal(true)}
-          className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
-        >
-          Forgot Password
-        </button>
-        <ForgotPModal
-          open={openPrivacyModal}
-          user=""
-          onClose={() => {
-            setOpenPrivacyModal(false);
-          }}
-        />
         <button
           type="button"
           onClick={() => setOpenRatingModal(true)}

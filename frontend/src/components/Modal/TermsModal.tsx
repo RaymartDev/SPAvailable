@@ -2,13 +2,11 @@
 import { IoClose } from 'react-icons/io5';
 
 interface TermsModalProps {
-  open: boolean;
   onClose: () => void;
+  handleRegister: () => Promise<void>;
 }
 
-function TermsModal({ open, onClose }: TermsModalProps) {
-  if (!open) return null;
-
+function TermsModal({ onClose, handleRegister }: TermsModalProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
       <div className="flex flex-col items-center w-[464px] h-[659px] bg-slate-50 rounded-2xl pb-10">
@@ -119,12 +117,14 @@ function TermsModal({ open, onClose }: TermsModalProps) {
               <button
                 type="button"
                 className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50"
+                onClick={handleRegister}
               >
                 Accept
               </button>
               <button
                 type="button"
                 className="bg-red-500 py-3 rounded-lg w-28 text-slate-50"
+                onClick={onClose}
               >
                 Decline
               </button>

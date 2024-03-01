@@ -13,6 +13,7 @@ import { useToast } from '../../hooks/useToast';
 import { setCredentials } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
 import { formatDate2Digit } from '../../components/Util/dateUtil';
+import TermsModal from '../../components/Modal/TermsModal';
 
 function Registration() {
   const location = useLocation();
@@ -25,6 +26,8 @@ function Registration() {
   const [profilePicture, setProfilePicture] = useState<string>(
     location.state.picture || DefaultPp
   );
+
+  const [openTermsModal, setOpenTermsModal] = useState<boolean>(false);
 
   const [password, setPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
@@ -135,6 +138,35 @@ function Registration() {
     setGenderError('');
   };
 
+  const handleRegister = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post('/api/v1/user/register', {
+        name: `${firstName} ${lastName}`,
+        email,
+        contact: contactNumber ? `0${contactNumber}` : '',
+        password,
+        birth_date: formatDate2Digit(selectedDate),
+        gender: gender === 'Male',
+        active: !!location.state.email_verified,
+        profile: profilePicture,
+      });
+      dispatch(setCredentials(response.data));
+      showSuccessToast('Successfully registered');
+      navigate('/user/pending');
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to register');
+      }
+    } finally {
+      handleResetAll();
+      setLoading(false);
+      setOpenTermsModal(false);
+    }
+  };
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -174,31 +206,8 @@ function Registration() {
       setLoading(false);
       return;
     }
-
-    try {
-      const response = await axios.post('/api/v1/user/register', {
-        name: `${firstName} ${lastName}`,
-        email,
-        contact: contactNumber ? `0${contactNumber}` : '',
-        password,
-        birth_date: formatDate2Digit(selectedDate),
-        gender: gender === 'Male',
-        active: !!location.state.email_verified,
-        profile: profilePicture,
-      });
-      dispatch(setCredentials(response.data));
-      showSuccessToast('Successfully registered');
-      navigate('/user/pending');
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        showErrorToast(err);
-      } else {
-        showErrorToast('Unable to register');
-      }
-    } finally {
-      handleResetAll();
-      setLoading(false);
-    }
+    setLoading(false);
+    setOpenTermsModal(true);
   };
 
   if (loading) {
@@ -208,6 +217,12 @@ function Registration() {
   return (
     <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
       <Navbar />
+      {openTermsModal && (
+        <TermsModal
+          onClose={() => setOpenTermsModal(false)}
+          handleRegister={handleRegister}
+        />
+      )}
       <div className="flex ">
         <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
@@ -232,6 +247,7 @@ function Registration() {
               id="profilePhoto"
               onChange={handleFileChange}
               className="hidden"
+              name="profilePhoto"
             />
             <label
               htmlFor="profilePhoto"

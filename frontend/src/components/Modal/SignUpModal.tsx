@@ -7,18 +7,31 @@ import { decodedToken } from '../Google/client';
 import { useToast } from '../../hooks/useToast';
 
 interface SignUpModalProps {
-  open: boolean;
   onClose: () => void;
   onSwitchToLogin: () => void;
 }
 
-function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
+function SignUpModal({ onClose, onSwitchToLogin }: SignUpModalProps) {
   const navigate = useNavigate() as NavigateFunction;
   const { showErrorToast } = useToast();
 
   const validateEmail = (email: string): boolean => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (!validateEmail(email)) {
+        setEmailError('Please enter a valid email address.');
+        return;
+      }
+      setEmailError('');
+      navigate('/register', {
+        state: { email },
+      });
+      setEmail('');
+    }
   };
 
   const navigateToRegister = () => {
@@ -36,8 +49,6 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-
-  if (!open) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20 ">
@@ -109,6 +120,7 @@ function SignUpModal({ open, onClose, onSwitchToLogin }: SignUpModalProps) {
               type="text"
               placeholder="Email Address"
               className="w-full rounded border-stone-950 border p-2"
+              onKeyDown={handleKeyPress}
             />
           </div>
           {emailError && (

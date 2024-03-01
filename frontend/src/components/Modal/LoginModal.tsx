@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
@@ -40,6 +39,17 @@ function LoginModal({
   const validateEmail = (emailParam: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(emailParam);
+  };
+
+  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Enter') {
+      if (!validateEmail(user)) {
+        setEmailError('Please enter a valid email address.');
+        return;
+      }
+      setEmailError('');
+      onContinueToPasswordModal();
+    }
   };
 
   const handleContinueClick = () => {
@@ -135,6 +145,7 @@ function LoginModal({
               className="w-full rounded border-stone-950 border p-2"
               value={user}
               onChange={handleEmailChange}
+              onKeyDown={handleKeyPress}
             />
           </div>
           {emailError && (
