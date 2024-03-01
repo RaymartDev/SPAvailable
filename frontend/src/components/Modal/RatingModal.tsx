@@ -5,13 +5,11 @@ import { useState } from 'react';
 import ModalStar from './ModalStar';
 
 interface RatingModalProps {
-  open: boolean;
   onClose: () => void;
 }
 
-function RatingModal({ open, onClose }: RatingModalProps) {
+function RatingModal({ onClose }: RatingModalProps) {
   const [feedback, setFeedback] = useState('');
-  if (!open) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const input = e.target.value;

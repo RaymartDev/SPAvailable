@@ -181,7 +181,7 @@ function EditProfile() {
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Password
+                New Password
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
@@ -201,7 +201,7 @@ function EditProfile() {
             </div>
             <div className="card mb-16">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Retype Password
+                Confirm New Password
               </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input

@@ -75,7 +75,7 @@ function Products() {
     <div className="bg-white py-8 px-12 max-h-screen">
       <div>
         <h1 className="text-4xl font-semibold text-center mb-8 w-fit">
-          Products
+          Our Products
         </h1>
         <div className="flex items-center justify-center">
           <button

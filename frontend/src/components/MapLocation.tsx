@@ -16,7 +16,8 @@ function MapLocation() {
           <div>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.2653988354764!2d121.02906847590596!3d14.754072073299145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b1cc5ffb90cf%3A0xf1e37bb3f2086d!2sCongressional%20Rd%20Ext%2C%20Barangay%20171%2C%20Caloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1708931611777!5m2!1sen!2sph"
-              height="500"
+              height="700"
+              width="700"
               className="w-full rounded-lg"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

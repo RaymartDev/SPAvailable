@@ -93,12 +93,13 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               </div>
               <h1 className="text-md ml-2">Feedback</h1>
             </button>
-            <RatingModal
-              open={openRatingModal}
-              onClose={() => {
-                setOpenRatingModal(false);
-              }}
-            />
+            {openRatingModal && (
+              <RatingModal
+                onClose={() => {
+                  setOpenRatingModal(false);
+                }}
+              />
+            )}
 
             <hr className="my-2" />
 
