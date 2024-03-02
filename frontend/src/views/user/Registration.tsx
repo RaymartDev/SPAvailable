@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
@@ -19,12 +19,18 @@ function Registration() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!location.state) {
+      navigate('/');
+    }
+  }, [navigate, location.state]);
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRePass, setVisibleRePass] = useState(false);
   const [contactNumber, setContactNumber] = useState('');
   const [profilePicture, setProfilePicture] = useState<string>(
-    location.state.picture || DefaultPp
+    location.state?.picture || DefaultPp
   );
 
   const [openTermsModal, setOpenTermsModal] = useState<boolean>(false);
@@ -33,9 +39,9 @@ function Registration() {
   const [retypePassword, setRetypePassword] = useState('');
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  const [firstName, setFirstName] = useState(location.state.firstName || '');
-  const [lastName, setLastName] = useState(location.state.lastName || '');
-  const [email, setEmail] = useState(location.state.email || '');
+  const [firstName, setFirstName] = useState(location.state?.firstName || '');
+  const [lastName, setLastName] = useState(location.state?.lastName || '');
+  const [email, setEmail] = useState(location.state?.email || '');
   const [gender, setGender] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
@@ -298,7 +304,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">Email</h2>
               <input
                 type="email"
-                disabled={location.state.google}
+                disabled={location.state?.google}
                 value={email}
                 onChange={handleEmailChange}
                 className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${emailError ? 'border-red-500' : ''}`}
