@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { lazy } from 'react';
 import Loader from './components/Loader Component/Loader';
-// Lazy loading the route components
+import Page from './components/Util/Page';
 
+/**
+ * LAZY LOADED COMPONENTS
+ */
 const Landing = lazy(() => import('./Landing'));
 const Home = lazy(() => import('./views/user/Home'));
 const Registration = lazy(() => import('./views/user/Registration'));
@@ -23,140 +25,34 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Landing />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Registration />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <Suspense fallback={<Loader />}>
-              <AboutUs />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/terms"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Terms />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
+        {/* REGULAR ROUTES */}
+        <Route path="/" element={<Page component={Landing} />} />
+        <Route path="/register" element={<Page component={Registration} />} />
+        <Route path="/about" element={<Page component={AboutUs} />} />
+        <Route path="/terms" element={<Page component={Terms} />} />
         <Route
           path="/privacy-policy"
-          element={
-            <Suspense fallback={<Loader />}>
-              <PrivacyPolicy />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/test"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Test />
-              <ToastContainer />
-            </Suspense>
-          }
+          element={<Page component={PrivacyPolicy} />}
         />
 
         {/* PROTECTED ROUTES */}
-        <Route
-          path="/user/dashboard"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Home />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
+        <Route path="/user/dashboard" element={<Page component={Home} />} />
         <Route
           path="/user/profile"
-          element={
-            <Suspense fallback={<Loader />}>
-              <EditProfile />
-              <ToastContainer />
-            </Suspense>
-          }
+          element={<Page component={EditProfile} />}
         />
-        <Route
-          path="/user/pending"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Pending />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/user/verify"
-          element={
-            <Suspense fallback={<Loader />}>
-              <VerifyPage />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
+        <Route path="/user/pending" element={<Page component={Pending} />} />
+        <Route path="/user/verify" element={<Page component={VerifyPage} />} />
 
-        <Route
-          path="/spa/about"
-          element={
-            <Suspense fallback={<Loader />}>
-              <AboutSpa />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
+        {/* SPA ROUTES */}
+        <Route path="/spa/about" element={<Page component={AboutSpa} />} />
+        <Route path="/spa/product" element={<Page component={Product} />} />
+        <Route path="/spa/service" element={<Page component={Service} />} />
 
-        <Route
-          path="/spa/product"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Product />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/spa/service"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Service />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
-
-        <Route path="/loader" element={<Loader />} />
-
-        <Route
-          path="*"
-          element={
-            <Suspense fallback={<Loader />}>
-              <NotFound />
-              <ToastContainer />
-            </Suspense>
-          }
-        />
+        {/* MISC */}
+        <Route path="/loader" element={<Page component={Loader} />} />
+        <Route path="/test" element={<Page component={Test} />} />
+        <Route path="*" element={<Page component={NotFound} />} />
       </Routes>
     </BrowserRouter>
   );
