@@ -12,3 +12,11 @@ body {
 html {
     scroll-behavior: smooth ;
   }
+
+@layer utilities {
+    .text-stroke-black {
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: black;
+      text-shadow: 0px 0px 0 black;
+    }
+}

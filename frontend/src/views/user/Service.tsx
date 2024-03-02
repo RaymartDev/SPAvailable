@@ -1,4 +1,5 @@
 import { useDeferredValue, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image23 from '../../img/image23.png';
 import ServiceComp from '../../components/ServiceComp';
@@ -23,19 +24,28 @@ function Service() {
       <div className="flex relative h-[450px] md:h-[598px]">
         <img alt="cover" src={Image23} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">
-          <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl">
+          <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl text-stroke-black">
             SERVICES
           </h1>
           <div className="flex mt-20">
-            <div className="flex flex-col items-center md:flex-row">
-              <div>
+            <div className="flex flex-col items-center md:flex-row gap-x-5">
+              <div className="relative">
+                <FaSearch className="absolute top-1/2 left-5 transform -translate-y-1/2 text-black" />
                 <input
                   type="search"
-                  className="rounded-full py-3 px-5 w-full md:w-[450px] mr-5 my-3 border-4 border-[#41924B]"
+                  className="rounded-full py-3 pl-12 pr-5 w-full md:w-[450px] border-4 border-[rgb(65,146,75)]"
                   placeholder="Search Service"
                   value={searchService}
                   onChange={(e) => setSearchService(e.target.value)}
                 />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="bg-[#41924B] py-3 px-10 rounded-full text-slate-50"
+                >
+                  Advanced Search
+                </button>
               </div>
             </div>
           </div>

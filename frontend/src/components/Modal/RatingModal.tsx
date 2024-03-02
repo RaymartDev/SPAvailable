@@ -36,21 +36,16 @@ function RatingModal({ onClose }: RatingModalProps) {
         <div className="flex flex-col h-full px-10 text-sm items-center justify-center">
           <div className="flex flex-col gap-y-5">
             <div>
-              <h1 className="text-lg font-semibold">
-                Are you enjoying using the website?
+              <h1 className="text-lg text-center font-semibold">
+                Your thoughts are valuable in helping improve our website.
               </h1>
             </div>
             <div className="flex items-center justify-center">
               <ModalStar totalStars={5} />
             </div>
-            <div className="flex justify-center items-center">
-              <h1 className="text-lg font-semibold">
-                How can we improve the website?
-              </h1>
-            </div>
             <div className="overflow-hidden">
               <textarea
-                className="w-full resize-none px-2 py-3 border-2"
+                className="w-full h-20 resize-none px-2 py-3 border-2 rounded-lg"
                 onChange={handleInputChange}
                 placeholder="Provide your feedback here..."
                 disabled={feedback.length >= 300}

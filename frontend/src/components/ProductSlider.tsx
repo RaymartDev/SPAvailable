@@ -73,11 +73,11 @@ function Products() {
 
   return (
     <div className="bg-white py-8 px-12 max-h-screen">
-      <div>
+      <div className="border-b-4 border-black">
         <h1 className="text-4xl font-semibold text-center mb-8 w-fit">
           Our Products
         </h1>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center pb-20">
           <button
             type="button"
             onClick={goToPrevSlide}

@@ -1,6 +1,6 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 interface ForgotPModalProps {
@@ -11,17 +11,44 @@ interface ForgotPModalProps {
 function ForgotPModal({ onClose, email }: ForgotPModalProps) {
   const [emailError, setEmailError] = useState('');
   const [emailVal, setEmail] = useState(email || '');
+  const [canClick, setCanClick] = useState(true);
+  const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    if (!canClick) {
+      const timer = setInterval(() => {
+        setCountdown((prevCountdown) => {
+          if (prevCountdown === 0) {
+            setCanClick(true);
+            clearInterval(timer);
+            return 0;
+          }
+          return prevCountdown - 1;
+        });
+      }, 1000); // Update countdown every second
+
+      return () => clearInterval(timer);
+    }
+  }, [canClick]);
+
   const validateEmail = (emailParam: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(emailParam);
   };
 
   const handleContinueClick = () => {
+    if (!canClick) {
+      return;
+    }
+
     if (!validateEmail(emailVal)) {
       setEmailError('Please enter a valid email address.');
       return;
     }
+
     setEmailError('');
+    setCanClick(false); // Disallow clicking for 1 minute
+    setCountdown(60); // Reset countdown timer
   };
 
   return (
@@ -60,7 +87,11 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
               />
             </div>
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
-
+            {countdown > 0 && (
+              <p className="text-red-500 text-sm">
+                Please wait {countdown} seconds before clicking again.
+              </p>
+            )}
             <div className="flex gap-x-5 items-center justify-end">
               <button
                 type="button"
@@ -71,8 +102,9 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
               </button>
               <button
                 type="button"
-                className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50 border-2 font-semibold"
+                className={`bg-[#41924B] py-3 rounded-lg w-28 text-slate-50 border-2 font-semibold ${canClick ? '' : 'cursor-not-allowed opacity-50'}`}
                 onClick={handleContinueClick}
+                disabled={!canClick}
               >
                 Continue
               </button>

@@ -192,7 +192,7 @@ function Landing() {
       <div className="flex relative md:h-[602px]">
         <img src={Suite} alt="Suite" className="object-cover h-full w-full" />
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full z-10">
-          <h1 className="font-bold text-slate-50 text-4xl md:text-6xl text-center">
+          <h1 className="font-bold text-slate-50 text-4xl md:text-6xl text-center text-stroke-black">
             FIND SPA NEAR YOU
           </h1>
         </div>

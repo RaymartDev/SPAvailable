@@ -4,20 +4,20 @@ import Juliet from '../img/BAUTISTA.png';
 import Lloyd from '../img/LLOYD.jpg';
 import Adoc from '../img/ADOC.png';
 import Bucad from '../img/BUCAD.png';
-import Image6 from '../img/image6.png';
-import Image7 from '../img/image7.png';
-import Image8 from '../img/image8.png';
+import Monzon from '../img/MONZON.png';
+import Borromeo from '../img/BORROMEO1.png';
+import Raby from '../img/RABY.png';
 
 function OurTeam() {
   const items = [
-    { image: Raymart, title: 'Project Manager / Backend Developer' },
-    { image: Juliet, title: 'Software Engineer' },
-    { image: Lloyd, title: 'Frontend Developer' },
-    { image: Adoc, title: 'Mobile App Developer' },
-    { image: Bucad, title: 'Documentator' },
-    { image: Image6, title: 'UI / UX' },
-    { image: Image7, title: 'UI / UX' },
-    { image: Image8, title: 'UI / UX' },
+    { image: Raymart, name: 'Raymart Sarmiento', title: 'Project Manager' },
+    { image: Juliet, name: 'Juliet Bautista', title: 'Software Engineer' },
+    { image: Lloyd, name: 'John Lloyd Itliong', title: 'Frontend Developer' },
+    { image: Adoc, name: 'Romeo Adoc', title: 'Mobile App Developer' },
+    { image: Bucad, name: 'Hazel Ann Bucad', title: 'Documentator' },
+    { image: Monzon, name: 'John Monzon', title: 'UI / UX' },
+    { image: Borromeo, name: 'John Joven Borromeo', title: 'UI / UX' },
+    { image: Raby, name: 'Mark Rhicky Raby', title: 'UI / UX' },
   ];
 
   return (
@@ -41,9 +41,10 @@ function OurTeam() {
               </div>
             </div>
             <div className="h-1/5">
-              <p className="md:text-xl text-lg text-center mt-5">
-                {item.title}
+              <p className="md:text-xl font-semibold text-lg text-center mt-3">
+                {item.name}
               </p>
+              <p className="md:text-md text-lg text-center">{item.title}</p>
             </div>
           </div>
         </div>

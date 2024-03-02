@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa6';
 import axios, { AxiosError } from 'axios';
+import { FaRegEdit } from 'react-icons/fa';
 import DefaultPp from '../../img/defaultPp.png';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useToast } from '../../hooks/useToast';
@@ -157,9 +158,13 @@ function EditProfile() {
 
           <div className="grid grid-cols-2 mx-10 ">
             <div className="card mb-16">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Full Name
-              </h2>
+              <div className="flex items-center mb-3">
+                <h2 className="text-xl text-neutral-400 font-semibold pr-2">
+                  Full Name
+                </h2>
+                <FaRegEdit size={20} />
+              </div>
+
               <input
                 type="text"
                 value={name}
@@ -180,9 +185,13 @@ function EditProfile() {
               />
             </div>
             <div className="card mb-16">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                New Password
-              </h2>
+              <div className="flex items-center mb-3">
+                <h2 className="text-xl text-neutral-400 font-semibold pr-2">
+                  New Password
+                </h2>
+                <FaRegEdit size={20} />
+              </div>
+
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   value={pass}
@@ -219,8 +228,28 @@ function EditProfile() {
                 </div>
               </div>
             </div>
+            <div className="card mb-16">
+              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+                Contact
+              </h2>
+              <input
+                type="text"
+                value={user?.contact}
+                className="w-9/12 border-b-2 px-1 py-2"
+              />
+            </div>
+            <div className="card mb-16">
+              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
+                Gender
+              </h2>
+              <input
+                type="text"
+                readOnly
+                disabled
+                className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
+              />
+            </div>
           </div>
-
           <div className="flex justify-end mx-10 mt-10">
             <div className="bg-[#41924B] rounded-full mr-[126px]">
               <button

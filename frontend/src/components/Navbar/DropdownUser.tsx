@@ -65,7 +65,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
             <img
               src={user?.profile || DefaultPp}
               alt="User Avatar"
-              className="size-12 rounded-full object-cover object-center"
+              className="size-12 rounded-full object-cover object-center border-[2px] border-[#41924B] p-[1px]"
             />
             <h1 className="ml-2 font-semibold text-md text-neutral-950">
               {user?.name}

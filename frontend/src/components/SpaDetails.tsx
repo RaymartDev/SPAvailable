@@ -35,7 +35,7 @@ function SpaDetails() {
           <img
             alt=""
             src={Image12}
-            className="size-[450px] -mt-10 rounded-lg "
+            className="size-[450px] -mt-20 rounded-lg"
           />
         </div>
       </div>
