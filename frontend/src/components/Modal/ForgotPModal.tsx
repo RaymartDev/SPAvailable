@@ -2,6 +2,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
+import axios, { AxiosError } from 'axios';
+import { useToast } from '../../hooks/useToast';
 
 interface ForgotPModalProps {
   onClose: () => void;
@@ -14,11 +16,13 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
   const [canClick, setCanClick] = useState(true);
   const [countdown, setCountdown] = useState(0);
 
+  const { showErrorToast, showSuccessToast } = useToast();
+
   useEffect(() => {
     if (!canClick) {
       const timer = setInterval(() => {
         setCountdown((prevCountdown) => {
-          if (prevCountdown === 0) {
+          if (prevCountdown <= 0) {
             setCanClick(true);
             clearInterval(timer);
             return 0;
@@ -36,7 +40,10 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
     return regex.test(emailParam);
   };
 
-  const handleContinueClick = () => {
+  const handleContinueClick = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
     if (!canClick) {
       return;
     }
@@ -44,6 +51,23 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
     if (!validateEmail(emailVal)) {
       setEmailError('Please enter a valid email address.');
       return;
+    }
+
+    try {
+      const response = await axios.post('/api/v1/user/reset', {
+        email: emailVal,
+      });
+      if (response.status === 200) {
+        showSuccessToast('Successfully sent reset password email');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to login');
+      }
+    } finally {
+      setEmail('');
     }
 
     setEmailError('');

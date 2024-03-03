@@ -17,15 +17,14 @@ This project aims to develop a website connecting spa businesses with spa goers.
 
 - Front-end: (Vite React, Tailwind CSS, Typescript)
 - Back-end: (Express, Typescript, Prisma ORM)
-- Database: (PostgreSQL)
-- Mobile: (React-Native)
+- Database: (MySQL)
 
 
 ### Environmental Values:
 
 ```
 NODE_ENV=development
-PORT=5000
+PORT=3000
 DATABASE_URL=mysql://user:pass@localhost:3306/spa
 SECRET_KEY=SPAvailable2024@
 EMAIL_ADDRESS=raymart.sarmiento23@gmail.com
