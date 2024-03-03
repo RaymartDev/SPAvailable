@@ -34,11 +34,31 @@ model spa {
   ownerId    Int?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  products   product[]
-  services   service[]
+  products   spa_product[]
+  services   spa_service[]
   owner      user?     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@index([ownerId], map: "spa_ownerId_fkey")
+}
+
+model spa_service {
+  id Int @id @default(autoincrement())
+  spaId Int
+  serviceId Int
+  service service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
+
+  @@unique([spaId, serviceId], name: "Unique_Spa_Service")
+}
+
+model spa_product {
+  id Int @id @default(autoincrement())
+  spaId Int
+  productId Int
+  product product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
+
+  @@unique([spaId, productId], name: "Unique_Spa_Product")
 }
 
 model service {
@@ -49,7 +69,7 @@ model service {
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
+  spa_services spa_service[]
 
   @@index([spaId], map: "service_spaId_fkey")
 }
@@ -62,7 +82,7 @@ model product {
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
+  spa_products spa_product[]
 
   @@index([spaId], map: "product_spaId_fkey")
 }
