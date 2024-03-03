@@ -98,7 +98,8 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
 
             <div>
               <p className="text-sm">
-                Please enter your email address and we'll send you a reset link.
+                Please enter your email address associated with your account and
+                we'll send you a link to reset you password.
               </p>
             </div>
             <div>
