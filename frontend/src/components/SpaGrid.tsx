@@ -44,6 +44,18 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
     },
   ];
 
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchSpa.toLowerCase())
+  );
+
+  if (filteredItems.length === 0 && searchSpa) {
+    return (
+      <div className="p-10">
+        <p className="text-2xl text-[#41924B] font-bold">No results found.</p>
+      </div>
+    );
+  }
+
   if (searchSpa) {
     return (
       <>
@@ -85,7 +97,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
   }
 
   return (
-    <>
+    <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
       {items.map((item, index) => (
         <div
           key={index}
@@ -115,7 +127,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
