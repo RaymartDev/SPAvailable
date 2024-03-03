@@ -26,6 +26,8 @@ model spa {
   id         Int       @id @default(autoincrement())
   name       String    @db.VarChar(255)
   desc       String    @db.VarChar(255)
+  cover_photo String?  @db.MediumText
+  display_photo String? @db.MediumText
   email      String?   @db.VarChar(50)
   contact    String?   @db.VarChar(20)
   address    String?

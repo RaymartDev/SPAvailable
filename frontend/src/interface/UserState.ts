@@ -10,6 +10,6 @@ interface UserStateRaw {
   profile?: string;
 }
 
-type UserState = UserStateRaw | undefined;
+type UserState = UserStateRaw | undefined | null;
 
 export default UserState;
