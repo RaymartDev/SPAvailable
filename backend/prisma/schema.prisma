@@ -65,6 +65,7 @@ model service {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
   description String?
+  display_photo String? @db.MediumText
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
@@ -78,6 +79,7 @@ model product {
   id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(255)
   description String?
+  display_photo String? @db.MediumText
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
