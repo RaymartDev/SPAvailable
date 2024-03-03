@@ -10,7 +10,7 @@ const Landing = lazy(() => import('./Landing'));
 const Home = lazy(() => import('./views/user/Home'));
 const Registration = lazy(() => import('./views/user/Registration'));
 const EditProfile = lazy(() => import('./views/user/EditProfile'));
-const ChangePassword = lazy(() => import('./views/user/ChangePassword'));
+const ResetPassword = lazy(() => import('./views/user/ResetPassword'));
 const Pending = lazy(() => import('./views/user/Pending'));
 const AboutSpa = lazy(() => import('./views/user/AboutSpa'));
 const VerifyPage = lazy(() => import('./views/user/Verify'));
@@ -56,8 +56,8 @@ function App() {
         <Route path="*" element={<Page component={NotFound} />} />
 
         <Route
-          path="/change-password"
-          element={<Page component={ChangePassword} />}
+          path="/reset-password"
+          element={<Page component={ResetPassword} />}
         />
       </Routes>
     </BrowserRouter>

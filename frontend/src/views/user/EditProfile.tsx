@@ -158,10 +158,8 @@ function EditProfile() {
 
           <div className="grid grid-cols-2 mx-10 ">
             <div className="card mb-16">
-              <div className="flex items-center mb-3">
-                <h2 className="text-xl text-neutral-400 font-semibold pr-2">
-                  Full Name
-                </h2>
+              <div className="flex items-center mb-3 text-neutral-400">
+                <h2 className="text-xl font-semibold pr-2">Full Name</h2>
                 <FaRegEdit size={20} />
               </div>
 
@@ -185,10 +183,8 @@ function EditProfile() {
               />
             </div>
             <div className="card mb-16">
-              <div className="flex items-center mb-3">
-                <h2 className="text-xl text-neutral-400 font-semibold pr-2">
-                  New Password
-                </h2>
+              <div className="flex items-center mb-3 text-neutral-400">
+                <h2 className="text-xl font-semibold pr-2">New Password</h2>
                 <FaRegEdit size={20} />
               </div>
 
@@ -209,9 +205,12 @@ function EditProfile() {
               </div>
             </div>
             <div className="card mb-16">
-              <h2 className="text-xl text-neutral-400 font-semibold mb-3">
-                Confirm New Password
-              </h2>
+              <div className="flex items-center mb-3 text-neutral-400">
+                <h2 className="text-xl  font-semibold pr-2">
+                  Confirm New Password
+                </h2>
+                <FaRegEdit size={20} />
+              </div>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   value={pass2}
@@ -235,7 +234,9 @@ function EditProfile() {
               <input
                 type="text"
                 value={user?.contact}
-                className="w-9/12 border-b-2 px-1 py-2"
+                className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
+                disabled
+                readOnly
               />
             </div>
             <div className="card mb-16">
@@ -244,6 +245,7 @@ function EditProfile() {
               </h2>
               <input
                 type="text"
+                value={user?.gender ? 'Male' : 'Female'}
                 readOnly
                 disabled
                 className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
