@@ -19,7 +19,6 @@ const Product = lazy(() => import('./views/user/Product'));
 const Service = lazy(() => import('./views/user/Service'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
-const Test = lazy(() => import('./views/user/Test'));
 const NotFound = lazy(() => import('./views/user/404/NotFound'));
 
 function App() {
@@ -52,13 +51,8 @@ function App() {
 
         {/* MISC */}
         <Route path="/loader" element={<Page component={Loader} />} />
-        <Route path="/test" element={<Page component={Test} />} />
+        <Route path="/reset" element={<Page component={ResetPassword} />} />
         <Route path="*" element={<Page component={NotFound} />} />
-
-        <Route
-          path="/reset-password"
-          element={<Page component={ResetPassword} />}
-        />
       </Routes>
     </BrowserRouter>
   );
