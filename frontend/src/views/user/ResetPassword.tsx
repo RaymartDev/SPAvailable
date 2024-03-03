@@ -2,6 +2,7 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer';
+import { useToast } from '../../hooks/useToast';
 
 function ChangePassword() {
   const [visibleNewPass, setVisibleNewPass] = useState(false);
@@ -9,6 +10,8 @@ function ChangePassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { showErrorToast } = useToast();
 
   const toggleNewPassword = () => {
     setVisibleNewPass(!visibleNewPass);
@@ -19,11 +22,16 @@ function ChangePassword() {
   };
 
   const handleResetPassword = () => {
+    if (!newPassword || !confirmNewPassword) {
+      showErrorToast('Please fill all required fields');
+      return;
+    }
+
     if (newPassword !== confirmNewPassword) {
       setErrorMessage("Passwords don't match.");
-    } else {
-      setErrorMessage('');
+      return;
     }
+    setErrorMessage('');
   };
 
   return (
