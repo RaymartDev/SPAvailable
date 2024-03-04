@@ -9,7 +9,7 @@ function Page({
 }) {
   return (
     <Suspense fallback={<Loader />}>
-      <ToastContainer />
+      <ToastContainer newestOnTop closeOnClick />
       <Component />
     </Suspense>
   );

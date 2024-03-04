@@ -26,28 +26,51 @@ model spa {
   id         Int       @id @default(autoincrement())
   name       String    @db.VarChar(255)
   desc       String    @db.VarChar(255)
+  cover_photo String?  @db.MediumText
+  display_photo String? @db.MediumText
   email      String?   @db.VarChar(50)
   contact    String?   @db.VarChar(20)
   address    String?
   ownerId    Int?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  products   product[]
-  services   service[]
+  products   spa_product[]
+  services   spa_service[]
   owner      user?     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@index([ownerId], map: "spa_ownerId_fkey")
+}
+
+model spa_service {
+  id Int @id @default(autoincrement())
+  spaId Int
+  serviceId Int
+  service service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
+
+  @@unique([spaId, serviceId], name: "Unique_Spa_Service")
+}
+
+model spa_product {
+  id Int @id @default(autoincrement())
+  spaId Int
+  productId Int
+  product product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
+
+  @@unique([spaId, productId], name: "Unique_Spa_Product")
 }
 
 model service {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
   description String?
+  display_photo String? @db.MediumText
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
+  spa_services spa_service[]
 
   @@index([spaId], map: "service_spaId_fkey")
 }
@@ -56,11 +79,12 @@ model product {
   id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(255)
   description String?
+  display_photo String? @db.MediumText
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  spa         spa?     @relation(fields: [spaId], references: [id], onDelete: Cascade)
+  spa_products spa_product[]
 
   @@index([spaId], map: "product_spaId_fkey")
 }
