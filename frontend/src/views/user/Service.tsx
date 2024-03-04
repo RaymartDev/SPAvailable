@@ -53,9 +53,7 @@ function Service() {
       </div>
 
       <div className="flex flex-col items-center justify-center bg-white">
-        <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
-          <ServiceComp searchService={searchValue} />
-        </div>
+        <ServiceComp searchService={searchValue} />
       </div>
 
       <Menu />

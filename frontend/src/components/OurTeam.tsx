@@ -1,11 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import Raymart from '../img/MART.png';
 import Juliet from '../img/BAUTISTA.png';
-import Lloyd from '../img/LLOYD.jpg';
+import Lloyd from '../img/LLOYD.png';
 import Adoc from '../img/ADOC.png';
 import Bucad from '../img/BUCAD.png';
 import Monzon from '../img/MONZON.png';
-import Borromeo from '../img/BORROMEO1.png';
+import Borromeo from '../img/BORROMEO.png';
 import Raby from '../img/RABY.png';
 
 function OurTeam() {

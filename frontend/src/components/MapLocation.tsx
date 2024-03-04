@@ -6,10 +6,10 @@ function MapLocation() {
   return (
     <div className="bg-white py-8 px-12 max-h-screen ">
       <div className="flex flex-col gap-y-4">
-        <h1 className="text-4xl font-semibold text-center w-fit">
-          Mandarin Spa of Caloocan City
-        </h1>
-        <p className="w-fit">Indulge Your Senses: A Sanctuary of Serenity</p>
+        <h1 className="text-4xl font-semibold text-center w-fit">Location</h1>
+        <button type="button" className="w-fit text-[#0000FF]">
+          CLICK HERE TO KNOW HOW TO ADD YOUR LOCATION
+        </button>
       </div>
       <div className="flex flex-col justify-center items-center py-10">
         <div className="w-11/12 rounded-lg border-black border-2 shadow-lg">

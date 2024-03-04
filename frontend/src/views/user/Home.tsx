@@ -1,5 +1,6 @@
 import { useDeferredValue, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { GoPlus } from 'react-icons/go';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
@@ -53,10 +54,32 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex w-full justify-center items-center px-5 pt-10 pb-5 bg-white">
-        <h1 className="w-fit justify-center items-center text-4xl md:text-6xl text-neutral-950 font-bold">
-          SPA NEAR ME
-        </h1>
+      <div className="flex w-full justify-between items-center px-10 pt-10 pb-5 bg-white">
+        <div className="flex gap-x-5">
+          <button
+            type="button"
+            className="bg-white border-2 border-[#41924B] text-[#41924B] rounded-full w-36 font-semibold py-2"
+          >
+            ALL
+          </button>
+          <button
+            type="button"
+            className="bg-white border-2 border-[#41924B] text-[#41924B] rounded-full w-36 font-semibold py-2"
+          >
+            OWNED
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="bg-[#41924B] border-2 border-[#41924B] text-white rounded-full w-36 flex justify-center items-center font-semibold py-2"
+          >
+            ADD SPA{' '}
+            <p>
+              <GoPlus size={20} />
+            </p>{' '}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">

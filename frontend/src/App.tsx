@@ -17,6 +17,9 @@ const VerifyPage = lazy(() => import('./views/user/Verify'));
 const AboutUs = lazy(() => import('./views/user/AboutUs'));
 const Product = lazy(() => import('./views/user/Product'));
 const Service = lazy(() => import('./views/user/Service'));
+const AboutProduct = lazy(() => import('./views/user/AboutProduct'));
+const AboutService = lazy(() => import('./views/user/AboutService'));
+const AddSpa = lazy(() => import('./views/user/AddSpa'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const Test = lazy(() => import('./views/user/Test'));
@@ -58,6 +61,15 @@ function App() {
         <Route
           path="/reset-password"
           element={<Page component={ResetPassword} />}
+        />
+        <Route path="/add-spa" element={<Page component={AddSpa} />} />
+        <Route
+          path="/about/product"
+          element={<Page component={AboutProduct} />}
+        />
+        <Route
+          path="/about/service"
+          element={<Page component={AboutService} />}
         />
       </Routes>
     </BrowserRouter>
