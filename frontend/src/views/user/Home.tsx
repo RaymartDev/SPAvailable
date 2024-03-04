@@ -1,4 +1,5 @@
 import { useDeferredValue, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
@@ -15,6 +16,11 @@ function MainHome() {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchSpa, setSearchSpa] = useState('');
   const searchValue = useDeferredValue(searchSpa);
+  const navigate = useNavigate();
+
+  const handleAddSpaClick = () => {
+    navigate('/add-spa');
+  };
 
   if (loading) {
     return <Loader />;
@@ -73,6 +79,7 @@ function MainHome() {
           <button
             type="button"
             className="bg-[#41924B] border-2 border-[#41924B] text-white rounded-full w-36 flex justify-center items-center font-semibold py-2"
+            onClick={handleAddSpaClick}
           >
             ADD SPA{' '}
             <p>

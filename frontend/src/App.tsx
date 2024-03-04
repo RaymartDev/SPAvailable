@@ -57,6 +57,7 @@ function App() {
         <Route path="/reset" element={<Page component={ResetPassword} />} />
         <Route path="*" element={<Page component={NotFound} />} />
 
+        {/* PAAYOS MART */}
         <Route
           path="/reset-password"
           element={<Page component={ResetPassword} />}
