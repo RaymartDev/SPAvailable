@@ -1,9 +1,16 @@
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import axios, { AxiosError } from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer';
 import { useToast } from '../../hooks/useToast';
+import Loader from '../../components/Loader Component/Loader';
+
+interface DecodedToken {
+  email: string;
+}
 
 function ChangePassword() {
   const location = useLocation();
@@ -13,16 +20,40 @@ function ChangePassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get('email');
+  const token = queryParams.get('token');
+
+  const decodeToken = (toke: string | null): DecodedToken | null => {
+    return toke ? jwtDecode(toke) : null;
+  };
+
+  const isTokenExpired = useCallback((toke: string | null) => {
+    if (!toke) {
+      return true; // Treat undefined/null token as expired
+    }
+
+    const decodedToken = jwtDecode(toke as string);
+
+    if (!decodedToken.exp) {
+      return true; // If there is no expiration time, treat as expired
+    }
+
+    // Check if current time is greater than expiration time
+    return Date.now() >= decodedToken.exp * 1000;
+  }, []);
+
+  const { showErrorToast, showSuccessToast } = useToast();
 
   useEffect(() => {
-    if (!email) {
+    if (!token) {
       navigate('/');
     }
-  }, [email, location.search, navigate]);
-
-  const { showErrorToast } = useToast();
+    if (isTokenExpired(token)) {
+      navigate('/');
+      showErrorToast('Token expired');
+    }
+  }, [showErrorToast, token, location.search, navigate, isTokenExpired]);
 
   const toggleNewPassword = () => {
     setVisibleNewPass(!visibleNewPass);
@@ -32,20 +63,55 @@ function ChangePassword() {
     setVisibleReNewPass(!visibleReNewPass);
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
+    setLoading(true);
     if (!newPassword || !confirmNewPassword) {
       showErrorToast('Please fill all required fields');
+      setLoading(false);
       return;
     }
 
     if (newPassword !== confirmNewPassword) {
       setErrorMessage("Passwords don't match.");
+      setLoading(false);
       return;
     }
-    setErrorMessage('');
+    const toUpdate = {
+      email: decodeToken(token)?.email,
+      password: newPassword,
+    };
+    try {
+      const response = await axios.put('/api/v1/user/reset', toUpdate);
+      if (response.status === 200) {
+        showSuccessToast('Successfully updated password');
+        setNewPassword('');
+        setConfirmNewPassword('');
+        navigate('/');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to reset password');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (email) {
+  const getDecodedEmail = (toke: string) => {
+    const decoded = decodeToken(toke);
+    if (decoded) {
+      return decoded.email;
+    }
+    return '';
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (token) {
     return (
       <div className="max-w-screen-2xl max-h-screen mx-auto px-4 md:overflow-hidden">
         <Navbar />
@@ -55,7 +121,7 @@ function ChangePassword() {
               <div className="flex flex-col items-center gap-y-5">
                 <h1 className="text-5xl">Reset Account Password</h1>
                 <h1 className="text-xl">
-                  Enter for a new password for {email}
+                  Enter for a new password for {` ${getDecodedEmail(token)}`}
                 </h1>
               </div>
               <div className="flex flex-col gap-y-5 w-1/2">

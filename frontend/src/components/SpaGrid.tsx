@@ -85,15 +85,16 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
           .map((item, index) => (
             <div
               key={index}
-              className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg"
+              className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg w"
             >
               <div className="flex flex-col h-full cursor-pointer p-5 ">
-                <img
-                  src={item.image}
-                  className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-                  alt={item.title}
-                  style={{ width: '100%', height: '250px' }}
-                />
+                <div className="w-full h-[300px] overflow-hidden">
+                  <img
+                    src={item.image}
+                    className="object-cover w-full h-full rounded-3xl  hover:scale-125 transition-all ease-in-out delay-150  duration-500"
+                    alt={item.title}
+                  />
+                </div>
                 <div className="flex items-center justify-between">
                   <h1 className="font-bold text-2xl text-neutral-950 mt-5">
                     {item.title}
@@ -116,7 +117,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
                   <button
                     type="button"
                     onClick={() => navigate('/spa/about')}
-                    className="rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
+                    className="transition-all ease-in-out delay-150 rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
                   >
                     SEE MORE
                   </button>
@@ -136,12 +137,13 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
           className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg"
         >
           <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
-            <img
-              src={item.image}
-              className="object-cover w-full h-full rounded-3xl hover:scale-105 duration-500"
-              alt={item.title}
-              style={{ width: '100%', height: '250px' }}
-            />
+            <div className="w-full h-[300px] overflow-hidden">
+              <img
+                src={item.image}
+                className="object-cover w-full h-full rounded-3xl hover:scale-125 transition-all ease-in-out delay-150 duration-500"
+                alt={item.title}
+              />
+            </div>
             <div className="flex items-center justify-between">
               <h1 className="font-bold text-2xl text-neutral-950 mt-5">
                 {item.title}
@@ -163,7 +165,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
               <button
                 type="button"
                 onClick={() => navigate('/spa/about')}
-                className="rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
+                className="transition-all ease-in-out delay-150 rounded-full bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
               >
                 SEE MORE
               </button>

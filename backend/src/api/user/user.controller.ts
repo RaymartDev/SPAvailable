@@ -458,8 +458,49 @@ export const sendForgotPassword = async (req : Request, res : Response, next : N
       return;
     }
 
-    sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '5m'), next);
+    sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '10m'), next);
     res.status(200).json({ message: 'Successfully resent the verification code' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetPassword = async (req: Request, res : Response, next : NextFunction) => {
+  try {
+    const { email, password } = req.body;
+
+    if (password) {
+      req.body.password = await generateHashedPassword(password);
+    }
+
+    const updatedUser = await prismaFetch(async (prisma : PrismaClient) => {
+      const user = await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          password: req.body.password,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          contact: true,
+          birth_date: true,
+          active: true,
+          gender: true,
+          profile: true,
+        },
+      });
+      return user;
+    }, next);
+
+    if (!updatedUser) {
+      res.status(400);
+      next(new Error('No account associated with this email address.'));
+      return;
+    }
+    res.status(200).json(updatedUser);
   } catch (err) {
     next(err);
   }

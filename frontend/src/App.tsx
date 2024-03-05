@@ -38,7 +38,7 @@ function App() {
           element={<Page component={PrivacyPolicy} />}
         />
 
-        {/* PROTECTED ROUTES */}
+        {/* USER ROUTES */}
         <Route path="/user/dashboard" element={<Page component={Home} />} />
         <Route
           path="/user/profile"
@@ -46,6 +46,11 @@ function App() {
         />
         <Route path="/user/pending" element={<Page component={Pending} />} />
         <Route path="/user/verify" element={<Page component={VerifyPage} />} />
+        <Route
+          path="/user/reset"
+          element={<Page component={ResetPassword} />}
+        />
+        <Route path="/user/add-spa" element={<Page component={AddSpa} />} />
 
         {/* SPA ROUTES */}
         <Route path="/spa/about" element={<Page component={AboutSpa} />} />
@@ -58,11 +63,6 @@ function App() {
         <Route path="*" element={<Page component={NotFound} />} />
 
         {/* PAAYOS MART */}
-        <Route
-          path="/reset-password"
-          element={<Page component={ResetPassword} />}
-        />
-        <Route path="/add-spa" element={<Page component={AddSpa} />} />
         <Route
           path="/about/product"
           element={<Page component={AboutProduct} />}

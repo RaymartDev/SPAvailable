@@ -18,6 +18,7 @@ router.get('/resend', protect, UserController.resendVerification);
 
 router.route('/reset')
   .post(UserController.sendForgotPassword)
-  .get(UserController.verifyReset);
+  .get(UserController.verifyReset)
+  .put(UserController.resetPassword);
 
 export default router;

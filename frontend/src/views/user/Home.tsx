@@ -10,6 +10,7 @@ import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import { useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
+import SearchMode from '../../interface/SearchMode';
 
 function MainHome() {
   const user = useAppSelector((state) => state.user);
@@ -17,9 +18,10 @@ function MainHome() {
   const [searchSpa, setSearchSpa] = useState('');
   const searchValue = useDeferredValue(searchSpa);
   const navigate = useNavigate();
+  const [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.ALL);
 
   const handleAddSpaClick = () => {
-    navigate('/add-spa');
+    navigate('/user/add-spa');
   };
 
   if (loading) {
@@ -64,13 +66,21 @@ function MainHome() {
         <div className="flex gap-x-5">
           <button
             type="button"
-            className="bg-white border-2 border-[#41924B] text-[#41924B] rounded-full w-36 font-semibold py-2"
+            onClick={() => {
+              if (searchMode === SearchMode.ALL) return;
+              setSearchMode(SearchMode.ALL);
+            }}
+            className={`${searchMode === SearchMode.ALL ? 'bg-[#41924B]' : 'bg-white'} border-2 border-[#41924B] ${searchMode === SearchMode.ALL ? 'text-white' : 'text-[#41924B]'} rounded-full w-36 font-semibold py-2`}
           >
             ALL
           </button>
           <button
             type="button"
-            className="bg-white border-2 border-[#41924B] text-[#41924B] rounded-full w-36 font-semibold py-2"
+            onClick={() => {
+              if (searchMode === SearchMode.OWNED) return;
+              setSearchMode(SearchMode.OWNED);
+            }}
+            className={`${searchMode === SearchMode.OWNED ? 'bg-[#41924B]' : 'bg-white'} border-2 border-[#41924B] ${searchMode === SearchMode.OWNED ? 'text-white' : 'text-[#41924B]'} rounded-full w-36 font-semibold py-2`}
           >
             OWNED
           </button>
