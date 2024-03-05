@@ -100,11 +100,7 @@ function MainHome() {
       </div>
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
-        {searchValue ? (
-          <SpaGrid searchSpa={searchValue} />
-        ) : (
-          <SpaGrid searchSpa="" />
-        )}
+        <SpaGrid searchSpa={searchValue} />
       </div>
 
       <div className="flex relative md:h-[800px] bg-white">

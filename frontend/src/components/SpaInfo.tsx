@@ -1,11 +1,28 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FaImages } from 'react-icons/fa';
+import Required from './Requred';
 
 interface SpaInfoProps {
   onReturnClick: () => void;
+  setSpaAddress: React.Dispatch<React.SetStateAction<string>>;
+  setSpaEmail: React.Dispatch<React.SetStateAction<string>>;
+  setSpaContact: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  address: string;
+  email: string;
+  contact: string;
 }
 
-function SpaInfo({ onReturnClick }: SpaInfoProps) {
+function SpaInfo({
+  onReturnClick,
+  setSpaAddress,
+  setSpaEmail,
+  setSpaContact,
+  handleSubmit,
+  address,
+  email,
+  contact,
+}: SpaInfoProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="bg-white flex flex-row justify-center gap-x-10 p-6">
@@ -39,7 +56,9 @@ function SpaInfo({ onReturnClick }: SpaInfoProps) {
                     <FaImages size={60} color="#41924B" />
                   </div>
                   <div className="flex flex-col items-center justify-center">
-                    <h1 className="font-semibold text-xl">Browse Image</h1>
+                    <h1 className="font-semibold text-xl">
+                      Click to Browse Image
+                    </h1>
                     <p className="text-sm">Supports JPEG, JPG, PNG</p>
                   </div>
                 </label>
@@ -51,10 +70,14 @@ function SpaInfo({ onReturnClick }: SpaInfoProps) {
           <h1 className="text-4xl font-bold px-4">Spa Info</h1>
           <div className="flex flex-col px-5 pt-5 pb-12 h-full gap-y-4">
             <div className="flex flex-col">
-              <h1 className="text-lg font-semibold">Email</h1>
+              <h1 className="text-lg font-semibold">
+                Email <Required />
+              </h1>
               <input
                 type="email"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                value={email}
+                onChange={(e) => setSpaEmail(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -62,13 +85,19 @@ function SpaInfo({ onReturnClick }: SpaInfoProps) {
               <input
                 type="text"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                value={contact}
+                onChange={(e) => setSpaContact(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-lg font-semibold">Address</h1>
+              <h1 className="text-lg font-semibold">
+                Address <Required />
+              </h1>
               <input
                 type="text"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                value={address}
+                onChange={(e) => setSpaAddress(e.target.value)}
               />
             </div>
           </div>
@@ -80,11 +109,12 @@ function SpaInfo({ onReturnClick }: SpaInfoProps) {
           className="bg-white w-52 py-3 rounded-full font-semibold border-2 border-[#41924B] text-[#41924B]"
           onClick={onReturnClick}
         >
-          RETURN
+          PREV
         </button>
         <button
           type="button"
           className="bg-[#41924B] w-52 py-3 rounded-full font-semibold border-2 border-[#41924B] text-slate-50"
+          onClick={handleSubmit}
         >
           ADD SPA
         </button>

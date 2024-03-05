@@ -1,11 +1,22 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FaImages } from 'react-icons/fa';
+import Required from './Requred';
 
 interface BasicInfoProps {
   onNextClick: () => void;
+  setSpaName: React.Dispatch<React.SetStateAction<string>>;
+  setSpaDesc: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
+  desc: string;
 }
 
-function BasicInfo({ onNextClick }: BasicInfoProps) {
+function BasicInfo({
+  onNextClick,
+  setSpaName,
+  setSpaDesc,
+  name,
+  desc,
+}: BasicInfoProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="bg-white flex flex-row justify-center gap-x-10 p-6">
@@ -41,7 +52,9 @@ function BasicInfo({ onNextClick }: BasicInfoProps) {
                     <FaImages size={60} color="#41924B" />
                   </div>
                   <div className="flex flex-col items-center justify-center">
-                    <h1 className="font-semibold text-xl">Browse Image</h1>
+                    <h1 className="font-semibold text-xl">
+                      Click to Browse Image
+                    </h1>
                     <p className="text-sm">Supports JPEG, JPG, PNG</p>
                   </div>
                 </label>
@@ -53,15 +66,25 @@ function BasicInfo({ onNextClick }: BasicInfoProps) {
           <h1 className="text-4xl font-bold px-4">Basic Info</h1>
           <div className="flex flex-col px-5 pt-5 pb-12 h-full gap-y-4">
             <div className="flex flex-col gap-y-2">
-              <h1 className="text-lg font-semibold">Spa Name</h1>
+              <h1 className="text-lg font-semibold">
+                Spa Name <Required />
+              </h1>
               <input
                 type="text"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                value={name}
+                onChange={(e) => setSpaName(e.target.value)}
               />
             </div>
             <div className="flex flex-col h-full gap-y-2">
-              <h1 className="text-lg font-semibold">Description</h1>
-              <textarea className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-full" />
+              <h1 className="text-lg font-semibold">
+                Description <Required />
+              </h1>
+              <textarea
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-full"
+                value={desc}
+                onChange={(e) => setSpaDesc(e.target.value)}
+              />
             </div>
           </div>
         </div>
