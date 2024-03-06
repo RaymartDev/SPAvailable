@@ -23,6 +23,8 @@ const AddSpa = lazy(() => import('./views/user/AddSpa'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const NotFound = lazy(() => import('./views/user/404/NotFound'));
+const Test = lazy(() => import('./views/user/Test'));
+const Swiper = lazy(() => import('./components/ProductSwiper'));
 
 function App() {
   return (
@@ -71,6 +73,9 @@ function App() {
           path="/about/service"
           element={<Page component={AboutService} />}
         />
+
+        <Route path="/test" element={<Page component={Test} />} />
+        <Route path="/swiper" element={<Page component={Swiper} />} />
       </Routes>
     </BrowserRouter>
   );

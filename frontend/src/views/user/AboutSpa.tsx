@@ -5,8 +5,8 @@
 import { useState } from 'react';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
-import ServiceSlider from '../../components/ServiceSlider';
-import ProductSlider from '../../components/ProductSlider';
+import ServiceSwiper from '../../components/ServiceSwiper';
+import ProductSwiper from '../../components/ProductSwiper';
 import MapLocation from '../../components/MapLocation';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
@@ -32,9 +32,9 @@ function AboutSpa() {
 
       <SpaDetails />
 
-      <ServiceSlider />
+      <ServiceSwiper />
 
-      <ProductSlider />
+      <ProductSwiper />
 
       <MapLocation />
 

@@ -1,22 +1,42 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { FaImages } from 'react-icons/fa';
+import { FaImages, FaTrash } from 'react-icons/fa';
 import Required from './Requred';
 
 interface BasicInfoProps {
   onNextClick: () => void;
   setSpaName: React.Dispatch<React.SetStateAction<string>>;
   setSpaDesc: React.Dispatch<React.SetStateAction<string>>;
+  setDisplayPhoto: React.Dispatch<React.SetStateAction<string>>;
   name: string;
   desc: string;
+  displayPhoto: string;
 }
 
 function BasicInfo({
   onNextClick,
   setSpaName,
   setSpaDesc,
+  setDisplayPhoto,
   name,
   desc,
+  displayPhoto,
 }: BasicInfoProps) {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        setDisplayPhoto(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeDisplayPhoto = () => {
+    setDisplayPhoto('');
+  };
+
   return (
     <div className="flex flex-col h-full">
       <div className="bg-white flex flex-row justify-center gap-x-10 p-6">
@@ -36,28 +56,41 @@ function BasicInfo({
                 Upload Spa Display Photo:
               </h1>
             </div>
-            <div className="flex justify-center items-center px-10 py-5 h-full">
+            <div className="flex justify-center items-center px-10 py-5 w-full h-full">
               <input
                 type="file"
                 accept="image/*"
                 className="hidden"
                 id="displayPhoto"
+                onChange={handleFileChange}
               />
-              <div className="border-dashed border-2 w-full h-full flex items-center justify-center">
-                <label
-                  htmlFor="displayPhoto"
-                  className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
-                >
-                  <div className="flex justify-center">
+              <div className="border-dashed border-2 w-full h-full flex items-center justify-center relative bg-[#FCFCFB]">
+                {displayPhoto ? (
+                  <>
+                    <img
+                      src={displayPhoto}
+                      alt="Spa Cover"
+                      className="w-full h-[410px] object-cover"
+                    />
+                    <FaTrash
+                      color="red"
+                      className="absolute bottom-2 right-1 cursor-pointer border-2 bg-white rounded-full p-2"
+                      onClick={removeDisplayPhoto}
+                      size={40}
+                    />
+                  </>
+                ) : (
+                  <label
+                    htmlFor="displayPhoto"
+                    className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
+                  >
                     <FaImages size={60} color="#41924B" />
-                  </div>
-                  <div className="flex flex-col items-center justify-center">
                     <h1 className="font-semibold text-xl">
                       Click to Browse Image
                     </h1>
                     <p className="text-sm">Supports JPEG, JPG, PNG</p>
-                  </div>
-                </label>
+                  </label>
+                )}
               </div>
             </div>
           </div>

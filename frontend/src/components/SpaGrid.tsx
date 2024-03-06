@@ -161,7 +161,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
 
             <p className="text-sm">{item.address}</p>
             <StarRating totalStars={5} />
-            <div className="flex items-center justify-center my-5">
+            <div className="flex items-center justify-center mt-5">
               <button
                 type="button"
                 onClick={() => navigate('/spa/about')}
