@@ -75,19 +75,23 @@ function SpaInfo({
               </h1>
               <input
                 type="email"
-                className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] w-9/12"
                 value={email}
                 onChange={(e) => setSpaEmail(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
               <h1 className="text-lg font-semibold">Contact Number</h1>
-              <input
-                type="text"
-                className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
-                value={contact}
-                onChange={(e) => setSpaContact(e.target.value)}
-              />
+              <div className="flex w-9/12 border-2 rounded bg-[#FCFCFB]">
+                <div className="flex w-1/12 items-center">+63</div>
+                <input
+                  type="tel"
+                  className="ml-1 px-1 py-2 w-11/12 bg-transparent"
+                  value={contact}
+                  maxLength={10}
+                  onChange={(e) => setSpaContact(e.target.value)}
+                />
+              </div>
             </div>
             <div className="flex flex-col">
               <h1 className="text-lg font-semibold">
@@ -95,7 +99,7 @@ function SpaInfo({
               </h1>
               <input
                 type="text"
-                className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] w-9/12"
                 value={address}
                 onChange={(e) => setSpaAddress(e.target.value)}
               />
