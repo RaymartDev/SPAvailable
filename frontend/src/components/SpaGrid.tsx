@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import Image11 from '../img/image11.png';
@@ -86,6 +88,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
             <div
               key={index}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg w"
+              onClick={() => navigate('/spa/about')}
             >
               <div className="flex flex-col h-full cursor-pointer p-5 ">
                 <div className="w-full h-[300px] overflow-hidden">
@@ -135,6 +138,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
         <div
           key={index}
           className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg"
+          onClick={() => navigate('/spa/about')}
         >
           <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
             <div className="w-full h-[300px] overflow-hidden rounded-3xl">
