@@ -17,6 +17,8 @@ function AddSpa() {
   const [spaEmail, setSpaEmail] = useState<string>('');
   const [spaContact, setSpaContact] = useState<string>('');
   const [spaAddress, setSpaAddress] = useState<string>('');
+  const [coverPhoto, setCoverPhoto] = useState<string>('');
+  const [displayPhoto, setDisplayPhoto] = useState<string>('');
   const { showErrorToast, showSuccessToast } = useToast();
 
   const resetAll = () => {
@@ -25,6 +27,8 @@ function AddSpa() {
     setSpaDesc('');
     setSpaEmail('');
     setSpaContact('');
+    setCoverPhoto('');
+    setDisplayPhoto('');
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,8 +66,10 @@ function AddSpa() {
                 }}
                 setSpaName={setSpaName}
                 setSpaDesc={setSpaDesc}
+                setDisplayPhoto={setDisplayPhoto}
                 name={spaName}
                 desc={spaDesc}
+                displayPhoto={displayPhoto}
               />
             ) : (
               <SpaInfo
@@ -71,9 +77,11 @@ function AddSpa() {
                 setSpaAddress={setSpaAddress}
                 setSpaEmail={setSpaEmail}
                 setSpaContact={setSpaContact}
+                setCoverPhoto={setCoverPhoto}
                 email={spaEmail}
                 address={spaAddress}
                 contact={spaContact}
+                coverPhoto={coverPhoto}
                 handleSubmit={handleSubmit}
               />
             )}

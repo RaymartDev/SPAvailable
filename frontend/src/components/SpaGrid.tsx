@@ -137,7 +137,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
           className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg"
         >
           <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
-            <div className="w-full h-[300px] overflow-hidden">
+            <div className="w-full h-[300px] overflow-hidden rounded-3xl">
               <img
                 src={item.image}
                 className="object-cover w-full h-full rounded-3xl hover:scale-125 transition-all ease-in-out delay-150 duration-500"
@@ -161,7 +161,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
 
             <p className="text-sm">{item.address}</p>
             <StarRating totalStars={5} />
-            <div className="flex items-center justify-center my-5">
+            <div className="flex items-center justify-center mt-5">
               <button
                 type="button"
                 onClick={() => navigate('/spa/about')}
