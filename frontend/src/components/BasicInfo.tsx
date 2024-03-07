@@ -70,7 +70,7 @@ function BasicInfo({
                     <img
                       src={displayPhoto}
                       alt="Spa Cover"
-                      className="w-full h-[410px] object-cover"
+                      className="w-full h-[410px] object-cover object-center"
                     />
                     <FaTrash
                       color="red"

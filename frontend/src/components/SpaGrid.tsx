@@ -79,7 +79,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
 
   if (searchSpa) {
     return (
-      <>
+      <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5 justify-center items-center">
         {items
           .filter((item) =>
             item.title.toLowerCase().includes(searchSpa.toLowerCase())
@@ -128,7 +128,7 @@ function SpaGrid({ searchSpa }: { searchSpa: string }) {
               </div>
             </div>
           ))}
-      </>
+      </div>
     );
   }
 

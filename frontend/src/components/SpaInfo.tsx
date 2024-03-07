@@ -74,7 +74,7 @@ function SpaInfo({
                     <img
                       src={coverPhoto}
                       alt="Spa Cover"
-                      className="w-full h-[410px] object-cover"
+                      className="w-full h-[410px] object-cover object-center"
                     />
                     <FaTrash
                       color="red"
@@ -132,7 +132,9 @@ function SpaInfo({
               </div>
             </div>
             <div className="flex flex-col gap-y-2">
-              <h1 className="text-lg font-semibold">Business Hours</h1>
+              <h1 className="text-lg font-semibold">
+                Business Hours <Required />
+              </h1>
               <div className="flex">
                 <div className="flex w-1/2 flex-col gap-y-1">
                   <h1 className="">Open Time</h1>
