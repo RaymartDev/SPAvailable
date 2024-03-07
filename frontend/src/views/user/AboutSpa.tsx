@@ -7,6 +7,7 @@ import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
 import ServiceSwiper from '../../components/ServiceSwiper';
 import ProductSwiper from '../../components/ProductSwiper';
+import GallerySwiper from '../../components/GallerySwiper';
 import MapLocation from '../../components/MapLocation';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
@@ -35,6 +36,8 @@ function AboutSpa() {
       <ServiceSwiper />
 
       <ProductSwiper />
+
+      <GallerySwiper />
 
       <MapLocation />
 

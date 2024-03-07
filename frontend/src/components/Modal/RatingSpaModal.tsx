@@ -4,11 +4,11 @@ import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import ModalStar from './ModalStar';
 
-interface RatingModalProps {
+interface RatingSpaModalProps {
   onClose: () => void;
 }
 
-function RatingModal({ onClose }: RatingModalProps) {
+function RatingSpaModal({ onClose }: RatingSpaModalProps) {
   const [feedback, setFeedback] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,22 +27,25 @@ function RatingModal({ onClose }: RatingModalProps) {
           </button>
         </div>
 
-        <div className="flex flex-col justify-center items-center w-[300px] h-fit pb-5">
+        <div className="flex flex-col justify-center items-center pt-5 h-fit">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-2xl">Help Us Improve!</h1>
+            <h1 className="font-bold text-3xl">Rate Our Spa</h1>
           </div>
         </div>
 
         <div className="flex flex-col h-full px-10 text-sm items-center justify-center">
           <div className="flex flex-col gap-y-5">
             <div>
-              <h1 className="text-lg text-center font-semibold">
-                Your thoughts are valuable in helping improve our website.
+              <h1 className="text-xl text-center font-semibold">
+                How would you rate your spa experience?
               </h1>
             </div>
             <div className="flex items-center justify-center">
               <ModalStar totalStars={5} />
             </div>
+            <h1 className="text-md font-semibold">
+              Do you have have any additional comment?
+            </h1>
             <div className="overflow-hidden">
               <textarea
                 className="w-full h-20 resize-none px-2 py-3 border-2 rounded-lg"
@@ -76,4 +79,4 @@ function RatingModal({ onClose }: RatingModalProps) {
   );
 }
 
-export default RatingModal;
+export default RatingSpaModal;

@@ -3,10 +3,12 @@ import Logo from '../../img/logo.png';
 import AddProductModal from '../../components/Modal/AddProductModal';
 import AddServiceModal from '../../components/Modal/AddServiceModal';
 import ProductSwiper from '../../components/ProductSwiper';
+import RatingWebsiteModal from '../../components/Modal/RatingWebsiteModal';
 
 function Test() {
   const [openProductModal, setOpenProductModal] = useState(false);
   const [openServiceModal, setOpenServiceModal] = useState(false);
+  const [openRatingWebsiteModal, setopenRatingWebsiteModal] = useState(false);
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
@@ -47,6 +49,20 @@ function Test() {
               setOpenServiceModal(false);
             }}
           />
+          <button
+            type="button"
+            onClick={() => setopenRatingWebsiteModal(true)}
+            className="mr-5 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50"
+          >
+            RATE WEBSITE
+          </button>
+          {openRatingWebsiteModal && (
+            <RatingWebsiteModal
+              onClose={() => {
+                setopenRatingWebsiteModal(false);
+              }}
+            />
+          )}
         </div>
       </div>
       <ProductSwiper />

@@ -9,13 +9,13 @@ import { logout } from '../../store/reducer/userSlice';
 import DefaultPp from '../../img/defaultPp.png';
 import { useToast } from '../../hooks/useToast';
 import DropdownProps from '../../interface/DropdownProps';
-import RatingModal from '../Modal/RatingModal';
+import RatingWebsiteModal from '../Modal/RatingWebsiteModal';
 
 function DropdownUserMenu({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
-  const [openRatingModal, setOpenRatingModal] = useState(false);
+  const [openRatingWebsiteModal, setOpenWebsiteRatingModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -86,17 +86,17 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
             <button
               type="button"
               className="flex items-center py-2 pl-2 hover:bg-gray-100 hover:text-neutral-950 w-full rounded-md"
-              onClick={() => setOpenRatingModal(true)}
+              onClick={() => setOpenWebsiteRatingModal(true)}
             >
               <div className="bg-slate-50  rounded-full p-2">
                 <MdOutlineFeedback color="black" size={25} />
               </div>
               <h1 className="text-md ml-2">Feedback</h1>
             </button>
-            {openRatingModal && (
-              <RatingModal
+            {openRatingWebsiteModal && (
+              <RatingWebsiteModal
                 onClose={() => {
-                  setOpenRatingModal(false);
+                  setOpenWebsiteRatingModal(false);
                 }}
               />
             )}

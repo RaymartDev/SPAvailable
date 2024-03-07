@@ -102,7 +102,7 @@ function SpaInfo({
         <div className="card h-full w-full flex flex-col items-center md:items-start ">
           <h1 className="text-4xl font-bold px-4">Spa Info</h1>
           <div className="flex flex-col px-5 pt-5 pb-12 h-full w-full gap-y-4">
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-y-2">
               <h1 className="text-lg font-semibold">
                 Email <Required />
               </h1>
@@ -113,7 +113,7 @@ function SpaInfo({
                 onChange={(e) => setSpaEmail(e.target.value)}
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-y-2">
               <h1 className="text-lg font-semibold">Contact Number</h1>
               <div className="flex border-2 rounded bg-[#FCFCFB]">
                 <div className="flex w-1/12 justify-center items-center">
@@ -131,12 +131,31 @@ function SpaInfo({
                 />
               </div>
             </div>
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col gap-y-2">
+              <h1 className="text-lg font-semibold">Business Hours</h1>
+              <div className="flex">
+                <div className="flex w-1/2 flex-col gap-y-1">
+                  <h1 className="">Open Time</h1>
+                  <input
+                    type="time"
+                    className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
+                  />
+                </div>
+                <div className="flex w-1/2 flex-col gap-y-2">
+                  <h1 className="">Close Time</h1>
+                  <input
+                    type="time"
+                    className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col h-full gap-y-2">
               <h1 className="text-lg font-semibold">
                 Address <Required />
               </h1>
               <textarea
-                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-1/2"
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-3/4"
                 value={address}
                 onChange={(e) => setSpaAddress(e.target.value)}
               />
