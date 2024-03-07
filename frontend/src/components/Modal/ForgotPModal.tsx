@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import axios, { AxiosError } from 'axios';
 import { useToast } from '../../hooks/useToast';
+import Loader from '../Loader Component/Loader';
 
 interface ForgotPModalProps {
   onClose: () => void;
@@ -15,6 +16,7 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
   const [emailVal, setEmail] = useState(email || '');
   const [canClick, setCanClick] = useState(true);
   const [countdown, setCountdown] = useState(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { showErrorToast, showSuccessToast } = useToast();
 
@@ -43,13 +45,14 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
   const handleContinueClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    e.preventDefault();
     if (!canClick) {
       return;
     }
-
+    setLoading(true);
+    e.preventDefault();
     if (!validateEmail(emailVal)) {
       setEmailError('Please enter a valid email address.');
+      setLoading(false);
       return;
     }
 
@@ -64,16 +67,21 @@ function ForgotPModal({ onClose, email }: ForgotPModalProps) {
       if (err instanceof AxiosError) {
         showErrorToast(err);
       } else {
-        showErrorToast('Unable to login');
+        showErrorToast('Unable to reset a new reset password email.');
       }
     } finally {
       setEmail('');
+      setLoading(false);
     }
 
     setEmailError('');
     setCanClick(false); // Disallow clicking for 1 minute
     setCountdown(60); // Reset countdown timer
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
