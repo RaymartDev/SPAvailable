@@ -39,7 +39,6 @@ function SpaDetails({ item }: { item: SpaState }) {
                 <IoTimeOutline size={25} />
               </div>
               <p className="text-xl ml-2 ">
-                Opens{' '}
                 {item?.openTime && item.closeTime
                   ? `${formatTime(item.openTime)} - ${formatTime(item.closeTime)}`
                   : ''}
