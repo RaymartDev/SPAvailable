@@ -62,15 +62,13 @@ function AddSpa() {
       return;
     }
 
-    const contact = spaContact ? `09${spaContact}` : '';
-
     const handlePost = async () => {
       try {
         const response = await axios.post('/api/v1/spa/control', {
           name: spaName,
           desc: spaDesc,
           email: spaEmail,
-          contact,
+          contact: spaContact ? `09${spaContact}` : '',
           openTime,
           closeTime,
           address: spaAddress,
