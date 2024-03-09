@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
-import Loader from './components/Loader Component/Loader';
 import Page from './components/Util/Page';
 
 /**
@@ -60,7 +59,6 @@ function App() {
         <Route path="/spa/service" element={<Page component={Service} />} />
 
         {/* MISC */}
-        <Route path="/loader" element={<Page component={Loader} />} />
         <Route path="/reset" element={<Page component={ResetPassword} />} />
         <Route path="*" element={<Page component={NotFound} />} />
 

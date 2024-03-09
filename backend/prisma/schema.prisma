@@ -32,6 +32,8 @@ model spa {
   contact    String?   @db.VarChar(20)
   address    String?
   ownerId    Int?
+  openTime   String? @db.VarChar(5)
+  closeTime  String? @db.VarChar(5)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   products   spa_product[]

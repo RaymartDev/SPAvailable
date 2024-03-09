@@ -14,6 +14,7 @@ import { setCredentials } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
 import { formatDate2Digit } from '../../components/Util/dateUtil';
 import TermsModal from '../../components/Modal/TermsModal';
+import Required from '../../components/Requred';
 
 function Registration() {
   const location = useLocation();
@@ -23,7 +24,7 @@ function Registration() {
     if (!location.state) {
       navigate('/');
     }
-  }, [navigate, location.state]);
+  }, [location.state]);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visiblePass, setVisiblePass] = useState(false);
@@ -279,7 +280,9 @@ function Registration() {
 
           <div className="grid grid-cols-2 mx-10 ">
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">First Name</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                First Name <Required />
+              </h2>
               <input
                 type="text"
                 value={firstName}
@@ -291,7 +294,9 @@ function Registration() {
               )}
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">Last Name</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Last Name <Required />
+              </h2>
               <input
                 type="text"
                 value={lastName}
@@ -301,7 +306,9 @@ function Registration() {
               {lastNameError && <p className="text-red-500">{lastNameError}</p>}
             </div>
             <div className="card mb-8">
-              <h2 className="text-xl font-semibold mb-3">Email</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Email <Required />
+              </h2>
               <input
                 type="email"
                 disabled={location.state?.google}
@@ -327,7 +334,9 @@ function Registration() {
             <div
               className={`card mb-8 relative ${passwordMismatch ? 'border-red-500' : ''}`}
             >
-              <h2 className="text-xl font-semibold mb-3">Password</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Password <Required />
+              </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visiblePass === false ? 'password' : 'text'}
@@ -348,7 +357,9 @@ function Registration() {
             <div
               className={`card mb-8 ${passwordMismatch ? 'border-red-500' : ''}`}
             >
-              <h2 className="text-xl font-semibold mb-3">Retype Password</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Retype Password <Required />
+              </h2>
               <div className="flex items-center w-9/12 border-b-2 relative">
                 <input
                   type={visibleRePass === false ? 'password' : 'text'}
@@ -369,7 +380,9 @@ function Registration() {
               )}
             </div>
             <div className="card">
-              <h2 className="text-xl font-semibold mb-3">Birthday</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Birthday <Required />
+              </h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
                 <DatePicker
                   className="px-1 py-2 bg-transparent "
@@ -380,7 +393,9 @@ function Registration() {
               </div>
             </div>
             <div className="card">
-              <h2 className="text-xl font-semibold mb-3">Gender</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                Gender <Required />
+              </h2>
               <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
                 <select
                   name="gender"

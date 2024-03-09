@@ -2,10 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Logo from '../../img/logo.png';
 import { useAppSelector } from '../../store/store';
 
 function Navbar() {
+  useEffect(() => {
+    // Scroll to the top of the component after navigation
+    window.scrollTo(0, 0);
+  }, []);
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
 

@@ -17,7 +17,7 @@ const validateEmail = (email : string) : boolean => {
 };
 
 const validatePhone = (phone : string) : boolean => {
-  return /^(09|\+639)\d{9}$/.test(phone);
+  return /^(09|\+639)\d{9,10}$/.test(phone);
 };
 
 const generateToken = (res : Response, email : string) : string => {

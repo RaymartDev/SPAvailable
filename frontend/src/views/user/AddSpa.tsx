@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
 import BasicInfo from '../../components/BasicInfo';
 import SpaInfo from '../../components/SpaInfo';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import { useToast } from '../../hooks/useToast';
+import { createSpa } from '../../store/reducer/spaSlice';
 
 function AddSpa() {
   const user = useAppSelector((state) => state.user);
@@ -19,16 +22,22 @@ function AddSpa() {
   const [spaAddress, setSpaAddress] = useState<string>('');
   const [coverPhoto, setCoverPhoto] = useState<string>('');
   const [displayPhoto, setDisplayPhoto] = useState<string>('');
+  const [openTime, setOpenTime] = useState<string>('');
+  const [closeTime, setCloseTime] = useState<string>('');
   const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const resetAll = () => {
-    setSpaAddress('');
     setSpaName('');
     setSpaDesc('');
     setSpaEmail('');
     setSpaContact('');
-    setCoverPhoto('');
+    setOpenTime('');
+    setCloseTime('');
+    setSpaAddress('');
     setDisplayPhoto('');
+    setCoverPhoto('');
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,9 +49,52 @@ function AddSpa() {
       setLoading(false);
       return;
     }
-    setLoading(false);
+
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(spaEmail)) {
+      showErrorToast('Please input a valid email address.');
+      setLoading(false);
+      return;
+    }
+
+    if (spaContact && !/^(09|\+639)\d{9,10}$/.test(`09${spaContact}`)) {
+      showErrorToast('Please input a valid phone number');
+      setLoading(false);
+      return;
+    }
+
+    const contact = spaContact ? `09${spaContact}` : '';
+
+    const handlePost = async () => {
+      try {
+        const response = await axios.post('/api/v1/spa/control', {
+          name: spaName,
+          desc: spaDesc,
+          email: spaEmail,
+          contact,
+          openTime,
+          closeTime,
+          address: spaAddress,
+          display_photo: displayPhoto,
+          cover_photo: coverPhoto,
+          ownerId: user?.id,
+        });
+        dispatch(createSpa(response.data));
+        setLoading(false);
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to register');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handlePost();
     showSuccessToast('Successfully created a new spa');
     resetAll();
+    navigate('/user/dashboard');
   };
 
   if (loading) {
@@ -78,11 +130,15 @@ function AddSpa() {
                 setSpaEmail={setSpaEmail}
                 setSpaContact={setSpaContact}
                 setCoverPhoto={setCoverPhoto}
+                setCloseTime={setCloseTime}
+                setOpenTime={setOpenTime}
                 email={spaEmail}
                 address={spaAddress}
                 contact={spaContact}
                 coverPhoto={coverPhoto}
                 handleSubmit={handleSubmit}
+                closeTime={closeTime}
+                openTime={openTime}
               />
             )}
           </div>

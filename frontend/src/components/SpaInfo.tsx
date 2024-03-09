@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FaImages, FaTrash } from 'react-icons/fa';
 import Required from './Requred';
+import { useToast } from '../hooks/useToast';
 
 interface SpaInfoProps {
   onReturnClick: () => void;
@@ -8,11 +9,15 @@ interface SpaInfoProps {
   setSpaEmail: React.Dispatch<React.SetStateAction<string>>;
   setSpaContact: React.Dispatch<React.SetStateAction<string>>;
   setCoverPhoto: React.Dispatch<React.SetStateAction<string>>;
+  setOpenTime: React.Dispatch<React.SetStateAction<string>>;
+  setCloseTime: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   address: string;
   email: string;
   contact: string;
   coverPhoto: string;
+  closeTime: string;
+  openTime: string;
 }
 
 function SpaInfo({
@@ -22,14 +27,23 @@ function SpaInfo({
   setSpaContact,
   setCoverPhoto,
   handleSubmit,
+  setOpenTime,
+  setCloseTime,
   address,
   email,
   contact,
   coverPhoto,
+  closeTime,
+  openTime,
 }: SpaInfoProps) {
+  const { showErrorToast } = useToast();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > 4 * 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 4MB or less.');
+        return;
+      }
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
@@ -37,10 +51,6 @@ function SpaInfo({
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const removeCoverPhoto = () => {
-    setCoverPhoto('');
   };
 
   return (
@@ -79,7 +89,7 @@ function SpaInfo({
                     <FaTrash
                       color="red"
                       className="absolute bottom-2 right-1 cursor-pointer"
-                      onClick={removeCoverPhoto}
+                      onClick={() => setCoverPhoto('')}
                       size={25}
                     />
                   </>
@@ -140,6 +150,8 @@ function SpaInfo({
                   <h1 className="">Open Time</h1>
                   <input
                     type="time"
+                    value={openTime}
+                    onChange={(e) => setOpenTime(e.target.value)}
                     className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
                   />
                 </div>
@@ -147,6 +159,8 @@ function SpaInfo({
                   <h1 className="">Close Time</h1>
                   <input
                     type="time"
+                    value={closeTime}
+                    onChange={(e) => setCloseTime(e.target.value)}
                     className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
                   />
                 </div>

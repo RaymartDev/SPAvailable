@@ -53,7 +53,7 @@ function ChangePassword() {
       navigate('/');
       showErrorToast('Token expired');
     }
-  }, [showErrorToast, token, location.search, navigate, isTokenExpired]);
+  }, [token, location.search, isTokenExpired]);
 
   const toggleNewPassword = () => {
     setVisibleNewPass(!visibleNewPass);

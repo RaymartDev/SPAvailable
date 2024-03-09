@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
 import ServiceSwiper from '../../components/ServiceSwiper';
@@ -18,6 +19,14 @@ import { useAppSelector } from '../../store/store';
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location.state || !location.state.item) {
+      navigate('/user/dashboard');
+    }
+  }, [location.state]);
 
   if (loading) {
     return <Loader />;
@@ -26,23 +35,15 @@ function AboutSpa() {
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
-
       <div className="flex h-[450px] md:h-[650px] z-10">
         <img src={Image11} className="object-cover h-full w-full" />
       </div>
-
-      <SpaDetails />
-
+      <SpaDetails item={location.state.item} />
       <ServiceSwiper />
-
       <ProductSwiper />
-
       <GallerySwiper />
-
       <MapLocation />
-
       <Menu />
-
       <Footer />
     </div>
   );

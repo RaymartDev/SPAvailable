@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FaImages, FaTrash } from 'react-icons/fa';
 import Required from './Requred';
+import { useToast } from '../hooks/useToast';
 
 interface BasicInfoProps {
   onNextClick: () => void;
@@ -21,9 +22,14 @@ function BasicInfo({
   desc,
   displayPhoto,
 }: BasicInfoProps) {
+  const { showErrorToast } = useToast();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 3MB or less.');
+        return;
+      }
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
@@ -31,10 +37,6 @@ function BasicInfo({
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const removeDisplayPhoto = () => {
-    setDisplayPhoto('');
   };
 
   return (
@@ -75,7 +77,7 @@ function BasicInfo({
                     <FaTrash
                       color="red"
                       className="absolute bottom-2 right-1 cursor-pointer border-2 bg-white rounded-full p-2"
-                      onClick={removeDisplayPhoto}
+                      onClick={() => setDisplayPhoto('')}
                       size={40}
                     />
                   </>

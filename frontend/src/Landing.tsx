@@ -18,6 +18,9 @@ import Loader from './components/Loader Component/Loader';
 import ForgotPModal from './components/Modal/ForgotPModal';
 
 function Landing() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
@@ -51,7 +54,7 @@ function Landing() {
     if (userObj?.id) {
       navigate('/user/dashboard');
     }
-  }, [userObj, navigate]);
+  }, [userObj]);
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = async (
     e

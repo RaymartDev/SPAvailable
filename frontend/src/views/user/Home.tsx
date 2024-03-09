@@ -1,16 +1,20 @@
-import { useDeferredValue, useState } from 'react';
+import { useDeferredValue, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
+import axios, { AxiosError } from 'axios';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
 import Image17 from '../../img/image17.png';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
 import SearchMode from '../../interface/SearchMode';
+import { useToast } from '../../hooks/useToast';
+import { setSpa } from '../../store/reducer/spaSlice';
+import SpaState from '../../interface/SpaState';
 
 function MainHome() {
   const user = useAppSelector((state) => state.user);
@@ -19,6 +23,46 @@ function MainHome() {
   const searchValue = useDeferredValue(searchSpa);
   const navigate = useNavigate();
   const [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.ALL);
+
+  const spaList: SpaState[] = useAppSelector((state) => state.spa);
+
+  const dispatch = useAppDispatch();
+  const { showErrorToast } = useToast();
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+
+    const handleFetch = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get('/api/v1/spa/control', {
+          cancelToken: source.token,
+        });
+        const responseState: SpaState[] = response.data;
+        if (response.status === 304) {
+          return;
+        }
+        if (responseState.length > 0) {
+          dispatch(setSpa(responseState));
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to fetch Spa List');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handleFetch();
+
+    return () => {
+      source.cancel('Request canceled by cleanup');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleAddSpaClick = () => {
     navigate('/user/add-spa');
@@ -100,7 +144,7 @@ function MainHome() {
       </div>
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
-        <SpaGrid searchSpa={searchValue} />
+        <SpaGrid searchSpa={searchValue} spaItems={spaList} />
       </div>
 
       <div className="flex relative md:h-[800px] bg-white">

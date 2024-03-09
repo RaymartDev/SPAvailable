@@ -4,11 +4,13 @@ import { protect } from '../authMiddleware';
 
 const router = Router();
 
-router.route('/spa')
+router.route('/control')
   .get(protect, SpaController.readAllSpa)
   .post(protect, SpaController.createSpa)
   .put(protect, SpaController.updateSpa)
   .delete(protect, SpaController.deleteSpa);
 
-router.get('/spa/search', protect, SpaController.readSpa);
+router.get('/control/search', protect, SpaController.readSpa);
+
+export default router;
 // ROUTES HERE

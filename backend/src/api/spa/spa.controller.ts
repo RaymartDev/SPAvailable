@@ -100,7 +100,14 @@ export const readAllSpa = async (req: UserRequest, res: Response<SpaObject[]>, n
 
     const spaList = await prismaFetch(async (prisma : PrismaClient) => {
       try {
-        return await prisma.spa.findMany();
+        return await prisma.spa.findMany({
+          orderBy: {
+            updated_at: 'desc',
+          },
+          include: {
+            owner: true,
+          },
+        });
       } catch (err) {
         next(err);
       }

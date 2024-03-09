@@ -110,7 +110,7 @@ function GallerySwiper() {
             </SwiperSlide>
           ))}
 
-          <div className="slider-controler">
+          <div className="slider-controller">
             <div className="swiper-button-prev slider-arrow" />
             <div className="swiper-button-next slider-arrow" />
           </div>
