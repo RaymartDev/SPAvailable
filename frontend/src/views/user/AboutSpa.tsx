@@ -36,7 +36,10 @@ function AboutSpa() {
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex h-[450px] md:h-[650px] z-10">
-        <img src={Image11} className="object-cover h-full w-full" />
+        <img
+          src={location.state.item.cover_photo || Image11}
+          className="object-cover h-full w-full"
+        />
       </div>
       <SpaDetails item={location.state.item} />
       <ServiceSwiper />

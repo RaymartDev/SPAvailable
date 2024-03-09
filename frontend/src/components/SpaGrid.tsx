@@ -60,7 +60,11 @@ function SpaGrid({
               <div
                 key={item?.id}
                 className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg w"
-                onClick={() => navigate('/spa/about')}
+                onClick={() =>
+                  navigate('/spa/about', {
+                    state: { item },
+                  })
+                }
               >
                 <div className="flex flex-col h-full cursor-pointer p-5 ">
                   <div className="w-full h-[300px] overflow-hidden">
@@ -117,7 +121,11 @@ function SpaGrid({
           <div
             key={item?.id}
             className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg"
-            onClick={() => navigate('/spa/about')}
+            onClick={() =>
+              navigate('/spa/about', {
+                state: { item },
+              })
+            }
           >
             <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
               <div className="w-full h-[300px] overflow-hidden rounded-3xl">

@@ -56,7 +56,7 @@ function SpaDetails({ item }: { item: SpaState }) {
         <div className="card flex items-center justify-center z-10 ">
           <img
             alt=""
-            src={Image12}
+            src={item?.display_photo || Image12}
             className="size-[450px] -mt-20 rounded-lg"
           />
         </div>
