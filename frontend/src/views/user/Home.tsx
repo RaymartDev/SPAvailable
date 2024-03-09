@@ -144,7 +144,11 @@ function MainHome() {
       </div>
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
-        <SpaGrid searchSpa={searchValue} spaItems={spaList} />
+        <SpaGrid
+          searchSpa={searchValue}
+          spaItems={spaList}
+          searchMode={searchMode}
+        />
       </div>
 
       <div className="flex relative md:h-[800px] bg-white">

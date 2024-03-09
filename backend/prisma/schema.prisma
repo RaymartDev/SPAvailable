@@ -19,7 +19,15 @@ model user {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   spa        spa[]
+  feedback   feedback[]
   active     Boolean   @default(false)
+}
+
+model feedback {
+  id Int @id @default(autoincrement())
+  desc String @db.VarChar(300)
+  ownerId Int
+  owner user @relation(fields: [ownerId],references: [id], onDelete: Cascade)
 }
 
 model spa {

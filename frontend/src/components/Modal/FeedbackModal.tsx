@@ -2,18 +2,50 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useToast } from '../../hooks/useToast';
+import UserState from '../../interface/UserState';
 
 interface RatingWebsiteModalProps {
   onClose: () => void;
+  setLoading: (e: boolean) => void;
+  user: UserState;
 }
 
-function RatingWebsiteModal({ onClose }: RatingWebsiteModalProps) {
+function Feedback({ onClose, setLoading, user }: RatingWebsiteModalProps) {
   const [feedback, setFeedback] = useState('');
+  const { showErrorToast, showSuccessToast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const input = e.target.value;
-    if (input.length <= 300) {
-      setFeedback(input);
+    if (input.length > 300) {
+      e.preventDefault();
+      return;
+    }
+    setFeedback(input);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post('/api/v1/feedback', {
+        desc: feedback,
+        ownerId: user?.id,
+      });
+      if (response.status === 200) {
+        showSuccessToast('Successfully submitted feedback');
+        setLoading(false);
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to send your feedback');
+      }
+    } finally {
+      setFeedback('');
+      setLoading(false);
+      onClose();
     }
   };
 
@@ -41,10 +73,10 @@ function RatingWebsiteModal({ onClose }: RatingWebsiteModalProps) {
             </div>
             <div className="overflow-hidden">
               <textarea
-                className="w-full h-20 resize-none px-2 py-3 border-2 rounded-lg"
+                className="w-full h-28 resize-none px-2 py-3 border-2 rounded-lg"
                 onChange={handleInputChange}
+                value={feedback}
                 placeholder="Provide your feedback here..."
-                disabled={feedback.length >= 300}
               />
               <p className="text-gray-500 text-right">
                 {feedback.length}/300 characters
@@ -54,6 +86,7 @@ function RatingWebsiteModal({ onClose }: RatingWebsiteModalProps) {
               <button
                 type="button"
                 className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50 border-2 font-semibold"
+                onClick={handleSubmit}
               >
                 Submit
               </button>
@@ -72,4 +105,4 @@ function RatingWebsiteModal({ onClose }: RatingWebsiteModalProps) {
   );
 }
 
-export default RatingWebsiteModal;
+export default Feedback;

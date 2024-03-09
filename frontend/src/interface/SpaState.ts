@@ -16,6 +16,6 @@ interface SpaStateRaw {
   updated_at: Date;
 }
 
-type SpaState = Partial<SpaStateRaw> | null | undefined;
+type SpaState = Partial<SpaStateRaw> | null;
 
 export default SpaState;

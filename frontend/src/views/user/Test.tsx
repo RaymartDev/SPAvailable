@@ -3,7 +3,7 @@ import Logo from '../../img/logo.png';
 import AddProductModal from '../../components/Modal/AddProductModal';
 import AddServiceModal from '../../components/Modal/AddServiceModal';
 import ProductSwiper from '../../components/ProductSwiper';
-import RatingWebsiteModal from '../../components/Modal/RatingWebsiteModal';
+import RatingWebsiteModal from '../../components/Modal/FeedbackModal';
 
 function Test() {
   const [openProductModal, setOpenProductModal] = useState(false);

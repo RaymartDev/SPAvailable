@@ -9,7 +9,7 @@ import { logout } from '../../store/reducer/userSlice';
 import DefaultPp from '../../img/defaultPp.png';
 import { useToast } from '../../hooks/useToast';
 import DropdownProps from '../../interface/DropdownProps';
-import RatingWebsiteModal from '../Modal/RatingWebsiteModal';
+import Feedback from '../Modal/FeedbackModal';
 
 function DropdownUserMenu({ setLoading, user }: DropdownProps) {
   const navigate = useNavigate();
@@ -94,10 +94,12 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               <h1 className="text-md ml-2">Feedback</h1>
             </button>
             {openRatingWebsiteModal && (
-              <RatingWebsiteModal
+              <Feedback
                 onClose={() => {
                   setOpenWebsiteRatingModal(false);
                 }}
+                setLoading={setLoading}
+                user={user}
               />
             )}
 
