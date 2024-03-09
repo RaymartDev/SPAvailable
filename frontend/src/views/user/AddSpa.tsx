@@ -44,8 +44,14 @@ function AddSpa() {
     setLoading(true);
     e.preventDefault();
 
-    if (!spaEmail || !spaAddress) {
-      showErrorToast('Please input all required fields.');
+    if (!spaEmail) {
+      showErrorToast('Email field is required.');
+      setLoading(false);
+      return;
+    }
+
+    if (!spaAddress) {
+      showErrorToast('Address field is required.');
       setLoading(false);
       return;
     }
@@ -58,6 +64,18 @@ function AddSpa() {
 
     if (spaContact && !/^(09|\+639)\d{9,10}$/.test(`09${spaContact}`)) {
       showErrorToast('Please input a valid phone number');
+      setLoading(false);
+      return;
+    }
+
+    if (!openTime) {
+      showErrorToast('Open time field is required.');
+      setLoading(false);
+      return;
+    }
+
+    if (!closeTime) {
+      showErrorToast('Closed time field is required.');
       setLoading(false);
       return;
     }

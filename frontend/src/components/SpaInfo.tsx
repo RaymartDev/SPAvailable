@@ -156,11 +156,17 @@ function SpaInfo({
                   />
                 </div>
                 <div className="flex w-1/2 flex-col gap-y-2">
-                  <h1 className="">Close Time</h1>
+                  <h1 className="">Closed Time</h1>
                   <input
                     type="time"
                     value={closeTime}
-                    onChange={(e) => setCloseTime(e.target.value)}
+                    onChange={(e) => {
+                      if (!openTime) {
+                        e.preventDefault();
+                        return;
+                      }
+                      setCloseTime(e.target.value);
+                    }}
                     className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
                   />
                 </div>
