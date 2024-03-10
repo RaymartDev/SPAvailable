@@ -11,6 +11,7 @@ interface BasicInfoProps {
     spaEmail: string;
     spaContact: string;
     spaAddress: string;
+    spaCity: string;
     coverPhoto: string;
     displayPhoto: string;
     openTime: string;
@@ -22,6 +23,7 @@ interface BasicInfoProps {
     spaEmail: string;
     spaContact: string;
     spaAddress: string;
+    spaCity: string;
     coverPhoto: string;
     displayPhoto: string;
     openTime: string;

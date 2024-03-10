@@ -71,7 +71,7 @@ function AboutSpa() {
           Edit Cover Photo
         </label>
       </div>
-      <SpaDetails setLoading={setLoading} item={item} />
+      <SpaDetails setLoading={setLoading} item={item} user={user} />
       <ServiceSwiper />
       <ProductSwiper />
       <GallerySwiper />

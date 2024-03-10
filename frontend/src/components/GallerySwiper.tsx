@@ -75,6 +75,7 @@ function GallerySwiper() {
         <Swiper
           effect="coverflow"
           grabCursor
+          loop
           centeredSlides
           slidesPerView={3}
           spaceBetween={30}

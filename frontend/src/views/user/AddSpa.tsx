@@ -20,6 +20,7 @@ function AddSpa() {
     spaEmail: '',
     spaContact: '',
     spaAddress: '',
+    spaCity: '',
     coverPhoto: '',
     displayPhoto: '',
     openTime: '',
@@ -63,12 +64,6 @@ function AddSpa() {
       return;
     }
 
-    if (!formData.spaAddress) {
-      showErrorToast('Address field is required.');
-      setLoading(false);
-      return;
-    }
-
     if (
       !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.spaEmail)
     ) {
@@ -98,6 +93,18 @@ function AddSpa() {
       return;
     }
 
+    if (!formData.spaCity) {
+      showErrorToast('City field is required.');
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.spaAddress) {
+      showErrorToast('Address field is required.');
+      setLoading(false);
+      return;
+    }
+
     const handlePost = async () => {
       try {
         const response = await axios.post('/api/v1/spa/control', {
@@ -107,7 +114,7 @@ function AddSpa() {
           contact: formData.spaContact ? `09${formData.spaContact}` : '',
           openTime: formData.openTime,
           closeTime: formData.closeTime,
-          address: formData.spaAddress,
+          address: `${formData.spaAddress} ${formData.spaCity}`,
           display_photo: formData.displayPhoto,
           cover_photo: formData.coverPhoto,
           ownerId: user?.id,

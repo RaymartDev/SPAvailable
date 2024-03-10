@@ -3,18 +3,23 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
+import axios, { AxiosError } from 'axios';
 import Image11 from '../img/image11.png';
 import StarRating from './StarRating';
 import DefaultPp from '../img/defaultPp.png';
 import SpaState from '../interface/SpaState';
 import SearchMode from '../interface/SearchMode';
-import { useAppSelector } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { useToast } from '../hooks/useToast';
+import { deleteSpa } from '../store/reducer/spaSlice';
 
 function SpaGrid({
+  setLoading,
   searchSpa,
   spaItems,
   searchMode,
 }: {
+  setLoading: (v: boolean) => void;
   searchSpa: string;
   spaItems: SpaState[];
   searchMode: SearchMode;
@@ -23,6 +28,8 @@ function SpaGrid({
 
   const items = spaItems;
   const user = useAppSelector((state) => state.user);
+  const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
 
   const formatTime = (time: string): string => {
     const [hours, minutes] = time.split(':');
@@ -69,6 +76,31 @@ function SpaGrid({
     return `${inputString.substring(0, maxLength)} ...`;
   }
 
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: SpaState
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/v1/spa/control/?id=${item?.id}`
+      );
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(deleteSpa(item));
+        showSuccessToast('Deleted successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to fetch Spa List');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (searchSpa) {
     return (
       <div
@@ -79,7 +111,7 @@ function SpaGrid({
         }`}
       >
         {filteredItemsOwned.length > 0 && filteredItems.length > 0 ? (
-          filteredItems.map((item) => (
+          filteredItems.slice(0, 6).map((item) => (
             <div
               key={item?.id}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg w"
@@ -135,6 +167,7 @@ function SpaGrid({
                     >
                       <button
                         key={item?.id}
+                        onClick={(e) => handleDelete(e, item)}
                         type="button"
                         className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >
@@ -163,7 +196,7 @@ function SpaGrid({
         className={`max-w-screen-2xl mx-auto grid grid-cols-1 my-5 justify-center items-center ${items.length === 0 || filteredItemsOwned.length === 0 ? 'place-items-center' : 'md:grid-cols-2 lg:grid-cols-3'}`}
       >
         {filteredItemsOwned.length > 0 &&
-          filteredItemsOwned.map((item) => (
+          filteredItemsOwned.slice(0, 6).map((item) => (
             <div
               key={item?.id}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg relative"
@@ -220,6 +253,7 @@ function SpaGrid({
                     >
                       <button
                         key={item?.id}
+                        onClick={(e) => handleDelete(e, item)}
                         type="button"
                         className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >

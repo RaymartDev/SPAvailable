@@ -15,12 +15,15 @@ import { useAppDispatch } from '../store/store';
 import { updateSpa } from '../store/reducer/spaSlice';
 import { useToast } from '../hooks/useToast';
 import DefaultPp from '../img/defaultPp.png';
+import UserState from '../interface/UserState';
 
 function SpaDetails({
   item,
+  user,
   setLoading,
 }: {
   item: SpaState;
+  user: UserState;
   setLoading: (v: boolean) => void;
 }) {
   const formatTime = (time: string): string => {
@@ -219,9 +222,11 @@ function SpaDetails({
               ) : (
                 <h1 className="text-5xl font-bold">{item?.name}</h1>
               )}
-              <button type="button" onClick={() => setIsEditing(!isEditing)}>
-                <FaEdit size={30} />
-              </button>
+              {item?.owner?.id === user?.id && (
+                <button type="button" onClick={() => setIsEditing(!isEditing)}>
+                  <FaEdit size={30} />
+                </button>
+              )}
             </div>
             <div className="flex items-center mb-5">
               <div>
@@ -320,12 +325,14 @@ function SpaDetails({
         <div className="border-b-4 border-black pb-10">
           <div className="flex items-center mb-5 gap-x-4">
             <h1 className="text-4xl font-semibold ">About Us</h1>
-            <button type="button">
-              <FaEdit
-                size={30}
-                onClick={() => setIsEditingAbout(!isEditingAbout)}
-              />
-            </button>
+            {item?.owner?.id === user?.id && (
+              <button type="button">
+                <FaEdit
+                  size={30}
+                  onClick={() => setIsEditingAbout(!isEditingAbout)}
+                />
+              </button>
+            )}
           </div>
           {isEditingAbout ? (
             <textarea
@@ -354,12 +361,14 @@ function SpaDetails({
         <div className="border-b-4 border-black pb-10">
           <div className="flex items-center mb-5 gap-x-4">
             <h1 className="text-4xl font-semibold ">Contact Us</h1>
-            <button
-              type="button"
-              onClick={() => setIsEditingContact(!isEditingContact)}
-            >
-              <FaEdit size={30} />
-            </button>
+            {item?.owner?.id === user?.id && (
+              <button
+                type="button"
+                onClick={() => setIsEditingContact(!isEditingContact)}
+              >
+                <FaEdit size={30} />
+              </button>
+            )}
           </div>
           <div className="flex flex-col gap-y-5">
             <div className="flex items-center gap-x-2">

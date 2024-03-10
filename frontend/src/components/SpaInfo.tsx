@@ -11,6 +11,7 @@ interface SpaInfoProps {
     spaEmail: string;
     spaContact: string;
     spaAddress: string;
+    spaCity: string;
     coverPhoto: string;
     displayPhoto: string;
     openTime: string;
@@ -23,6 +24,7 @@ interface SpaInfoProps {
     spaEmail: string;
     spaContact: string;
     spaAddress: string;
+    spaCity: string;
     coverPhoto: string;
     displayPhoto: string;
     openTime: string;
@@ -193,8 +195,15 @@ function SpaInfo({
               </div>
             </div>
             <div className="flex flex-col h-full gap-y-2">
-              <h1 className="text-lg font-semibold">City</h1>
-              <input className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-3/4" />
+              <h1 className="text-lg font-semibold">
+                City <Required />
+              </h1>
+              <input
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-3/4"
+                name="spaCity"
+                value={formData.spaCity}
+                onChange={handleChange}
+              />
             </div>
             <div className="flex flex-col h-full gap-y-2">
               <h1 className="text-lg font-semibold">

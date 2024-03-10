@@ -76,6 +76,7 @@ function ServiceSwiper() {
       <div className="border-b-4 border-black pb-10">
         <Swiper
           effect="coverflow"
+          loop
           grabCursor
           centeredSlides
           slidesPerView={3}
