@@ -16,10 +16,12 @@ import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
 import Loader from '../../components/Loader Component/Loader';
 import { useAppSelector } from '../../store/store';
+import SpaState from '../../interface/SpaState';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
+  const spa = useAppSelector((state) => state.spa);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -49,7 +51,13 @@ function AboutSpa() {
           Edit Cover Photo
         </button>
       </div>
-      <SpaDetails item={location.state.item} />
+      <SpaDetails
+        key={location.state?.item.id}
+        setLoading={setLoading}
+        item={
+          spa.find((item) => item?.id === location.state.item?.id) as SpaState
+        }
+      />
       <ServiceSwiper />
       <ProductSwiper />
       <GallerySwiper />

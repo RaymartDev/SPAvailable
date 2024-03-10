@@ -149,6 +149,7 @@ function MainHome() {
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
         <SpaGrid
+          setLoading={setLoading}
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
           searchMode={searchMode}

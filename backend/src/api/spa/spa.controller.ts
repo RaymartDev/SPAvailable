@@ -248,13 +248,13 @@ export const deleteSpa = async (req: UserRequest, res: Response<MessageResponse>
       return;
     }
 
-    const { id } = req.body;
+    const { id } = req.query;
   
     const searchSpa = await prismaFetch(async (prisma : PrismaClient) => {
       try {
         return await prisma.spa.findUnique({
           where: {
-            id,
+            id: parseInt(id as string),
           },
         });
       } catch (err) {
@@ -278,7 +278,7 @@ export const deleteSpa = async (req: UserRequest, res: Response<MessageResponse>
       try {
         await prisma.spa.delete({
           where: {
-            id,
+            id: parseInt(id as string),
           },
         });
       } catch (err) {

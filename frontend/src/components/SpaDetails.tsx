@@ -5,11 +5,21 @@ import {
   IoCameraSharp,
 } from 'react-icons/io5';
 import { FaEdit } from 'react-icons/fa';
+import axios, { AxiosError } from 'axios';
 import StarRating from './StarRating';
 import Image12 from '../img/image12.png';
 import SpaState from '../interface/SpaState';
+import { useAppDispatch } from '../store/store';
+import { updateSpa } from '../store/reducer/spaSlice';
+import { useToast } from '../hooks/useToast';
 
-function SpaDetails({ item }: { item: SpaState }) {
+function SpaDetails({
+  item,
+  setLoading,
+}: {
+  item: SpaState;
+  setLoading: (v: boolean) => void;
+}) {
   const formatTime = (time: string): string => {
     const [hours, minutes] = time.split(':');
     const intHours = parseInt(hours, 10); // Parse hours as an integer
@@ -34,27 +44,91 @@ function SpaDetails({ item }: { item: SpaState }) {
   const [openTime, setOpenTime] = useState(item?.openTime || '');
   const [closeTime, setCloseTime] = useState(item?.closeTime || '');
   const [aboutText, setAboutText] = useState(item?.desc || '');
-
   const [isEditingAbout, setIsEditingAbout] = useState(false);
 
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
+  const dispatch = useAppDispatch();
+  const { showSuccessToast, showErrorToast } = useToast();
+  const handleFirstSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const updatedSpa: SpaState = {
+      id: item?.id,
+      name: nameText,
+      address: addressText,
+      openTime,
+      closeTime,
+    };
+    if (updatedSpa.name === item?.name) {
+      delete updatedSpa.name;
+    }
+    if (updatedSpa.address === item?.address) {
+      delete updatedSpa.address;
+    }
+    if (updatedSpa.openTime === item?.openTime) {
+      delete updatedSpa.openTime;
+    }
+    if (updatedSpa.closeTime === item?.closeTime) {
+      delete updatedSpa.closeTime;
+    }
+    if (
+      !updateSpa.name &&
+      !updatedSpa.address &&
+      !updatedSpa.openTime &&
+      !updatedSpa.closeTime
+    ) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await axios.put('/api/v1/spa/control', updatedSpa);
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(updateSpa(updatedSpa));
+        showSuccessToast('Updated Successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to fetch Spa List');
+      }
+    } finally {
+      setNameText(item?.name || '');
+      setAddressText(item?.address || '');
+      setOpenTime(item?.openTime || '');
+      setCloseTime(item?.closeTime || '');
+      setLoading(false);
+      setIsEditing(false);
+    }
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-  };
-
-  const handleAboutEdit = () => {
-    setIsEditingAbout(!isEditingAbout);
-  };
-
-  const handleAboutChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setAboutText(e.target.value);
-  };
-
-  const handleSaveAbout = () => {
-    setIsEditingAbout(false);
+  const handleAboutChange = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const updatedSpa: SpaState = {
+      id: item?.id,
+      desc: aboutText,
+    };
+    if (updatedSpa.desc === item?.desc) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await axios.put('/api/v1/spa/control', updatedSpa);
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(updateSpa(updatedSpa));
+        showSuccessToast('Updated Successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to fetch Spa List');
+      }
+    } finally {
+      setLoading(false);
+      setAboutText(item?.desc || '');
+      setIsEditingAbout(false);
+    }
   };
 
   return (
@@ -73,7 +147,7 @@ function SpaDetails({ item }: { item: SpaState }) {
               ) : (
                 <h1 className="text-5xl font-bold">{item?.name}</h1>
               )}
-              <button type="button" onClick={handleEdit}>
+              <button type="button" onClick={() => setIsEditing(!isEditing)}>
                 <FaEdit size={30} />
               </button>
             </div>
@@ -129,7 +203,7 @@ function SpaDetails({ item }: { item: SpaState }) {
                 <div className="w-full flex justify-end">
                   <button
                     type="button"
-                    onClick={handleSave}
+                    onClick={handleFirstSave}
                     className="mt-3 px-4 py-2 bg-[#41924B] text-white rounded-lg"
                   >
                     Save Changes
@@ -167,13 +241,16 @@ function SpaDetails({ item }: { item: SpaState }) {
           <div className="flex items-center mb-5 gap-x-4">
             <h1 className="text-4xl font-semibold ">About Us</h1>
             <button type="button">
-              <FaEdit size={30} onClick={handleAboutEdit} />
+              <FaEdit
+                size={30}
+                onClick={() => setIsEditingAbout(!isEditingAbout)}
+              />
             </button>
           </div>
           {isEditingAbout ? (
             <textarea
               value={aboutText}
-              onChange={handleAboutChange}
+              onChange={(e) => setAboutText(e.target.value)}
               className="w-full h-32 border rounded-lg px-3 py-2 resize-none"
             />
           ) : (
@@ -183,7 +260,7 @@ function SpaDetails({ item }: { item: SpaState }) {
             <div className="w-full flex justify-end">
               <button
                 type="button"
-                onClick={handleSaveAbout}
+                onClick={handleAboutChange}
                 className="mt-3 px-4 py-2 bg-[#41924B] text-white rounded-lg"
               >
                 Save Changes

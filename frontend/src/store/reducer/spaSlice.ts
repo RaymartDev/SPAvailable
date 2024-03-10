@@ -18,7 +18,7 @@ export const SpaSlice = createSlice({
       const index = state.findIndex((spa) => spa?.id === updatedSpa?.id);
       if (index !== -1) {
         const newState = [...state];
-        newState[index] = updatedSpa;
+        newState[index] = { ...newState[index], ...updatedSpa };
         return newState;
       }
       return state;

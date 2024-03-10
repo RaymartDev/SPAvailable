@@ -3,26 +3,33 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
+import axios, { AxiosError } from 'axios';
 import Image11 from '../img/image11.png';
 import StarRating from './StarRating';
 import DefaultPp from '../img/defaultPp.png';
 import SpaState from '../interface/SpaState';
 import SearchMode from '../interface/SearchMode';
-import { useAppSelector } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { deleteSpa } from '../store/reducer/spaSlice';
+import { useToast } from '../hooks/useToast';
 
 function SpaGrid({
   searchSpa,
   spaItems,
   searchMode,
+  setLoading,
 }: {
   searchSpa: string;
   spaItems: SpaState[];
   searchMode: SearchMode;
+  setLoading: (V: boolean) => void;
 }) {
   const navigate = useNavigate();
 
   const items = spaItems;
   const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { showErrorToast, showSuccessToast } = useToast();
 
   const formatTime = (time: string): string => {
     const [hours, minutes] = time.split(':');
@@ -68,6 +75,31 @@ function SpaGrid({
     }
     return `${inputString.substring(0, maxLength)} ...`;
   }
+
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: SpaState
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/v1/spa/control/?id=${item?.id || ''}`
+      );
+      if (response.status >= 200 && response.status < 300) {
+        showSuccessToast('Spa selected have been deleted successfully');
+        dispatch(deleteSpa(item));
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to fetch Spa List');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (searchSpa) {
     return (
@@ -135,6 +167,9 @@ function SpaGrid({
                     <div className="flex" onClick={(e) => e.stopPropagation()}>
                       <button
                         type="button"
+                        onClick={(e) => {
+                          handleDelete(e, item);
+                        }}
                         className="bg-[#41924B] rounded-full p-1"
                       >
                         Delete
@@ -222,6 +257,9 @@ function SpaGrid({
                     >
                       <button
                         type="button"
+                        onClick={(e) => {
+                          handleDelete(e, item);
+                        }}
                         className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >
                         DELETE
