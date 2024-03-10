@@ -113,6 +113,7 @@ function AddSpa() {
           ownerId: user?.id,
         });
         dispatch(createSpa(response.data));
+        showSuccessToast('Successfully created a new spa');
         setLoading(false);
       } catch (err) {
         if (err instanceof AxiosError) {
@@ -126,9 +127,10 @@ function AddSpa() {
     };
 
     handlePost();
-    showSuccessToast('Successfully created a new spa');
     resetAll();
-    navigate('/user/dashboard');
+    setTimeout(() => {
+      navigate('/user/dashboard');
+    }, 500);
   };
 
   if (loading) {
