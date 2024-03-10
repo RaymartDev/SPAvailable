@@ -90,7 +90,7 @@ function BasicInfo({
                   <>
                     <img
                       src={formData.displayPhoto}
-                      alt="Spa Cover"
+                      alt="Spa DisplayPhoto"
                       className="w-full h-[410px] object-cover object-center"
                     />
                     <button

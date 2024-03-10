@@ -5,6 +5,8 @@ import {
   IoCameraSharp,
 } from 'react-icons/io5';
 import { FaEdit } from 'react-icons/fa';
+import { MdOutlineMail } from 'react-icons/md';
+import { LuPhone } from 'react-icons/lu';
 import axios, { AxiosError } from 'axios';
 import StarRating from './StarRating';
 import Image12 from '../img/image12.png';
@@ -12,6 +14,7 @@ import SpaState from '../interface/SpaState';
 import { useAppDispatch } from '../store/store';
 import { updateSpa } from '../store/reducer/spaSlice';
 import { useToast } from '../hooks/useToast';
+import DefaultPp from '../img/defaultPp.png';
 
 function SpaDetails({
   item,
@@ -43,11 +46,29 @@ function SpaDetails({
   const [addressText, setAddressText] = useState(item?.address || '');
   const [openTime, setOpenTime] = useState(item?.openTime || '');
   const [closeTime, setCloseTime] = useState(item?.closeTime || '');
-  const [aboutText, setAboutText] = useState(item?.desc || '');
+
   const [isEditingAbout, setIsEditingAbout] = useState(false);
+  const [aboutText, setAboutText] = useState(item?.desc || '');
+
+  const [isEditingContact, setIsEditingContact] = useState(false);
+  const [newEmail, setNewEmail] = useState(item?.owner?.email || '');
+  const [newContact, setNewContact] = useState(item?.owner?.contact || '');
+
+  const [displayPhoto, setDisplayPhoto] = useState<string>('');
 
   const dispatch = useAppDispatch();
   const { showSuccessToast, showErrorToast } = useToast();
+
+  const handleDisplayPhotoChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const newDisplayPhoto = URL.createObjectURL(file);
+      setDisplayPhoto(newDisplayPhoto);
+    }
+  };
+
   const handleFirstSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -130,6 +151,38 @@ function SpaDetails({
       setIsEditingAbout(false);
     }
   };
+
+  const handleContactChanges = async () => {
+    setLoading(true);
+    try {
+      const updatedSpa: SpaState = {
+        id: item?.id,
+        owner: {
+          ...item?.owner,
+          email: newEmail,
+          contact: newContact,
+        },
+      };
+      const response = await axios.put('/api/v1/spa/control', updatedSpa);
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(updateSpa(updatedSpa));
+        showSuccessToast('Changes Saved Successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to save changes');
+      }
+    } finally {
+      setLoading(false);
+      setIsEditing(false);
+    }
+  };
+
+  if (!item) {
+    return null;
+  }
 
   return (
     <div className="bg-white ">
@@ -223,15 +276,23 @@ function SpaDetails({
           <div className="h-[400px] w-7/12 rounded-lg relative">
             <img
               alt=""
-              src={item?.display_photo || Image12}
+              src={displayPhoto || item.display_photo || Image12}
               className="w-full h-full object-cover -mt-20 rounded-lg shadow-xl"
+              id="displayPhoto"
             />
-            <button
-              type="button"
-              className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full"
+            <label
+              htmlFor="fileInputDisplayPhoto"
+              className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full cursor-pointer"
             >
-              <IoCameraSharp color="white" size={25} />
-            </button>
+              <input
+                type="file"
+                id="fileInputDisplayPhoto"
+                accept="image/*"
+                onChange={handleDisplayPhotoChange}
+                className="hidden"
+              />
+              <IoCameraSharp size={25} color="white" />
+            </label>
           </div>
         </div>
       </div>
@@ -267,6 +328,74 @@ function SpaDetails({
               </button>
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="px-12 pb-10 ">
+        <div className="border-b-4 border-black pb-10">
+          <div className="flex items-center mb-5 gap-x-4">
+            <h1 className="text-4xl font-semibold ">Contact Us</h1>
+            <button
+              type="button"
+              onClick={() => setIsEditingContact(!isEditingContact)}
+            >
+              <FaEdit size={30} />
+            </button>
+          </div>
+          <div className="flex flex-col gap-y-5">
+            <div className="flex items-center gap-x-2">
+              <img
+                src={item?.owner?.profile || DefaultPp}
+                alt=""
+                className="size-8 rounded-full object-cover object-center border-[1px] border-[#41924B]"
+              />
+              <h1 className="text-xl">{item?.owner?.name || 'Creator'}</h1>
+            </div>
+            <div>
+              {isEditingContact ? (
+                <div className="flex flex-col gap-y-5">
+                  <input
+                    type="text"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    placeholder="New Email"
+                    className="border-b-2 text-xl w-1/4 focus:outline-none"
+                  />
+                  <input
+                    type="tel"
+                    value={newContact}
+                    onChange={(e) => setNewContact(e.target.value)}
+                    placeholder="New Contact Number"
+                    className="border-b-2 text-xl w-1/4 focus:outline-none"
+                  />
+                  <div className="w-full flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleContactChanges}
+                      className="px-4 py-2 bg-[#41924B] text-white rounded-lg"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-y-5">
+                  <div className="flex items-center gap-x-2">
+                    <MdOutlineMail size={25} />
+                    <h1 className="text-xl">
+                      {item?.owner?.email || 'Creator'}
+                    </h1>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <LuPhone size={25} />
+                    <h1 className="text-xl">
+                      {item?.owner?.contact || 'Contact Number'}{' '}
+                    </h1>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

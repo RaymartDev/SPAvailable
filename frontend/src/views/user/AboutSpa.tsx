@@ -20,6 +20,7 @@ import SpaState from '../../interface/SpaState';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [coverPhoto, setCoverPhoto] = useState<string>('');
   const user = useAppSelector((state) => state.user);
   const spa = useAppSelector((state) => state.spa);
   const location = useLocation();
@@ -28,28 +29,45 @@ function AboutSpa() {
   useEffect(() => {
     if (!location.state || !location.state.item) {
       navigate('/user/dashboard');
+    } else {
+      setCoverPhoto(location.state.item.cover_photo || '');
     }
   }, [location.state]);
 
   if (loading) {
     return <Loader />;
   }
+  const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const newCoverPhoto = URL.createObjectURL(file);
+      setCoverPhoto(newCoverPhoto);
+    }
+  };
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex h-[450px] md:h-[500px] z-10 relative">
         <img
-          src={location.state.item.cover_photo || Image11}
+          src={coverPhoto || location.state.item.cover_photo || Image11}
           className="object-cover h-full w-full"
+          id="coverPhoto"
         />
-        <button
-          type="button"
-          className="absolute bottom-5 left-5 bg-[#41924B] text-white px-5 py-2 rounded-lg flex items-center gap-x-2 font-semibold"
+        <label
+          htmlFor="fileInput"
+          className="absolute bottom-5 left-5 bg-[#41924B] text-white px-5 py-2 rounded-lg flex items-center gap-x-2 font-semibold cursor-pointer"
         >
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            onChange={handleCoverPhotoChange}
+            className="hidden"
+          />
           <IoCameraSharp size={20} />
           Edit Cover Photo
-        </button>
+        </label>
       </div>
       <SpaDetails
         key={location.state?.item.id}
