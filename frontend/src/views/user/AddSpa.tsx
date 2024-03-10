@@ -13,68 +13,86 @@ import { createSpa } from '../../store/reducer/spaSlice';
 
 function AddSpa() {
   const user = useAppSelector((state) => state.user);
+
+  const initialFormData = {
+    spaName: '',
+    spaDesc: '',
+    spaEmail: '',
+    spaContact: '',
+    spaAddress: '',
+    coverPhoto: '',
+    displayPhoto: '',
+    openTime: '',
+    closeTime: '',
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const resetFormData = () => {
+    setFormData(initialFormData);
+  };
+
   const [loading, setLoading] = useState<boolean>(false);
   const [showBasicInfo, setShowBasicInfo] = useState<boolean>(true);
-  const [spaName, setSpaName] = useState<string>('');
-  const [spaDesc, setSpaDesc] = useState<string>('');
-  const [spaEmail, setSpaEmail] = useState<string>('');
-  const [spaContact, setSpaContact] = useState<string>('');
-  const [spaAddress, setSpaAddress] = useState<string>('');
-  const [coverPhoto, setCoverPhoto] = useState<string>('');
-  const [displayPhoto, setDisplayPhoto] = useState<string>('');
-  const [openTime, setOpenTime] = useState<string>('');
-  const [closeTime, setCloseTime] = useState<string>('');
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const resetAll = () => {
-    setSpaName('');
-    setSpaDesc('');
-    setSpaEmail('');
-    setSpaContact('');
-    setOpenTime('');
-    setCloseTime('');
-    setSpaAddress('');
-    setDisplayPhoto('');
-    setCoverPhoto('');
+    resetFormData();
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
     e.preventDefault();
 
-    if (!spaEmail) {
+    if (!formData.spaEmail) {
       showErrorToast('Email field is required.');
       setLoading(false);
       return;
     }
 
-    if (!spaAddress) {
+    if (!formData.spaAddress) {
       showErrorToast('Address field is required.');
       setLoading(false);
       return;
     }
 
-    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(spaEmail)) {
+    if (
+      !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.spaEmail)
+    ) {
       showErrorToast('Please input a valid email address.');
       setLoading(false);
       return;
     }
 
-    if (spaContact && !/^(09|\+639)\d{9,10}$/.test(`09${spaContact}`)) {
+    if (
+      formData.spaContact &&
+      !/^(09|\+639)\d{9,10}$/.test(`09${formData.spaContact}`)
+    ) {
       showErrorToast('Please input a valid phone number');
       setLoading(false);
       return;
     }
 
-    if (!openTime) {
+    if (!formData.openTime) {
       showErrorToast('Open time field is required.');
       setLoading(false);
       return;
     }
 
-    if (!closeTime) {
+    if (!formData.closeTime) {
       showErrorToast('Closed time field is required.');
       setLoading(false);
       return;
@@ -83,15 +101,15 @@ function AddSpa() {
     const handlePost = async () => {
       try {
         const response = await axios.post('/api/v1/spa/control', {
-          name: spaName,
-          desc: spaDesc,
-          email: spaEmail,
-          contact: spaContact ? `09${spaContact}` : '',
-          openTime,
-          closeTime,
-          address: spaAddress,
-          display_photo: displayPhoto,
-          cover_photo: coverPhoto,
+          name: formData.spaName,
+          desc: formData.spaDesc,
+          email: formData.spaEmail,
+          contact: formData.spaContact ? `09${formData.spaContact}` : '',
+          openTime: formData.openTime,
+          closeTime: formData.closeTime,
+          address: formData.spaAddress,
+          display_photo: formData.displayPhoto,
+          cover_photo: formData.coverPhoto,
           ownerId: user?.id,
         });
         dispatch(createSpa(response.data));
@@ -126,35 +144,27 @@ function AddSpa() {
             {showBasicInfo ? (
               <BasicInfo
                 onNextClick={() => {
-                  if (!spaName || !spaDesc) {
-                    showErrorToast('Please input all required fields.');
+                  if (!formData.spaName) {
+                    showErrorToast('Name of the spa is required field.');
+                    return;
+                  }
+                  if (!formData.spaDesc) {
+                    showErrorToast('Description of the spa is required field.');
                     return;
                   }
                   setShowBasicInfo(false);
                 }}
-                setSpaName={setSpaName}
-                setSpaDesc={setSpaDesc}
-                setDisplayPhoto={setDisplayPhoto}
-                name={spaName}
-                desc={spaDesc}
-                displayPhoto={displayPhoto}
+                handleChange={handleChange}
+                setFormData={setFormData}
+                formData={formData}
               />
             ) : (
               <SpaInfo
                 onReturnClick={() => setShowBasicInfo(true)}
-                setSpaAddress={setSpaAddress}
-                setSpaEmail={setSpaEmail}
-                setSpaContact={setSpaContact}
-                setCoverPhoto={setCoverPhoto}
-                setCloseTime={setCloseTime}
-                setOpenTime={setOpenTime}
-                email={spaEmail}
-                address={spaAddress}
-                contact={spaContact}
-                coverPhoto={coverPhoto}
+                setFormData={setFormData}
+                formData={formData}
+                handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                closeTime={closeTime}
-                openTime={openTime}
               />
             )}
           </div>

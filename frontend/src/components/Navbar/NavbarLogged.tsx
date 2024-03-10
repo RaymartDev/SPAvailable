@@ -15,7 +15,7 @@ function NavbarLogged({ setLoading, user }: DropdownProps) {
   }, []);
 
   useEffect(() => {
-    if (!user?.id) {
+    if (!user) {
       navigate('/');
       return;
     }

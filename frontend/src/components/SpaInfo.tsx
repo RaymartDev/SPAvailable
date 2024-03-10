@@ -5,36 +5,40 @@ import { useToast } from '../hooks/useToast';
 
 interface SpaInfoProps {
   onReturnClick: () => void;
-  setSpaAddress: React.Dispatch<React.SetStateAction<string>>;
-  setSpaEmail: React.Dispatch<React.SetStateAction<string>>;
-  setSpaContact: React.Dispatch<React.SetStateAction<string>>;
-  setCoverPhoto: React.Dispatch<React.SetStateAction<string>>;
-  setOpenTime: React.Dispatch<React.SetStateAction<string>>;
-  setCloseTime: React.Dispatch<React.SetStateAction<string>>;
+  setFormData: (formData: {
+    spaName: string;
+    spaDesc: string;
+    spaEmail: string;
+    spaContact: string;
+    spaAddress: string;
+    coverPhoto: string;
+    displayPhoto: string;
+    openTime: string;
+    closeTime: string;
+  }) => void;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  address: string;
-  email: string;
-  contact: string;
-  coverPhoto: string;
-  closeTime: string;
-  openTime: string;
+  formData: {
+    spaName: string;
+    spaDesc: string;
+    spaEmail: string;
+    spaContact: string;
+    spaAddress: string;
+    coverPhoto: string;
+    displayPhoto: string;
+    openTime: string;
+    closeTime: string;
+  };
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 function SpaInfo({
   onReturnClick,
-  setSpaAddress,
-  setSpaEmail,
-  setSpaContact,
-  setCoverPhoto,
+  setFormData,
   handleSubmit,
-  setOpenTime,
-  setCloseTime,
-  address,
-  email,
-  contact,
-  coverPhoto,
-  closeTime,
-  openTime,
+  formData,
+  handleChange,
 }: SpaInfoProps) {
   const { showErrorToast } = useToast();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +51,10 @@ function SpaInfo({
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
-        setCoverPhoto(base64String);
+        setFormData({
+          ...formData,
+          coverPhoto: base64String,
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -79,17 +86,22 @@ function SpaInfo({
                 onChange={handleFileChange}
               />
               <div className="border-dashed border-2 w-full h-full flex items-center justify-center relative bg-[#FCFCFB]">
-                {coverPhoto ? (
+                {formData.coverPhoto ? (
                   <>
                     <img
-                      src={coverPhoto}
+                      src={formData.coverPhoto}
                       alt="Spa Cover"
                       className="w-full h-[410px] object-cover object-center"
                     />
                     <FaTrash
                       color="red"
                       className="absolute bottom-2 right-1 cursor-pointer"
-                      onClick={() => setCoverPhoto('')}
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          coverPhoto: '',
+                        })
+                      }
                       size={25}
                     />
                   </>
@@ -118,9 +130,10 @@ function SpaInfo({
               </h1>
               <input
                 type="email"
+                name="spaEmail"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
-                value={email}
-                onChange={(e) => setSpaEmail(e.target.value)}
+                value={formData.spaEmail}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col gap-y-2">
@@ -132,10 +145,14 @@ function SpaInfo({
                 <input
                   type="tel"
                   className="ml-1 px-1 py-2 w-11/12 bg-transparent"
-                  value={contact}
+                  name="spaContact"
+                  value={formData.spaContact}
                   onChange={(e) => {
                     const allowedChars = e.target.value.replace(/\D/g, '');
-                    setSpaContact(allowedChars.slice(0, 10));
+                    setFormData({
+                      ...formData,
+                      spaContact: allowedChars.slice(0, 10),
+                    });
                   }}
                   maxLength={9}
                 />
@@ -150,8 +167,9 @@ function SpaInfo({
                   <h1 className="">Open Time</h1>
                   <input
                     type="time"
-                    value={openTime}
-                    onChange={(e) => setOpenTime(e.target.value)}
+                    name="openTime"
+                    value={formData.openTime}
+                    onChange={handleChange}
                     className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
                   />
                 </div>
@@ -159,13 +177,14 @@ function SpaInfo({
                   <h1 className="">Closed Time</h1>
                   <input
                     type="time"
-                    value={closeTime}
+                    name="closeTime"
+                    value={formData.closeTime}
                     onChange={(e) => {
-                      if (!openTime) {
+                      if (!formData.openTime) {
                         e.preventDefault();
                         return;
                       }
-                      setCloseTime(e.target.value);
+                      handleChange(e);
                     }}
                     className="border-2 rounded px-3 py-2 bg-[#FCFCFB] w-1/2 "
                   />
@@ -178,8 +197,9 @@ function SpaInfo({
               </h1>
               <textarea
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-3/4"
-                value={address}
-                onChange={(e) => setSpaAddress(e.target.value)}
+                name="spaAddress"
+                value={formData.spaAddress}
+                onChange={handleChange}
               />
             </div>
           </div>

@@ -6,7 +6,7 @@ const userInfoFromLocalStorage: string | null =
   localStorage.getItem('userInfo');
 const initialState: UserState = userInfoFromLocalStorage
   ? JSON.parse(userInfoFromLocalStorage)
-  : {};
+  : null;
 
 export const UserSlice = createSlice({
   name: 'user',
@@ -21,7 +21,7 @@ export const UserSlice = createSlice({
     },
     logout: (_state) => {
       localStorage.removeItem('userInfo');
-      return {};
+      return null;
     },
     verify: (state) => {
       if (state) {

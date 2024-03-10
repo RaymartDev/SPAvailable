@@ -61,6 +61,13 @@ function SpaGrid({
     return item;
   });
 
+  function limitString(inputString: string, maxLength: number): string {
+    if (inputString.length <= maxLength) {
+      return inputString;
+    }
+    return `${inputString.substring(0, maxLength)} ...`;
+  }
+
   if (searchSpa) {
     return (
       <div
@@ -107,7 +114,9 @@ function SpaGrid({
                   />
                   <h1>{item?.owner?.name || 'Creator'}</h1>
                 </div>
-                <p className="text-sm my-2">{item?.address}</p>
+                <p className="text-sm my-2">
+                  {limitString(item?.address || 'address', 52)}
+                </p>
                 <StarRating totalStars={5} />
                 <div className="flex items-center justify-center my-5">
                   <button
@@ -178,7 +187,9 @@ function SpaGrid({
                 <h1>{item?.owner?.name || 'Creator'}</h1>
               </div>
 
-              <p className="text-sm">{item?.address}</p>
+              <p className="text-sm">
+                {limitString(item?.address || 'address', 52)}
+              </p>
               <StarRating totalStars={5} />
               <div className="flex items-center justify-center mt-5">
                 <button

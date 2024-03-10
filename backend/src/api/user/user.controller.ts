@@ -283,6 +283,7 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
   try {
     if (req.user) {
       const {
+        name,
         email,
         contact,
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -291,12 +292,14 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
         gender,
       } = req.body;
 
-      if (email) {
-        delete req.body.email;
+      if (!name && !password && !contact && !gender) {
+        res.status(400);
+        next(new Error('No changes found'));
+        return;
       }
 
-      if (password) {
-        req.body.password = await generateHashedPassword(password);
+      if (email) {
+        delete req.body.email;
       }
   
       if (birth_date) {
@@ -310,26 +313,40 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
       }
   
       const updatedUser = await prismaFetch(async (prisma : PrismaClient) => {
-        const user = await prisma.user.update({
-          where: {
-            email: req.user && req.user.email,
-          },
-          data: {
-            gender: gender === 'male',
-            ...req.body,
-          },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            contact: true,
-            birth_date: true,
-            active: true,
-            gender: true,
-            profile: true,
-          },
-        });
-        return user;
+        try {
+          if (password) {
+            const userRaw = await prisma.user.findUnique({ where: { id: req.user?.id } });
+            const passwordMatch = await matchPassword(password, userRaw?.password || '');
+            if (passwordMatch) {
+              next(new Error('Try another combination of password that you have not used yet.'));
+              return;
+            }
+          }
+  
+          const user = await prisma.user.update({
+            where: {
+              email: req.user && req.user.email,
+            },
+            data: {
+              gender: gender === 'male',
+              ...req.body,
+              password: await generateHashedPassword(password),
+            },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              contact: true,
+              birth_date: true,
+              active: true,
+              gender: true,
+              profile: true,
+            },
+          });
+          return user;
+        } catch (err) {
+          next(err);
+        }
       }, next);
 
       res.status(200).json(updatedUser);

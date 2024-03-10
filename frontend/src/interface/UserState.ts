@@ -1,3 +1,5 @@
+import Nullable from './Nullable';
+
 interface UserStateRaw {
   id: number;
   name: string;
@@ -10,6 +12,6 @@ interface UserStateRaw {
   profile: string;
 }
 
-type UserState = Partial<UserStateRaw> | undefined | null;
+type UserState = Nullable<Partial<UserStateRaw>>;
 
 export default UserState;

@@ -15,7 +15,7 @@ function Navbar() {
   const user = useAppSelector((state) => state.user);
 
   const handleClick = () => {
-    if (user?.id) {
+    if (user) {
       navigate(user.active ? '/user/dashboard' : '/user/pending');
       return;
     }

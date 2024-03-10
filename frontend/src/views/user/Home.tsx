@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
@@ -15,12 +15,13 @@ import SearchMode from '../../interface/SearchMode';
 import { useToast } from '../../hooks/useToast';
 import { setSpa } from '../../store/reducer/spaSlice';
 import SpaState from '../../interface/SpaState';
+import useDebounce from '../../hooks/useDebounce';
 
 function MainHome() {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchSpa, setSearchSpa] = useState('');
-  const searchValue = useDeferredValue(searchSpa);
+  const debouncedSearchTerm = useDebounce(searchSpa, 300);
   const navigate = useNavigate();
   const [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.ALL);
 
@@ -30,8 +31,10 @@ function MainHome() {
   const { showErrorToast } = useToast();
 
   useEffect(() => {
+    if (spaList.length > 0) {
+      return () => {};
+    }
     const source = axios.CancelToken.source();
-
     const handleFetch = async () => {
       setLoading(true);
       try {
@@ -40,6 +43,7 @@ function MainHome() {
         });
         const responseState: SpaState[] = response.data;
         if (response.status === 304) {
+          setLoading(false);
           return;
         }
         if (responseState.length > 0) {
@@ -62,7 +66,7 @@ function MainHome() {
       source.cancel('Request canceled by cleanup');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [spaList]);
 
   const handleAddSpaClick = () => {
     navigate('/user/add-spa');
@@ -145,7 +149,7 @@ function MainHome() {
 
       <div className="flex flex-col items-center justify-center bg-white pb-16">
         <SpaGrid
-          searchSpa={searchValue}
+          searchSpa={debouncedSearchTerm}
           spaItems={spaList}
           searchMode={searchMode}
         />

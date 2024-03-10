@@ -5,22 +5,38 @@ import { useToast } from '../hooks/useToast';
 
 interface BasicInfoProps {
   onNextClick: () => void;
-  setSpaName: React.Dispatch<React.SetStateAction<string>>;
-  setSpaDesc: React.Dispatch<React.SetStateAction<string>>;
-  setDisplayPhoto: React.Dispatch<React.SetStateAction<string>>;
-  name: string;
-  desc: string;
-  displayPhoto: string;
+  setFormData: (formData: {
+    spaName: string;
+    spaDesc: string;
+    spaEmail: string;
+    spaContact: string;
+    spaAddress: string;
+    coverPhoto: string;
+    displayPhoto: string;
+    openTime: string;
+    closeTime: string;
+  }) => void;
+  formData: {
+    spaName: string;
+    spaDesc: string;
+    spaEmail: string;
+    spaContact: string;
+    spaAddress: string;
+    coverPhoto: string;
+    displayPhoto: string;
+    openTime: string;
+    closeTime: string;
+  };
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 function BasicInfo({
   onNextClick,
-  setSpaName,
-  setSpaDesc,
-  setDisplayPhoto,
-  name,
-  desc,
-  displayPhoto,
+  setFormData,
+  formData,
+  handleChange,
 }: BasicInfoProps) {
   const { showErrorToast } = useToast();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +49,10 @@ function BasicInfo({
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
-        setDisplayPhoto(base64String);
+        setFormData({
+          ...formData,
+          displayPhoto: base64String,
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -67,17 +86,22 @@ function BasicInfo({
                 onChange={handleFileChange}
               />
               <div className="border-dashed border-2 w-full h-full flex items-center justify-center relative bg-[#FCFCFB]">
-                {displayPhoto ? (
+                {formData.displayPhoto ? (
                   <>
                     <img
-                      src={displayPhoto}
+                      src={formData.displayPhoto}
                       alt="Spa Cover"
                       className="w-full h-[410px] object-cover object-center"
                     />
                     <FaTrash
                       color="red"
                       className="absolute bottom-2 right-1 cursor-pointer border-2 bg-white rounded-full p-2"
-                      onClick={() => setDisplayPhoto('')}
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          displayPhoto: '',
+                        })
+                      }
                       size={40}
                     />
                   </>
@@ -107,8 +131,9 @@ function BasicInfo({
               <input
                 type="text"
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB]"
-                value={name}
-                onChange={(e) => setSpaName(e.target.value)}
+                name="spaName"
+                value={formData.spaName}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col h-full gap-y-2">
@@ -117,8 +142,9 @@ function BasicInfo({
               </h1>
               <textarea
                 className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-full"
-                value={desc}
-                onChange={(e) => setSpaDesc(e.target.value)}
+                name="spaDesc"
+                value={formData.spaDesc}
+                onChange={handleChange}
               />
             </div>
           </div>

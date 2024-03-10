@@ -11,6 +11,13 @@ import { updateInfo } from '../../store/reducer/userSlice';
 import Loader from '../../components/Loader Component/Loader';
 import { formatDate } from '../../components/Util/dateUtil';
 
+interface UpdateInfo {
+  password?: string;
+  name?: string;
+  contact?: string;
+  profile?: string;
+}
+
 function EditProfile() {
   const user = useAppSelector((state) => state.user);
   const [visiblePass, setVisiblePass] = useState(false);
@@ -53,20 +60,32 @@ function EditProfile() {
       setLoading(false);
       return;
     }
-    const toUpdate = {
+    const toUpdate: UpdateInfo = {
       password: pass,
       name,
       contact,
       profile: profilePicture,
     };
 
+    if (user?.name === toUpdate.name) {
+      delete toUpdate.name;
+    }
+
+    if (user?.contact === toUpdate.contact) {
+      delete toUpdate.contact;
+    }
+
+    if (user?.profile === toUpdate.profile) {
+      delete toUpdate.profile;
+    }
+
     try {
       const response = await axios.put('/api/v1/user/profile', toUpdate);
       if (response.status === 200) {
         showSuccessToast('Successfully updated profile');
         dispatch(updateInfo(toUpdate));
-        setName(toUpdate.name);
-        setContact(toUpdate.contact);
+        setName(toUpdate.name ? toUpdate.name : user?.name || '');
+        setContact(toUpdate.contact ? toUpdate.contact : user?.contact || '');
         setPass('');
         setPass2('');
       }

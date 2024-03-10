@@ -1,3 +1,4 @@
+import Nullable from './Nullable';
 import UserState from './UserState';
 
 interface SpaStateRaw {
@@ -16,6 +17,6 @@ interface SpaStateRaw {
   updated_at: Date;
 }
 
-type SpaState = Partial<SpaStateRaw> | null;
+type SpaState = Nullable<Partial<SpaStateRaw>>;
 
 export default SpaState;
