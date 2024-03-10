@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IoCameraSharp } from 'react-icons/io5';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
@@ -20,19 +20,21 @@ import SpaState from '../../interface/SpaState';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [coverPhoto, setCoverPhoto] = useState<string>('');
   const user = useAppSelector((state) => state.user);
   const spa = useAppSelector((state) => state.spa);
-  const location = useLocation();
+  const { id } = useParams();
+  const item = spa.find(
+    (itemSpa) => itemSpa?.id === parseInt(id as string, 10)
+  ) as SpaState;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!location.state || !location.state.item) {
+    if (!item) {
       navigate('/user/dashboard');
-    } else {
-      setCoverPhoto(location.state.item.cover_photo || '');
     }
-  }, [location.state]);
+  }, [id]);
+
+  const [coverPhoto, setCoverPhoto] = useState<string>(item?.cover_photo || '');
 
   if (loading) {
     return <Loader />;
@@ -50,7 +52,7 @@ function AboutSpa() {
       <NavbarLogged setLoading={setLoading} user={user} />
       <div className="flex h-[450px] md:h-[500px] z-10 relative">
         <img
-          src={coverPhoto || location.state.item.cover_photo || Image11}
+          src={coverPhoto || Image11}
           className="object-cover h-full w-full"
           id="coverPhoto"
         />
@@ -69,13 +71,7 @@ function AboutSpa() {
           Edit Cover Photo
         </label>
       </div>
-      <SpaDetails
-        key={location.state?.item.id}
-        setLoading={setLoading}
-        item={
-          spa.find((item) => item?.id === location.state.item?.id) as SpaState
-        }
-      />
+      <SpaDetails setLoading={setLoading} item={item} />
       <ServiceSwiper />
       <ProductSwiper />
       <GallerySwiper />

@@ -51,8 +51,8 @@ function SpaDetails({
   const [aboutText, setAboutText] = useState(item?.desc || '');
 
   const [isEditingContact, setIsEditingContact] = useState(false);
-  const [newEmail, setNewEmail] = useState(item?.owner?.email || '');
-  const [newContact, setNewContact] = useState(item?.owner?.contact || '');
+  const [newEmail, setNewEmail] = useState(item?.email || '');
+  const [newContact, setNewContact] = useState(item?.contact || '');
 
   const [displayPhoto, setDisplayPhoto] = useState<string>('');
 
@@ -92,12 +92,17 @@ function SpaDetails({
       delete updatedSpa.closeTime;
     }
     if (
-      !updateSpa.name &&
+      !updatedSpa.name &&
       !updatedSpa.address &&
       !updatedSpa.openTime &&
       !updatedSpa.closeTime
     ) {
+      setNameText(item?.name || '');
+      setAddressText(item?.address || '');
+      setOpenTime(item?.openTime || '');
+      setCloseTime(item?.closeTime || '');
       setLoading(false);
+      setIsEditing(false);
       return;
     }
     try {
@@ -131,6 +136,8 @@ function SpaDetails({
     };
     if (updatedSpa.desc === item?.desc) {
       setLoading(false);
+      setAboutText(item?.desc || '');
+      setIsEditingAbout(false);
       return;
     }
     try {
@@ -154,15 +161,27 @@ function SpaDetails({
 
   const handleContactChanges = async () => {
     setLoading(true);
+    const updatedSpa: SpaState = {
+      id: item?.id,
+      email: newEmail,
+      contact: newContact,
+    };
+
+    if (updatedSpa.email === item?.email) {
+      delete updatedSpa.email;
+    }
+
+    if (updatedSpa.contact === item?.contact) {
+      delete updatedSpa.contact;
+    }
+
+    if (!updatedSpa.email && !updatedSpa.contact) {
+      setLoading(false);
+      setIsEditingContact(false);
+      return;
+    }
+
     try {
-      const updatedSpa: SpaState = {
-        id: item?.id,
-        owner: {
-          ...item?.owner,
-          email: newEmail,
-          contact: newContact,
-        },
-      };
       const response = await axios.put('/api/v1/spa/control', updatedSpa);
       if (response.status >= 200 && response.status < 300) {
         dispatch(updateSpa(updatedSpa));
@@ -176,7 +195,7 @@ function SpaDetails({
       }
     } finally {
       setLoading(false);
-      setIsEditing(false);
+      setIsEditingContact(false);
     }
   };
 
@@ -359,14 +378,14 @@ function SpaDetails({
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     placeholder="New Email"
-                    className="border-b-2 text-xl w-1/4 focus:outline-none"
+                    className="border-b-2 text-xl w-[30%] focus:outline-none"
                   />
                   <input
                     type="tel"
                     value={newContact}
                     onChange={(e) => setNewContact(e.target.value)}
                     placeholder="New Contact Number"
-                    className="border-b-2 text-xl w-1/4 focus:outline-none"
+                    className="border-b-2 text-xl w-[30%] focus:outline-none"
                   />
                   <div className="w-full flex justify-end">
                     <button
@@ -382,14 +401,12 @@ function SpaDetails({
                 <div className="flex flex-col gap-y-5">
                   <div className="flex items-center gap-x-2">
                     <MdOutlineMail size={25} />
-                    <h1 className="text-xl">
-                      {item?.owner?.email || 'Creator'}
-                    </h1>
+                    <h1 className="text-xl">{item?.email || 'Creator'}</h1>
                   </div>
                   <div className="flex items-center gap-x-2">
                     <LuPhone size={25} />
                     <h1 className="text-xl">
-                      {item?.owner?.contact || 'Contact Number'}{' '}
+                      {item?.contact || 'Contact Number'}{' '}
                     </h1>
                   </div>
                 </div>

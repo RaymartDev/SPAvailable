@@ -116,17 +116,14 @@ function SpaGrid({
                   <h1>{item?.owner?.name || 'Creator'}</h1>
                 </div>
                 <p className="text-sm my-2">
-                  {limitString(item?.address || 'address', 52)}
+                  {limitString(item?.address || 'address', 30)}
                 </p>
                 <StarRating totalStars={5} />
                 <div className="flex items-center justify-center mt-5 w-full">
                   <button
+                    key={item?.id}
                     type="button"
-                    onClick={() =>
-                      navigate('/spa/about', {
-                        state: { item },
-                      })
-                    }
+                    onClick={() => navigate(`/spa/about/${item?.id}`)}
                     className="transition-all ease-in-out delay-150 rounded-full w-2/5 bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
                   >
                     SEE MORE
@@ -137,6 +134,7 @@ function SpaGrid({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
+                        key={item?.id}
                         type="button"
                         className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >
@@ -169,11 +167,7 @@ function SpaGrid({
             <div
               key={item?.id}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg relative"
-              onClick={() =>
-                navigate('/spa/about', {
-                  state: { item },
-                })
-              }
+              onClick={() => navigate(`/spa/about/${item?.id}`)}
             >
               <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
                 <div className="w-full h-[300px] overflow-hidden rounded-3xl border-[1px]">
@@ -203,11 +197,12 @@ function SpaGrid({
                 </div>
 
                 <p className="text-sm">
-                  {limitString(item?.address || 'address', 52)}
+                  {limitString(item?.address || 'address', 30)}
                 </p>
                 <StarRating totalStars={5} />
                 <div className="flex items-center justify-center mt-5 w-full">
                   <button
+                    key={item?.id}
                     type="button"
                     onClick={() =>
                       navigate('/spa/about', {
@@ -224,6 +219,7 @@ function SpaGrid({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
+                        key={item?.id}
                         type="button"
                         className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >

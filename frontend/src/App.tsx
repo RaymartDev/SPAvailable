@@ -54,7 +54,7 @@ function App() {
         <Route path="/user/add-spa" element={<Page component={AddSpa} />} />
 
         {/* SPA ROUTES */}
-        <Route path="/spa/about" element={<Page component={AboutSpa} />} />
+        <Route path="/spa/about/:id" element={<Page component={AboutSpa} />} />
         <Route path="/spa/product" element={<Page component={Product} />} />
         <Route path="/spa/service" element={<Page component={Service} />} />
 
