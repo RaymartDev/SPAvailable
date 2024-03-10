@@ -93,17 +93,18 @@ function BasicInfo({
                       alt="Spa Cover"
                       className="w-full h-[410px] object-cover object-center"
                     />
-                    <FaTrash
-                      color="red"
-                      className="absolute bottom-2 right-1 cursor-pointer border-2 bg-white rounded-full p-2"
+                    <button
+                      type="button"
+                      className="bg-white rounded-full p-2 absolute bottom-2 right-1"
                       onClick={() =>
                         setFormData({
                           ...formData,
                           displayPhoto: '',
                         })
                       }
-                      size={40}
-                    />
+                    >
+                      <FaTrash color="red" size={20} />
+                    </button>
                   </>
                 ) : (
                   <label

@@ -93,17 +93,18 @@ function SpaInfo({
                       alt="Spa Cover"
                       className="w-full h-[410px] object-cover object-center"
                     />
-                    <FaTrash
-                      color="red"
-                      className="absolute bottom-2 right-1 cursor-pointer"
+                    <button
+                      type="button"
                       onClick={() =>
                         setFormData({
                           ...formData,
                           coverPhoto: '',
                         })
                       }
-                      size={25}
-                    />
+                      className="absolute bottom-2 right-1 cursor-pointer border-2 bg-white rounded-full p-2"
+                    >
+                      <FaTrash color="red" size={20} />
+                    </button>
                   </>
                 ) : (
                   <label
@@ -123,7 +124,7 @@ function SpaInfo({
         </div>
         <div className="card h-full w-full flex flex-col items-center md:items-start ">
           <h1 className="text-4xl font-bold px-4">Spa Info</h1>
-          <div className="flex flex-col px-5 pt-5 pb-12 h-full w-full gap-y-4">
+          <div className="flex flex-col px-5 pt-5 pb-14 h-full w-full gap-y-4">
             <div className="flex flex-col gap-y-2">
               <h1 className="text-lg font-semibold">
                 Email <Required />
@@ -190,6 +191,10 @@ function SpaInfo({
                   />
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col h-full gap-y-2">
+              <h1 className="text-lg font-semibold">City</h1>
+              <input className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-3/4" />
             </div>
             <div className="flex flex-col h-full gap-y-2">
               <h1 className="text-lg font-semibold">

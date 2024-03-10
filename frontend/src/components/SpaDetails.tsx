@@ -1,4 +1,10 @@
-import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
+import { useState } from 'react';
+import {
+  IoLocationOutline,
+  IoTimeOutline,
+  IoCameraSharp,
+} from 'react-icons/io5';
+import { FaEdit } from 'react-icons/fa';
 import StarRating from './StarRating';
 import Image12 from '../img/image12.png';
 import SpaState from '../interface/SpaState';
@@ -22,27 +28,114 @@ function SpaDetails({ item }: { item: SpaState }) {
     return formattedTime;
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [nameText, setNameText] = useState(item?.name || '');
+  const [addressText, setAddressText] = useState(item?.address || '');
+  const [openTime, setOpenTime] = useState(item?.openTime || '');
+  const [closeTime, setCloseTime] = useState(item?.closeTime || '');
+  const [aboutText, setAboutText] = useState(item?.desc || '');
+
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const handleAboutEdit = () => {
+    setIsEditingAbout(!isEditingAbout);
+  };
+
+  const handleAboutChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setAboutText(e.target.value);
+  };
+
+  const handleSaveAbout = () => {
+    setIsEditingAbout(false);
+  };
+
   return (
     <div className="bg-white ">
       <div className="grid grid-cols-2 items-center justify-center ">
         <div className="card flex justify-start items-center pl-12 ">
           <div className="flex flex-col  justify-start border-b-4 border-black pb-20">
-            <h1 className="text-5xl font-bold mb-5">{item?.name}</h1>
+            <div className="flex items-center mb-5 gap-x-4">
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={nameText}
+                  onChange={(e) => setNameText(e.target.value)}
+                  className="border-b-2 text-5xl focus:outline-none"
+                />
+              ) : (
+                <h1 className="text-5xl font-bold">{item?.name}</h1>
+              )}
+              <button type="button" onClick={handleEdit}>
+                <FaEdit size={30} />
+              </button>
+            </div>
             <div className="flex items-center mb-5">
               <div>
                 <IoLocationOutline size={25} />
               </div>
-              <p className="text-xl ml-2 ">{item?.address}</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={addressText}
+                  onChange={(e) => setAddressText(e.target.value)}
+                  className="border-b-2 text-xl w-full focus:outline-none"
+                />
+              ) : (
+                <p className="text-xl ml-2 ">{item?.address}</p>
+              )}
             </div>
             <div className="flex items-center mb-5">
               <div>
                 <IoTimeOutline size={25} />
               </div>
-              <p className="text-xl ml-2 ">
-                {item?.openTime && item.closeTime
-                  ? `${formatTime(item.openTime)} - ${formatTime(item.closeTime)}`
-                  : ''}
-              </p>
+              {isEditing ? (
+                <>
+                  <input
+                    type="time"
+                    value={openTime}
+                    onChange={(e) => setOpenTime(e.target.value)}
+                    className="border-b-2 border-blue-500 focus:outline-none mr-2"
+                  />
+                  <span className="text-xl">-</span>
+                  <input
+                    type="time"
+                    value={closeTime}
+                    onChange={(e) => setCloseTime(e.target.value)}
+                    className="border-b-2 border-blue-500 focus:outline-none ml-2"
+                  />
+                </>
+              ) : (
+                <>
+                  <p className="text-xl ml-2 ">
+                    {item?.openTime ? formatTime(item.openTime) : ''}
+                  </p>
+                  <span className="text-xl mx-2">-</span>
+                  <p className="text-xl ">
+                    {item?.closeTime ? formatTime(item.closeTime) : ''}
+                  </p>
+                </>
+              )}
+            </div>
+            <div>
+              {isEditing && (
+                <div className="w-full flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className="mt-3 px-4 py-2 bg-[#41924B] text-white rounded-lg"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              )}
             </div>
             <div className="flex items-center">
               <p className="text-2xl mr-2 font-semibold">5.0</p>
@@ -52,19 +145,51 @@ function SpaDetails({ item }: { item: SpaState }) {
           </div>
         </div>
 
-        <div className="card flex items-center justify-center z-10 ">
-          <img
-            alt=""
-            src={item?.display_photo || Image12}
-            className="size-[450px] -mt-20 rounded-lg"
-          />
+        <div className="card flex items-center justify-center z-10 relative">
+          <div className="h-[400px] w-7/12 rounded-lg relative">
+            <img
+              alt=""
+              src={item?.display_photo || Image12}
+              className="w-full h-full object-cover -mt-20 rounded-lg shadow-xl"
+            />
+            <button
+              type="button"
+              className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full"
+            >
+              <IoCameraSharp color="white" size={25} />
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="px-12 pb-10 ">
         <div className="border-b-4 border-black pb-10">
-          <h1 className="text-4xl font-semibold mb-5">About Us</h1>
-          <p className="text-xl leading-10 italic">{item?.desc}</p>
+          <div className="flex items-center mb-5 gap-x-4">
+            <h1 className="text-4xl font-semibold ">About Us</h1>
+            <button type="button">
+              <FaEdit size={30} onClick={handleAboutEdit} />
+            </button>
+          </div>
+          {isEditingAbout ? (
+            <textarea
+              value={aboutText}
+              onChange={handleAboutChange}
+              className="w-full h-32 border rounded-lg px-3 py-2 resize-none"
+            />
+          ) : (
+            <p className="text-xl leading-10 italic">{item?.desc}</p>
+          )}
+          {isEditingAbout && (
+            <div className="w-full flex justify-end">
+              <button
+                type="button"
+                onClick={handleSaveAbout}
+                className="mt-3 px-4 py-2 bg-[#41924B] text-white rounded-lg"
+              >
+                Save Changes
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

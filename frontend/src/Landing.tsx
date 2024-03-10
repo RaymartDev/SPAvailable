@@ -16,6 +16,7 @@ import Suite from './img/suite.png';
 import Image9 from './img/image9.png';
 import Loader from './components/Loader Component/Loader';
 import ForgotPModal from './components/Modal/ForgotPModal';
+import OurTeam from './components/OurTeam';
 
 function Landing() {
   useEffect(() => {
@@ -230,7 +231,16 @@ function Landing() {
           </div>
         </div>
       </div>
-
+      <div>
+        <div className="flex justify-center items-center bg-[#41924B] p-5">
+          <h1 className="text-xl md:text-3xl text-slate-50 font-bold">
+            THE TEAM
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-white pb-10">
+          <OurTeam />
+        </div>
+      </div>
       <div>
         <div className="flex flex-col">
           <div className="w-full md:h-[602px]">
