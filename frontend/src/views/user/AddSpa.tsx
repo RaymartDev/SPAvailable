@@ -112,7 +112,7 @@ function AddSpa() {
           cover_photo: formData.coverPhoto,
           ownerId: user?.id,
         });
-        dispatch(createSpa(response.data));
+        dispatch(createSpa({ ...response.data, owner: user }));
         showSuccessToast('Successfully created a new spa');
         setLoading(false);
       } catch (err) {
@@ -128,9 +128,7 @@ function AddSpa() {
 
     handlePost();
     resetAll();
-    setTimeout(() => {
-      navigate('/user/dashboard');
-    }, 500);
+    navigate('/user/dashboard');
   };
 
   if (loading) {

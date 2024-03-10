@@ -9,9 +9,7 @@ export const SpaSlice = createSlice({
   reducers: {
     createSpa: (state: SpaState[], action: PayloadAction<SpaState>) => {
       if (action.payload) {
-        const newState = [...state];
-        newState.unshift(action.payload);
-        return newState;
+        return [action.payload, ...state];
       }
       return state;
     },
