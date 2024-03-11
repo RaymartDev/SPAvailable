@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `user` ADD COLUMN `profile` VARCHAR(191) NOT NULL DEFAULT '';

@@ -41,7 +41,7 @@ router.post('/feedback', protect, async (req: UserRequest, res: Response<Feedbac
 
     const feedbackCreated = await prismaFetch(async (prisma : PrismaClient) => {
       try {
-        return prisma.feedback.create({
+        return await prisma.feedback.create({
           data: req.body,
         });
       } catch (err) {

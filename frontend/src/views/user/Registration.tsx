@@ -237,6 +237,7 @@ function Registration() {
               <img
                 alt="Profile"
                 src={profilePicture || DefaultPp}
+                loading="lazy"
                 className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
               />
             </div>

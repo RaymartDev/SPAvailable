@@ -12,6 +12,6 @@ interface SpaInterface {
   created_at?: Date;
 }
 
-type SpaObject = SpaInterface | null | undefined;
+type SpaObject = SpaInterface | null;
 
 export default SpaObject;

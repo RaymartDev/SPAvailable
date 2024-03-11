@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.10.0",
+    "@prisma/client": "^5.10.2",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",
     "@types/jsonwebtoken": "^9.0.5",

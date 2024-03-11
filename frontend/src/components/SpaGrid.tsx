@@ -55,14 +55,17 @@ function SpaGrid({
     page,
     6
   );
-  const maxPage = Math.ceil(
-    spaItems.filter((item) => {
-      if (searchMode === SearchMode.OWNED) {
-        const isOwnedByUser = item?.owner?.id === user?.id;
-        return isOwnedByUser;
-      }
-      return item;
-    }).length / 6
+  const maxPage = Math.max(
+    Math.ceil(
+      spaItems.filter((item) => {
+        if (searchMode === SearchMode.OWNED) {
+          const isOwnedByUser = item?.owner?.id === user?.id;
+          return isOwnedByUser;
+        }
+        return item;
+      }).length / 6
+    ),
+    1
   );
 
   const handlePrevPage = (e: React.MouseEvent<HTMLButtonElement>) => {
