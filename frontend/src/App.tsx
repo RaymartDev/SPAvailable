@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Page from './components/Util/Page';
 import Landing from './Landing';
 
@@ -29,7 +30,15 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* REGULAR ROUTES */}
-        <Route path="/" element={<Landing />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Landing />
+              <ToastContainer />
+            </>
+          }
+        />
         <Route path="/register" element={<Page component={Registration} />} />
         <Route path="/about" element={<Page component={AboutUs} />} />
         <Route path="/terms" element={<Page component={Terms} />} />

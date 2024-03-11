@@ -102,11 +102,15 @@ function LoginModal({
                       email: decoded.email,
                       verified: decoded.email_verified,
                     });
-                    dispatch(setCredentials(response.data));
-                    showSuccessToast('Successfully logged in');
-                    navigate(
-                      response.data.active ? '/user/dashboard' : '/user/pending'
-                    );
+                    if (response.status >= 200 && response.status < 300) {
+                      dispatch(setCredentials(response.data));
+                      showSuccessToast('Successfully logged in');
+                      navigate(
+                        response.data.active
+                          ? '/user/dashboard'
+                          : '/user/pending'
+                      );
+                    }
                   } catch (err) {
                     if (err instanceof AxiosError) {
                       showErrorToast(err);
@@ -122,7 +126,7 @@ function LoginModal({
                 }
               }}
               onError={() => {
-                showErrorToast('Registration failed');
+                showErrorToast('Login failed');
               }}
               width={300}
               shape="circle"
