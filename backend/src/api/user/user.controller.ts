@@ -290,9 +290,10 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
         birth_date,
         password,
         gender,
+        profile,
       } = req.body;
 
-      if (!name && !password && !contact && !gender) {
+      if (!name && !password && !contact && !gender && !profile) {
         res.status(400);
         next(new Error('No changes found'));
         return;
