@@ -9,7 +9,7 @@ router.route('/control')
   .post(protect, SpaController.createSpa)
   .put(protect, SpaController.updateSpa);
 
-router.delete('/control:id', protect, SpaController.deleteSpa);
+router.delete('/control/:id', protect, SpaController.deleteSpa);
 
 router.get('/control/search', protect, SpaController.readSpa);
 

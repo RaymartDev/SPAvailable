@@ -31,7 +31,7 @@ router.route('/control')
     .get(authMiddleware_1.protect, SpaController.readAllSpa)
     .post(authMiddleware_1.protect, SpaController.createSpa)
     .put(authMiddleware_1.protect, SpaController.updateSpa);
-router.delete('/control:id', authMiddleware_1.protect, SpaController.deleteSpa);
+router.delete('/control/:id', authMiddleware_1.protect, SpaController.deleteSpa);
 router.get('/control/search', authMiddleware_1.protect, SpaController.readSpa);
 exports.default = router;
 // ROUTES HERE
