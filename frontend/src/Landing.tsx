@@ -95,10 +95,12 @@ function Landing() {
         email: user,
         password,
       });
-      dispatch(setCredentials(response.data));
-      showSuccessToast('Successfully logged in');
-      setPasswordModalOpen(false);
-      navigate(response.data.active ? '/user/dashboard' : '/user/pending');
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(setCredentials(response.data));
+        showSuccessToast('Successfully logged in');
+        setPasswordModalOpen(false);
+        navigate(response.data.active ? '/user/dashboard' : '/user/pending');
+      }
     } catch (err) {
       if (err instanceof AxiosError) {
         showErrorToast(err);

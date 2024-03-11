@@ -119,9 +119,10 @@ function AddSpa() {
           cover_photo: formData.coverPhoto,
           ownerId: user?.id,
         });
-        dispatch(createSpa({ ...response.data, owner: user }));
-        showSuccessToast('Successfully created a new spa');
-        setLoading(false);
+        if (response.status >= 200 && response.status < 300) {
+          dispatch(createSpa({ ...response.data, owner: user }));
+          showSuccessToast('Successfully created a new spa');
+        }
       } catch (err) {
         if (err instanceof AxiosError) {
           showErrorToast(err);
@@ -130,12 +131,11 @@ function AddSpa() {
         }
       } finally {
         setLoading(false);
+        resetAll();
+        navigate('/user/dashboard');
       }
     };
-
     handlePost();
-    resetAll();
-    navigate('/user/dashboard');
   };
 
   if (loading) {

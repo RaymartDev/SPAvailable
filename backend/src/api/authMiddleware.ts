@@ -37,15 +37,30 @@ const protect = async (req: Request, res: Response, next : NextFunction) => {
       // Check if user is undefined
       if (!(req as UserRequest).user) { 
         res.status(401);
+        res.cookie('jwt', '', {
+          httpOnly: true,
+          expires: new Date(0),
+        });
+        localStorage.removeItem('userInfo');
         next(new Error('Not authorized no token'));
       }
       next();
     } catch (err) {
       res.status(401);
+      res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0),
+      });
+      localStorage.removeItem('userInfo');
       next(new Error('Not authorized no token'));
     }
   } else {
     res.status(401);
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    localStorage.removeItem('userInfo');
     next(new Error('Not authorized no token'));
   }
 };
