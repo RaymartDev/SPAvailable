@@ -158,7 +158,7 @@ function Registration() {
         active: !!location.state.email_verified,
         profile: profilePicture,
       });
-      if (response.status === 200 && response.status < 300) {
+      if (response.status >= 200 && response.status < 300) {
         dispatch(setCredentials(response.data));
         showSuccessToast('Successfully registered');
         navigate(
