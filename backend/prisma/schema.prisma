@@ -3,18 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model user {
-  id         Int       @id @default(autoincrement())
-  name       String    @db.VarChar(255)
+  id         Int    @id @default(sequence())
+  name       String
   gender     Boolean   @default(true)
-  email      String    @unique @db.VarChar(50)
-  contact    String?   @db.VarChar(20)
+  email      String    @unique
+  contact    String?
   password   String
-  profile    String?    @db.MediumText
+  profile    String?
   birth_date DateTime  @db.Date
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
@@ -24,77 +24,67 @@ model user {
 }
 
 model feedback {
-  id Int @id @default(autoincrement())
-  desc String @db.VarChar(300)
+  id Int @id @default(sequence())
+  desc String
   ownerId Int
   owner user @relation(fields: [ownerId],references: [id], onDelete: Cascade)
 }
 
 model spa {
-  id         Int       @id @default(autoincrement())
-  name       String    @db.VarChar(255)
-  desc       String    @db.VarChar(255)
-  cover_photo String?  @db.MediumText
-  display_photo String? @db.MediumText
-  email      String?   @db.VarChar(50)
-  contact    String?   @db.VarChar(20)
+  id         Int       @id @default(sequence())
+  name       String    
+  desc       String   
+  cover_photo String?
+  display_photo String? 
+  email      String? 
+  contact    String?  
   address    String?
   ownerId    Int?
-  openTime   String? @db.VarChar(5)
-  closeTime  String? @db.VarChar(5)
+  openTime   String?
+  closeTime  String? 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   products   spa_product[]
   services   spa_service[]
   owner      user?     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-
-  @@index([ownerId], map: "spa_ownerId_fkey")
 }
 
 model spa_service {
-  id Int @id @default(autoincrement())
+  id Int @id @default(sequence())
   spaId Int
   serviceId Int
   service service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
-
-  @@unique([spaId, serviceId], name: "Unique_Spa_Service")
 }
 
 model spa_product {
-  id Int @id @default(autoincrement())
+  id Int @id @default(sequence())
   spaId Int
   productId Int
   product product @relation(fields: [productId], references: [id], onDelete: Cascade)
   spa spa @relation(fields: [spaId], references: [id], onDelete: Cascade)
-
-  @@unique([spaId, productId], name: "Unique_Spa_Product")
 }
 
 model service {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
+  id          Int      @id @default(sequence())
+  title       String  
   description String?
-  display_photo String? @db.MediumText
+  display_photo String?
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   spa_services spa_service[]
-
-  @@index([spaId], map: "service_spaId_fkey")
 }
 
 model product {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(255)
+  id          Int      @id @default(sequence())
+  name        String 
   description String?
-  display_photo String? @db.MediumText
+  display_photo String? 
   available   Boolean  @default(true)
   spaId       Int?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   spa_products spa_product[]
-
-  @@index([spaId], map: "product_spaId_fkey")
 }

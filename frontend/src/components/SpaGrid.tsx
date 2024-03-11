@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 import axios, { AxiosError } from 'axios';
 import Image11 from '../img/image11.png';
 import StarRating from './StarRating';
@@ -19,14 +18,12 @@ function SpaGrid({
   spaItems,
   searchMode,
   page,
-  setPage,
 }: {
   setLoading: (v: boolean) => void;
   searchSpa: string;
   spaItems: SpaState[];
   searchMode: SearchMode;
   page: number;
-  setPage: (v: number) => void;
 }) {
   const navigate = useNavigate();
 
@@ -53,33 +50,8 @@ function SpaGrid({
       return item;
     }),
     page,
-    6
+    9
   );
-  const maxPage = Math.ceil(
-    spaItems.filter((item) => {
-      if (searchMode === SearchMode.OWNED) {
-        const isOwnedByUser = item?.owner?.id === user?.id;
-        return isOwnedByUser;
-      }
-      return item;
-    }).length / 6
-  );
-
-  const handlePrevPage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (page === 1) {
-      return;
-    }
-    setPage(page - 1);
-  };
-
-  const handleNextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (page === maxPage) {
-      return;
-    }
-    setPage(page + 1);
-  };
 
   const formatTime = (time: string): string => {
     const [hours, minutes] = time.split(':');
@@ -322,30 +294,6 @@ function SpaGrid({
             </p>
           </div>
         )}
-      </div>
-
-      <div className="flex items-center justify-center">
-        <div className="bg-[#41924B] flex justify-between items-center px-5 py-2 gap-x-20 text-white rounded-lg">
-          <button
-            type="button"
-            onClick={handlePrevPage}
-            className="hover:bg-white p-3 hover:text-black rounded-full"
-          >
-            <FaArrowLeftLong />
-          </button>
-          <div className="flex gap-x-5 items-center">
-            <h1 className="p-3 font-semibold">{page}</h1>
-            <p className="font-semibold">/</p>
-            <h1 className="p-3 font-semibold">{maxPage}</h1>
-          </div>
-          <button
-            type="button"
-            onClick={handleNextPage}
-            className="hover:bg-white p-3 hover:text-black rounded-full"
-          >
-            <FaArrowRightLong />
-          </button>
-        </div>
       </div>
     </div>
   );

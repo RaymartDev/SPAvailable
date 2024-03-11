@@ -158,9 +158,13 @@ function Registration() {
         active: !!location.state.email_verified,
         profile: profilePicture,
       });
-      dispatch(setCredentials(response.data));
-      showSuccessToast('Successfully registered');
-      navigate('/user/pending');
+      if (response.status === 200 && response.status < 300) {
+        dispatch(setCredentials(response.data));
+        showSuccessToast('Successfully registered');
+        navigate(
+          location.state.email_verified ? 'user/dashboard' : '/user/pending'
+        );
+      }
     } catch (err) {
       if (err instanceof AxiosError) {
         showErrorToast(err);
@@ -237,6 +241,7 @@ function Registration() {
               <img
                 alt="Profile"
                 src={profilePicture || DefaultPp}
+                loading="lazy"
                 className={`w-full h-full object-cover rounded-full object-center  ${profilePicture ? 'bg-white' : ''}`}
               />
             </div>

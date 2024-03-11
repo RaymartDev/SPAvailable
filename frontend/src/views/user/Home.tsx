@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
 import axios, { AxiosError } from 'axios';
+import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import Image10 from '../../img/image10.png';
 import SpaGrid from '../../components/SpaGrid';
-import Image17 from '../../img/image17.png';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -71,6 +71,35 @@ function MainHome() {
 
   const handleAddSpaClick = () => {
     navigate('/user/add-spa');
+  };
+
+  const maxPage = Math.max(
+    Math.ceil(
+      spaList.filter((item) => {
+        if (searchMode === SearchMode.OWNED) {
+          const isOwnedByUser = item?.owner?.id === user?.id;
+          return isOwnedByUser;
+        }
+        return item;
+      }).length / 9
+    ),
+    1
+  );
+
+  const handlePrevPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (page === 1) {
+      return;
+    }
+    setPage(page - 1);
+  };
+
+  const handleNextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (page === maxPage) {
+      return;
+    }
+    setPage(page + 1);
   };
 
   if (loading) {
@@ -150,23 +179,36 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center bg-white pb-16">
+      <div className="flex flex-col items-center justify-between gap-24 bg-white pb-16 min-h-[37.5em]">
         <SpaGrid
           setLoading={setLoading}
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
           searchMode={searchMode}
           page={page}
-          setPage={setPage}
         />
       </div>
-
-      <div className="flex relative md:h-[800px] bg-white">
-        <img alt="cover" src={Image17} className="object-cover h-full w-full" />
-        <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full z-10 text-stroke-black">
-          <h1 className="font-bold text-slate-50 text-4xl md:text-8xl text-center">
-            SPAVAILABLE
-          </h1>
+      <div className="flex bg-white items-center justify-center pb-10">
+        <div className="bg-[#41924B] flex justify-between items-center px-5 py-2 gap-x-20 text-white rounded-lg">
+          <button
+            type="button"
+            onClick={handlePrevPage}
+            className="hover:bg-white p-3 hover:text-black rounded-full"
+          >
+            <FaArrowLeftLong />
+          </button>
+          <div className="flex gap-x-5 items-center">
+            <h1 className="p-3 font-semibold">{page}</h1>
+            <p className="font-semibold">/</p>
+            <h1 className="p-3 font-semibold">{maxPage}</h1>
+          </div>
+          <button
+            type="button"
+            onClick={handleNextPage}
+            className="hover:bg-white p-3 hover:text-black rounded-full"
+          >
+            <FaArrowRightLong />
+          </button>
         </div>
       </div>
 
