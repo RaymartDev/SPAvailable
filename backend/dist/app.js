@@ -38,8 +38,9 @@ const app = (0, express_1.default)();
 app.use((0, morgan_1.default)('dev'));
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: 'https://spavailable.vercel.app/',
+    allowedHeaders: '*',
+    methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE'],
 }));
 app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ limit: '10mb', extended: true }));
