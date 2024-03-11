@@ -7,8 +7,9 @@ const router = Router();
 router.route('/control')
   .get(protect, SpaController.readAllSpa)
   .post(protect, SpaController.createSpa)
-  .put(protect, SpaController.updateSpa)
-  .delete(protect, SpaController.deleteSpa);
+  .put(protect, SpaController.updateSpa);
+
+router.delete('/control:id', protect, SpaController.deleteSpa);
 
 router.get('/control/search', protect, SpaController.readSpa);
 

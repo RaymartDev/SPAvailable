@@ -248,7 +248,7 @@ export const deleteSpa = async (req: UserRequest, res: Response<MessageResponse>
       return;
     }
 
-    const { id } = req.query;
+    const { id } = req.params;
   
     const searchSpa = await prismaFetch(async (prisma : PrismaClient) => {
       try {

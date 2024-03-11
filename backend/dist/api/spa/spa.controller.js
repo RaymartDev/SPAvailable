@@ -231,7 +231,7 @@ const deleteSpa = async (req, res, next) => {
             next(new Error('User not yet verified'));
             return;
         }
-        const { id } = req.query;
+        const { id } = req.params;
         const searchSpa = await (0, prisma_1.prismaFetch)(async (prisma) => {
             try {
                 return await prisma.spa.findUnique({

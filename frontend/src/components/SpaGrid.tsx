@@ -105,9 +105,7 @@ function SpaGrid({
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.delete(
-        `/api/v1/spa/control/?id=${item?.id}`
-      );
+      const response = await axios.delete(`/api/v1/spa/control/${item?.id}`);
       if (response.status >= 200 && response.status < 300) {
         dispatch(deleteSpa(item));
         showSuccessToast('Deleted successfully');

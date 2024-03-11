@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
 import Page from './components/Util/Page';
+import Landing from './Landing';
 
 /**
  * LAZY LOADED COMPONENTS
  */
-const Landing = lazy(() => import('./Landing'));
 const Home = lazy(() => import('./views/user/Home'));
 const Registration = lazy(() => import('./views/user/Registration'));
 const EditProfile = lazy(() => import('./views/user/EditProfile'));
@@ -29,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* REGULAR ROUTES */}
-        <Route path="/" element={<Page component={Landing} />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Page component={Registration} />} />
         <Route path="/about" element={<Page component={AboutUs} />} />
         <Route path="/terms" element={<Page component={Terms} />} />
