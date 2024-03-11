@@ -18,18 +18,68 @@ function SpaGrid({
   searchSpa,
   spaItems,
   searchMode,
+  page,
+  setPage,
 }: {
   setLoading: (v: boolean) => void;
   searchSpa: string;
   spaItems: SpaState[];
   searchMode: SearchMode;
+  page: number;
+  setPage: (v: number) => void;
 }) {
   const navigate = useNavigate();
 
-  const items = spaItems;
+  function paginate(
+    array: SpaState[],
+    currentPage: number,
+    itemsPerPage: number
+  ): SpaState[] {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return array.slice(startIndex, endIndex);
+  }
+
   const user = useAppSelector((state) => state.user);
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
+
+  const items = paginate(
+    spaItems.filter((item) => {
+      if (searchMode === SearchMode.OWNED) {
+        const isOwnedByUser = item?.owner?.id === user?.id;
+        return isOwnedByUser;
+      }
+      return item;
+    }),
+    page,
+    6
+  );
+  const maxPage = Math.ceil(
+    spaItems.filter((item) => {
+      if (searchMode === SearchMode.OWNED) {
+        const isOwnedByUser = item?.owner?.id === user?.id;
+        return isOwnedByUser;
+      }
+      return item;
+    }).length / 6
+  );
+
+  const handlePrevPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (page === 1) {
+      return;
+    }
+    setPage(page - 1);
+  };
+
+  const handleNextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (page === maxPage) {
+      return;
+    }
+    setPage(page + 1);
+  };
 
   const formatTime = (time: string): string => {
     const [hours, minutes] = time.split(':');
@@ -49,7 +99,7 @@ function SpaGrid({
     return formattedTime;
   };
 
-  const filteredItems = items.filter((item) => {
+  const filteredItems = spaItems.filter((item) => {
     const searchName = item?.name?.toLowerCase();
     const matchesSearch =
       searchName && searchName.includes(searchSpa.toLowerCase());
@@ -110,8 +160,8 @@ function SpaGrid({
             : 'md:grid-cols-2 lg:grid-cols-3'
         }`}
       >
-        {filteredItemsOwned.length > 0 && filteredItems.length > 0 ? (
-          filteredItems.slice(0, 6).map((item) => (
+        {filteredItemsOwned.length > 0 || filteredItems.length > 0 ? (
+          filteredItems.map((item) => (
             <div
               key={item?.id}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg w"
@@ -131,7 +181,7 @@ function SpaGrid({
                 </div>
                 <div className="flex items-center justify-between">
                   <h1 className="font-bold text-2xl text-neutral-950 mt-5">
-                    {item?.name}
+                    {limitString(item?.name || 'Name', 15)}
                   </h1>
                   <h1 className="mt-5 text-[#41924B] font-semibold">
                     {item?.openTime && item.closeTime
@@ -196,7 +246,7 @@ function SpaGrid({
         className={`max-w-screen-2xl mx-auto grid grid-cols-1 my-5 justify-center items-center ${items.length === 0 || filteredItemsOwned.length === 0 ? 'place-items-center' : 'md:grid-cols-2 lg:grid-cols-3'}`}
       >
         {filteredItemsOwned.length > 0 &&
-          filteredItemsOwned.slice(0, 6).map((item) => (
+          filteredItemsOwned.map((item) => (
             <div
               key={item?.id}
               className="rounded-3xl border-2 p-2 mx-4 mt-4 hover:shadow-lg relative"
@@ -212,7 +262,7 @@ function SpaGrid({
                 </div>
                 <div className="flex items-center justify-between">
                   <h1 className="font-bold text-2xl text-neutral-950 mt-5">
-                    {item?.name}
+                    {limitString(item?.name || 'Name', 15)}
                   </h1>
                   <h1 className="mt-5 text-[#41924B] font-semibold">
                     {item?.openTime && item.closeTime
@@ -278,17 +328,19 @@ function SpaGrid({
         <div className="bg-[#41924B] flex justify-between items-center px-5 py-2 gap-x-20 text-white rounded-lg">
           <button
             type="button"
+            onClick={handlePrevPage}
             className="hover:bg-white p-3 hover:text-black rounded-full"
           >
             <FaArrowLeftLong />
           </button>
           <div className="flex gap-x-5 items-center">
-            <h1 className="p-3 font-semibold">1</h1>
+            <h1 className="p-3 font-semibold">{page}</h1>
             <p className="font-semibold">/</p>
-            <h1 className="p-3 font-semibold">1</h1>
+            <h1 className="p-3 font-semibold">{maxPage}</h1>
           </div>
           <button
             type="button"
+            onClick={handleNextPage}
             className="hover:bg-white p-3 hover:text-black rounded-full"
           >
             <FaArrowRightLong />

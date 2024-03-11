@@ -24,6 +24,7 @@ function MainHome() {
   const debouncedSearchTerm = useDebounce(searchSpa, 300);
   const navigate = useNavigate();
   const [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.ALL);
+  const [page, setPage] = useState<number>(1);
 
   const spaList: SpaState[] = useAppSelector((state) => state.spa);
 
@@ -117,6 +118,7 @@ function MainHome() {
             onClick={() => {
               if (searchMode === SearchMode.ALL) return;
               setSearchMode(SearchMode.ALL);
+              setPage(1);
             }}
             className={`${searchMode === SearchMode.ALL ? 'bg-[#41924B]' : 'bg-white'} border-2 border-[#41924B] ${searchMode === SearchMode.ALL ? 'text-white' : 'text-[#41924B]'} rounded-full w-36 font-semibold py-2`}
           >
@@ -127,6 +129,7 @@ function MainHome() {
             onClick={() => {
               if (searchMode === SearchMode.OWNED) return;
               setSearchMode(SearchMode.OWNED);
+              setPage(1);
             }}
             className={`${searchMode === SearchMode.OWNED ? 'bg-[#41924B]' : 'bg-white'} border-2 border-[#41924B] ${searchMode === SearchMode.OWNED ? 'text-white' : 'text-[#41924B]'} rounded-full w-36 font-semibold py-2`}
           >
@@ -153,6 +156,8 @@ function MainHome() {
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
           searchMode={searchMode}
+          page={page}
+          setPage={setPage}
         />
       </div>
 
