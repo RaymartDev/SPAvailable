@@ -15,7 +15,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors({
-  origin: 'https://spavailable.vercel.app/',
+  origin: '*',
   allowedHeaders: '*',
   methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE'],
 }));
