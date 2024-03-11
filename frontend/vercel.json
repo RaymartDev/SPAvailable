@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/:path*",
-            "destination": "https://spavailable.cyclic.app/:path*"
+            "destination": "https://spavailable.cyclic.app/api/:path*"
         },
         {
             "source": "/(.*)",
