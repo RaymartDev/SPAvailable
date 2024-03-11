@@ -162,7 +162,7 @@ function Registration() {
         dispatch(setCredentials(response.data));
         showSuccessToast('Successfully registered');
         navigate(
-          location.state.email_verified ? 'user/dashboard' : '/user/pending'
+          location.state.email_verified ? '/user/dashboard' : '/user/pending'
         );
       }
     } catch (err) {
