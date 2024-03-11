@@ -255,29 +255,29 @@ function SpaGrid({
                   {limitString(item?.address || 'address', 30)}
                 </p>
                 <StarRating totalStars={5} />
-                <div className="flex items-center justify-center mt-5 w-full">
-                  <button
-                    key={item?.id}
-                    type="button"
-                    onClick={() =>
-                      navigate('/spa/about', {
-                        state: { item },
-                      })
-                    }
-                    className="transition-all ease-in-out delay-150 rounded-full w-2/5 bg-[#41924B] font-semibold text-sm text-slate-50 py-3 px-10 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
-                  >
-                    SEE MORE
-                  </button>
-                  {user?.id === item?.owner?.id && (
-                    <div
-                      className="flex ml-6"
-                      onClick={(e) => e.stopPropagation()}
+                <div className="flex items-center justify-center mt-5 w-full gap-x-5">
+                  <div className="w-1/2">
+                    <button
+                      key={item?.id}
+                      type="button"
+                      onClick={() =>
+                        navigate('/spa/about', {
+                          state: { item },
+                        })
+                      }
+                      className="transition-all ease-in-out delay-150 rounded-full bg-[#41924B] font-semibold text-sm overflow-hidden text-slate-50 h-full w-full py-3 hover:text-[#41924B] hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-green-800 border-[1px]"
                     >
+                      SEE MORE
+                    </button>
+                  </div>
+
+                  {user?.id === item?.owner?.id && (
+                    <div className="w-1/2" onClick={(e) => e.stopPropagation()}>
                       <button
                         key={item?.id}
                         onClick={(e) => handleDelete(e, item)}
                         type="button"
-                        className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 py-3 px-14 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
+                        className="transition-all ease-in-out delay-150 rounded-full bg-red-600 font-semibold text-sm text-slate-50 h-full w-full py-3 hover:text-red-600 hover:bg-slate-50 hover:border-neutral-950 hover:border-[1px] border-red-600 border-[1px]"
                       >
                         DELETE
                       </button>
