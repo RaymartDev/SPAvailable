@@ -4,11 +4,9 @@ import { protect } from '../authMiddleware';
 
 const router = Router();
 
-router.route('/control')
-  .get(protect, SpaController.readAllSpa)
-  .post(protect, SpaController.createSpa)
-  .put(protect, SpaController.updateSpa);
-
+router.get('/control', protect, SpaController.readAllSpa);
+router.post('/control', protect, SpaController.createSpa);
+router.put('/control', protect, SpaController.updateSpa);
 router.delete('/control/:id', protect, SpaController.deleteSpa);
 
 router.get('/control/search', protect, SpaController.readSpa);

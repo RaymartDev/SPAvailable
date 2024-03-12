@@ -27,10 +27,9 @@ const express_1 = require("express");
 const SpaController = __importStar(require("./spa.controller"));
 const authMiddleware_1 = require("../authMiddleware");
 const router = (0, express_1.Router)();
-router.route('/control')
-    .get(authMiddleware_1.protect, SpaController.readAllSpa)
-    .post(authMiddleware_1.protect, SpaController.createSpa)
-    .put(authMiddleware_1.protect, SpaController.updateSpa);
+router.get('/control', authMiddleware_1.protect, SpaController.readAllSpa);
+router.post('/control', authMiddleware_1.protect, SpaController.createSpa);
+router.put('/control', authMiddleware_1.protect, SpaController.updateSpa);
 router.delete('/control/:id', authMiddleware_1.protect, SpaController.deleteSpa);
 router.get('/control/search', authMiddleware_1.protect, SpaController.readSpa);
 exports.default = router;
