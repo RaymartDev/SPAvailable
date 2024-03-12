@@ -18,12 +18,14 @@ function SpaGrid({
   spaItems,
   searchMode,
   page,
+  spaItemCount,
 }: {
   setLoading: (v: boolean) => void;
   searchSpa: string;
   spaItems: SpaState[];
   searchMode: SearchMode;
   page: number;
+  spaItemCount: number;
 }) {
   const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ function SpaGrid({
       return item;
     }),
     page,
-    9
+    spaItemCount
   );
 
   const formatTime = (time: string): string => {

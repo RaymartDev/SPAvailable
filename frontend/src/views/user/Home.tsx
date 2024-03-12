@@ -25,6 +25,19 @@ function MainHome() {
   const navigate = useNavigate();
   const [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.ALL);
   const [page, setPage] = useState<number>(1);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const spaList: SpaState[] = useAppSelector((state) => state.spa);
 
@@ -73,6 +86,16 @@ function MainHome() {
     navigate('/user/add-spa');
   };
 
+  const spaPerPage = (): number => {
+    if (width >= 1080) {
+      return 9;
+    }
+    if (width >= 800) {
+      return 6;
+    }
+    return 3;
+  };
+
   const maxPage = Math.max(
     Math.ceil(
       spaList.filter((item) => {
@@ -81,7 +104,7 @@ function MainHome() {
           return isOwnedByUser;
         }
         return item;
-      }).length / 9
+      }).length / spaPerPage()
     ),
     1
   );
@@ -184,6 +207,7 @@ function MainHome() {
           setLoading={setLoading}
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
+          spaItemCount={spaPerPage()}
           searchMode={searchMode}
           page={page}
         />
