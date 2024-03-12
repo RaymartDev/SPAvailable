@@ -43,7 +43,6 @@ const protect = async (req, res, next) => {
                     httpOnly: true,
                     expires: new Date(0),
                 });
-                localStorage.removeItem('userInfo');
                 next(new Error('Not authorized no token'));
             }
             next();
@@ -54,7 +53,6 @@ const protect = async (req, res, next) => {
                 httpOnly: true,
                 expires: new Date(0),
             });
-            localStorage.removeItem('userInfo');
             next(new Error('Not authorized no token'));
         }
     }
@@ -64,7 +62,6 @@ const protect = async (req, res, next) => {
             httpOnly: true,
             expires: new Date(0),
         });
-        localStorage.removeItem('userInfo');
         next(new Error('Not authorized no token'));
     }
 };
