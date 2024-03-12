@@ -147,6 +147,7 @@ function SpaGrid({
                 <div className="w-full h-[300px] overflow-hidden">
                   <img
                     src={item?.display_photo || Image11}
+                    referrerPolicy="no-referrer"
                     className="object-cover w-full h-full rounded-3xl  hover:scale-125 transition-all ease-in-out delay-150  duration-500"
                     alt={item?.name}
                   />
@@ -228,6 +229,7 @@ function SpaGrid({
                 <div className="w-full h-[300px] overflow-hidden rounded-3xl border-[1px]">
                   <img
                     src={item?.display_photo || Image11}
+                    referrerPolicy="no-referrer"
                     className="object-cover w-full h-full rounded-3xl  hover:scale-125 transition-all ease-in-out delay-150  duration-500"
                     alt={item?.name}
                   />
