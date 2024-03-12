@@ -376,6 +376,7 @@ function SpaDetails({
             <div className="flex items-center gap-x-2">
               <img
                 src={item?.owner?.profile || DefaultPp}
+                referrerPolicy="no-referrer"
                 alt=""
                 className="size-8 rounded-full object-cover object-center border-[1px] border-[#41924B]"
               />
