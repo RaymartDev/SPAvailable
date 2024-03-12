@@ -43,8 +43,8 @@ app.use((0, cors_1.default)({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: '*',
 }));
-app.use(express_1.default.json({ limit: '10mb' }));
-app.use(express_1.default.urlencoded({ limit: '10mb', extended: true }));
+app.use(express_1.default.json({ limit: '5gb' }));
+app.use(express_1.default.urlencoded({ limit: '5gb', extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.get('/', (_req, res) => {
     res.json({
