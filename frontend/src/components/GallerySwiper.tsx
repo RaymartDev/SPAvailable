@@ -77,14 +77,40 @@ function GallerySwiper() {
           grabCursor
           loop
           centeredSlides
-          slidesPerView={3}
-          spaceBetween={30}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 250,
-            modifier: 1,
-            slideShadows: false,
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+              coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 150,
+                modifier: 1,
+                slideShadows: false,
+              },
+            },
+            800: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+              coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 200,
+                modifier: 1,
+                slideShadows: false,
+              },
+            },
+            1080: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+              coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 250,
+                modifier: 1,
+                slideShadows: false,
+              },
+            },
           }}
           navigation={{
             nextEl: '.swiper-button-next',
