@@ -26,37 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const SpaController = __importStar(require("./spa.controller"));
 const authMiddleware_1 = require("../authMiddleware");
-const prisma_1 = require("../../prisma");
 const router = (0, express_1.Router)();
-router.get('/', async (req, res, next) => {
-    try {
-        const spaList = await (0, prisma_1.prismaFetch)(async (prisma) => {
-            try {
-                return await prisma.spa.findMany({
-                    orderBy: {
-                        updated_at: 'desc',
-                    },
-                    include: {
-                        owner: true,
-                    },
-                });
-            }
-            catch (err) {
-                next(err);
-            }
-        }, next);
-        if (spaList) {
-            res.status(200).json(spaList);
-        }
-        else {
-            res.status(400);
-            next(new Error('Something went wrong'));
-        }
-    }
-    catch (err) {
-        next(err);
-    }
-});
+router.get('/control', authMiddleware_1.protect, SpaController.readAllSpa);
 router.post('/control', authMiddleware_1.protect, SpaController.createSpa);
 router.put('/control', authMiddleware_1.protect, SpaController.updateSpa);
 router.delete('/control/:id', authMiddleware_1.protect, SpaController.deleteSpa);

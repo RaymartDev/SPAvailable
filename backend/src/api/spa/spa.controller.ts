@@ -1,4 +1,5 @@
-import { NextFunction, Response } from 'express';
+import { 
+  Request, NextFunction, Response } from 'express';
 import UserRequest from '../../interfaces/user/UserRequest';
 import SpaObject from '../../interfaces/spa/SpaInterface';
 import { validateEmail, validatePhone } from '../../util';
@@ -78,6 +79,34 @@ export const createSpa = async (req: UserRequest, res: Response<SpaObject>, next
     } else {
       res.status(400);
       next(new Error('Invalid user data'));
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const readAllSpa = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const spaList = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        return await prisma.spa.findMany({
+          orderBy: {
+            updated_at: 'desc',
+          },
+          include: {
+            owner: true,
+          },
+        });
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+
+    if (spaList) {
+      res.status(200).json(spaList);
+    } else {
+      res.status(400);
+      next(new Error('Something went wrong'));
     }
   } catch (err) {
     next(err);
