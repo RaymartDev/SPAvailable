@@ -78,6 +78,16 @@ const createSpa = async (req, res, next) => {
 exports.createSpa = createSpa;
 const readAllSpa = async (req, res, next) => {
     try {
+        if (!req.user) {
+            res.status(400);
+            next(new Error('User not found'));
+            return;
+        }
+        if (!req.user.active) {
+            res.status(404);
+            next(new Error('User not yet verified'));
+            return;
+        }
         const spaList = await (0, prisma_1.prismaFetch)(async (prisma) => {
             try {
                 return await prisma.spa.findMany({
