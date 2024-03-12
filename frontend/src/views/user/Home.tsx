@@ -184,6 +184,7 @@ function MainHome() {
           setLoading={setLoading}
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
+          spaItemCount={9}
           searchMode={searchMode}
           page={page}
         />
