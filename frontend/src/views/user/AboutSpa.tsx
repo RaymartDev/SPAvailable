@@ -56,20 +56,22 @@ function AboutSpa() {
           className="object-cover h-full w-full"
           id="coverPhoto"
         />
-        <label
-          htmlFor="fileInput"
-          className="absolute bottom-5 left-5 bg-[#41924B] text-white px-5 py-2 rounded-lg flex items-center gap-x-2 font-semibold cursor-pointer"
-        >
-          <input
-            type="file"
-            id="fileInput"
-            accept="image/*"
-            onChange={handleCoverPhotoChange}
-            className="hidden"
-          />
-          <IoCameraSharp size={20} />
-          Edit Cover Photo
-        </label>
+        {item?.owner?.id === user?.id && (
+          <label
+            htmlFor="fileInput"
+            className="absolute bottom-5 left-5 bg-[#41924B] text-white px-5 py-2 rounded-lg flex items-center gap-x-2 font-semibold cursor-pointer"
+          >
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              onChange={handleCoverPhotoChange}
+              className="hidden"
+            />
+            <IoCameraSharp size={20} />
+            Edit Cover Photo
+          </label>
+        )}
       </div>
       <SpaDetails setLoading={setLoading} item={item} user={user} />
       <ServiceSwiper />

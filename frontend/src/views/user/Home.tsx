@@ -202,7 +202,7 @@ function MainHome() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-between gap-24 bg-white pb-16 min-h-[37.5em]">
+      <div className="flex flex-col items-center justify-center gap-24 bg-white pb-16 min-h-[37.5em]">
         <SpaGrid
           setLoading={setLoading}
           searchSpa={debouncedSearchTerm}

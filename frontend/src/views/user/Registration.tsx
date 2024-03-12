@@ -226,7 +226,7 @@ function Registration() {
   }
 
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-hidden">
+    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 overflow-y-visible">
       <Navbar />
       {openTermsModal && (
         <TermsModal
