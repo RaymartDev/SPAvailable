@@ -102,7 +102,9 @@ const readAllSpa = async (req, res, next) => {
         }
     }
     catch (err) {
-        next(err);
+        res.status(500).json({
+            message: err,
+        });
     }
 };
 exports.readAllSpa = readAllSpa;

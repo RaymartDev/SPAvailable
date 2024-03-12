@@ -108,7 +108,9 @@ export const readAllSpa = async (req: UserRequest, res: Response, next: NextFunc
       next(new Error('Something went wrong'));
     }
   } catch (err) {
-    next(err);
+    res.status(500).json({
+      message: err,
+    });
   }
 };
 
