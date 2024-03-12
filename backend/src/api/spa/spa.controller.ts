@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { Request, NextFunction, Response } from 'express';
 import UserRequest from '../../interfaces/user/UserRequest';
 import SpaObject from '../../interfaces/spa/SpaInterface';
 import { validateEmail, validatePhone } from '../../util';
@@ -86,18 +86,6 @@ export const createSpa = async (req: UserRequest, res: Response<SpaObject>, next
 
 export const readAllSpa = async (req: UserRequest, res: Response, next: NextFunction) => {
   try {
-    if (!req.user) {
-      res.status(400);
-      next(new Error('User not found'));
-      return;
-    }
-
-    if (!req.user.active) {
-      res.status(404);
-      next(new Error('User not yet verified'));
-      return;
-    }
-
     const spaList = await prismaFetch(async (prisma : PrismaClient) => {
       try {
         return await prisma.spa.findMany({
