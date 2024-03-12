@@ -74,7 +74,7 @@ function BasicInfo({
       <div className="grid grid-cols-2 h-full items-center justify-center px-10 pt-5">
         <div className="card h-full flex flex-col justify-center px-8">
           <div className="rounded border-2 px-8 pt-5 pb-14 h-5/6">
-            <div>
+            <div className="w-full flex mb-3">
               <h1 className="font-semibold text-xl">
                 Upload Spa Display Photo:
               </h1>
@@ -93,7 +93,7 @@ function BasicInfo({
                     <img
                       src={formData.displayPhoto}
                       alt="Spa DisplayPhoto"
-                      className="w-full h-[410px] object-cover object-center"
+                      className="w-full h-full object-cover object-center"
                     />
                     <button
                       type="button"

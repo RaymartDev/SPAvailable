@@ -175,9 +175,9 @@ function AddSpa() {
               />
             )}
           </div>
-          <Menu />
-          <Footer />
         </div>
+        <Menu />
+        <Footer />
       </div>
     </div>
   );
