@@ -304,19 +304,21 @@ function SpaDetails({
               className="w-full h-full object-cover -mt-20 rounded-lg shadow-xl"
               id="displayPhoto"
             />
-            <label
-              htmlFor="fileInputDisplayPhoto"
-              className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full cursor-pointer"
-            >
-              <input
-                type="file"
-                id="fileInputDisplayPhoto"
-                accept="image/*"
-                onChange={handleDisplayPhotoChange}
-                className="hidden"
-              />
-              <IoCameraSharp size={25} color="white" />
-            </label>
+            {item?.owner?.id === user?.id && (
+              <label
+                htmlFor="fileInputDisplayPhoto"
+                className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full cursor-pointer"
+              >
+                <input
+                  type="file"
+                  id="fileInputDisplayPhoto"
+                  accept="image/*"
+                  onChange={handleDisplayPhotoChange}
+                  className="hidden"
+                />
+                <IoCameraSharp size={25} color="white" />
+              </label>
+            )}
           </div>
         </div>
       </div>
