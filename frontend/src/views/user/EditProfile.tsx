@@ -79,6 +79,16 @@ function EditProfile() {
       delete toUpdate.profile;
     }
 
+    if (
+      !toUpdate.profile &&
+      !toUpdate.contact &&
+      !toUpdate.name &&
+      !toUpdate.password
+    ) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.put('/api/v1/user/profile', toUpdate);
       if (response.status === 200) {
