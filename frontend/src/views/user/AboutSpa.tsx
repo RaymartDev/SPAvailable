@@ -21,7 +21,6 @@ import SavePhotoModal from '../../components/Modal/SavePhotoModal';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [coverPhoto, setCoverPhoto] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
   const spa = useAppSelector((state) => state.spa);
@@ -30,6 +29,7 @@ function AboutSpa() {
     (itemSpa) => itemSpa?.id === parseInt(id as string, 10)
   ) as SpaState;
   const navigate = useNavigate();
+  const [coverPhoto, setCoverPhoto] = useState<string>(item?.cover_photo || '');
 
   useEffect(() => {
     if (!item) {

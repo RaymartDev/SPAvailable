@@ -58,7 +58,9 @@ function SpaDetails({
   const [newEmail, setNewEmail] = useState(item?.email || '');
   const [newContact, setNewContact] = useState(item?.contact || '');
 
-  const [displayPhoto, setDisplayPhoto] = useState<string>('');
+  const [displayPhoto, setDisplayPhoto] = useState<string>(
+    item?.display_photo || ''
+  );
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
@@ -312,7 +314,7 @@ function SpaDetails({
           <div className="h-[400px] w-7/12 rounded-lg relative">
             <img
               alt=""
-              src={displayPhoto || item.display_photo || Image12}
+              src={displayPhoto || Image12}
               className="w-full h-full object-cover -mt-20 rounded-lg shadow-xl"
               id="displayPhoto"
             />

@@ -22,7 +22,6 @@ const AboutService = lazy(() => import('./views/user/AboutService'));
 const AddSpa = lazy(() => import('./views/user/AddSpa'));
 const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
-const NotFound = lazy(() => import('./views/user/404/NotFound'));
 const Swiper = lazy(() => import('./components/ProductSwiper'));
 
 function App() {
@@ -68,7 +67,7 @@ function App() {
 
         {/* MISC */}
         <Route path="/reset" element={<Page component={ResetPassword} />} />
-        <Route path="*" element={<Page component={NotFound} />} />
+        <Route path="*" element={<Page component={Home} />} />
 
         {/* PAAYOS MART */}
         <Route
