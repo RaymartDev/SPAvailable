@@ -17,9 +17,12 @@ import Image11 from '../../img/image11.png';
 import Loader from '../../components/Loader Component/Loader';
 import { useAppSelector } from '../../store/store';
 import SpaState from '../../interface/SpaState';
+import SavePhotoModal from '../../components/Modal/SavePhotoModal';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [coverPhoto, setCoverPhoto] = useState<string>('');
+  const [showModal, setShowModal] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
   const spa = useAppSelector((state) => state.spa);
   const { id } = useParams();
@@ -34,18 +37,27 @@ function AboutSpa() {
     }
   }, [id]);
 
-  const [coverPhoto, setCoverPhoto] = useState<string>(item?.cover_photo || '');
-
-  if (loading) {
-    return <Loader />;
-  }
   const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const newCoverPhoto = URL.createObjectURL(file);
       setCoverPhoto(newCoverPhoto);
+      setShowModal(true);
     }
   };
+
+  const handleSaveChanges = () => {
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setCoverPhoto(item?.cover_photo || '');
+    setShowModal(false);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
@@ -80,6 +92,11 @@ function AboutSpa() {
       <MapLocation />
       <Menu />
       <Footer />
+      <SavePhotoModal
+        isOpen={showModal}
+        onCancel={handleCancel}
+        onSaveChanges={handleSaveChanges}
+      />
     </div>
   );
 }

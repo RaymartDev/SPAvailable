@@ -12,7 +12,7 @@ function SavePhotoModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed max-w-screen-2xl mx-auto inset-[88px] flex justify-center items-start z-50">
+    <div className="fixed max-w-screen-2xl px-4 mx-auto inset-[88px] flex justify-center items-start z-50">
       <div className="bg-black bg-opacity-20 w-full py-3 px-10">
         <div className="flex justify-between">
           <div className="flex items-center">

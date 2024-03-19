@@ -16,6 +16,7 @@ import { updateSpa } from '../store/reducer/spaSlice';
 import { useToast } from '../hooks/useToast';
 import DefaultPp from '../img/defaultPp.png';
 import UserState from '../interface/UserState';
+import SavePhotoModal from './Modal/SavePhotoModal';
 
 function SpaDetails({
   item,
@@ -58,6 +59,7 @@ function SpaDetails({
   const [newContact, setNewContact] = useState(item?.contact || '');
 
   const [displayPhoto, setDisplayPhoto] = useState<string>('');
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const { showSuccessToast, showErrorToast } = useToast();
@@ -69,7 +71,17 @@ function SpaDetails({
     if (file) {
       const newDisplayPhoto = URL.createObjectURL(file);
       setDisplayPhoto(newDisplayPhoto);
+      setShowModal(true);
     }
+  };
+
+  const handleSaveChanges = () => {
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setDisplayPhoto(item?.display_photo || '');
+    setShowModal(false);
   };
 
   const handleFirstSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -427,6 +439,11 @@ function SpaDetails({
           </div>
         </div>
       </div>
+      <SavePhotoModal
+        isOpen={showModal}
+        onCancel={handleCancel}
+        onSaveChanges={handleSaveChanges}
+      />
     </div>
   );
 }
