@@ -3,7 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import Image11 from '../img/image11.png';
+import Image12 from '../img/image12.png';
 import StarRating from './StarRating';
 import DefaultPp from '../img/defaultPp.png';
 import SpaState from '../interface/SpaState';
@@ -146,7 +146,7 @@ function SpaGrid({
               <div className="flex flex-col h-full cursor-pointer p-5 ">
                 <div className="w-full h-[300px] overflow-hidden">
                   <img
-                    src={item?.display_photo || Image11}
+                    src={item?.display_photo || Image12}
                     referrerPolicy="no-referrer"
                     className="object-cover w-full h-full rounded-3xl  hover:scale-125 transition-all ease-in-out delay-150  duration-500"
                     alt={item?.name}
@@ -228,7 +228,7 @@ function SpaGrid({
               <div className="flex flex-col h-full cursor-pointer p-5 gap-y-2">
                 <div className="w-full h-[300px] overflow-hidden rounded-3xl border-[1px]">
                   <img
-                    src={item?.display_photo || Image11}
+                    src={item?.display_photo || Image12}
                     referrerPolicy="no-referrer"
                     className="object-cover w-full h-full rounded-3xl  hover:scale-125 transition-all ease-in-out delay-150  duration-500"
                     alt={item?.name}

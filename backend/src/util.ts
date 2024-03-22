@@ -59,9 +59,10 @@ const sendEmail = async (email : string, name : string, token : string, next : N
     transporter.verify(function (error, success) {
       if (error) {
         reject(error);
-      } else {
-        resolve(success);
-      }
+        next(error);
+        return;
+      } 
+      resolve(success);
     });
   });
 
@@ -91,9 +92,8 @@ const sendEmail = async (email : string, name : string, token : string, next : N
         next(err);
         reject(err);
         return;
-      } else {
-        resolve(info);
-      }
+      } 
+      resolve(info);
     });
   });
 };
@@ -116,9 +116,10 @@ const sendEmailPWReset = async (email : string, name : string, token : string, n
     transporter.verify(function (error, success) {
       if (error) {
         reject(error);
-      } else {
-        resolve(success);
-      }
+        next(error);
+        return;
+      } 
+      resolve(success);
     });
   });
 
@@ -153,9 +154,8 @@ const sendEmailPWReset = async (email : string, name : string, token : string, n
         next(err);
         reject(err);
         return;
-      } else {
-        resolve(info);
-      }
+      } 
+      resolve(info);
     });
   });
 };

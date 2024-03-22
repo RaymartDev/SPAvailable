@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Page from './components/Util/Page';
 import Landing from './Landing';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * LAZY LOADED COMPONENTS
@@ -33,8 +34,8 @@ function App() {
           path="/"
           element={
             <>
+              <ToastContainer newestOnTop closeOnClick />
               <Landing />
-              <ToastContainer />
             </>
           }
         />

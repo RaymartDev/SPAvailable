@@ -84,7 +84,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 150,
+                depth: 50,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -95,7 +95,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 200,
+                depth: 100,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -106,7 +106,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 250,
+                depth: 150,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -123,15 +123,12 @@ function GallerySwiper() {
           {galleryData.map((gallery) => (
             <SwiperSlide key={gallery.id}>
               <div className="flex flex-col pb-20  items-center justify-center">
-                <div className="bg-[#41924B] rounded-xl flex flex-col items-center justify-center">
+                <div className="bg-white rounded-xl flex flex-col items-center justify-center">
                   <img
                     src={gallery.imageUrl}
                     alt={gallery.title}
-                    className="h-[300px] w-[400px] object-cover rounded-t-xl"
+                    className="h-[400px] w-[500px] object-cover rounded-t-xl"
                   />
-                  <h1 className="text-xl font-semibold text-white py-3">
-                    {gallery.title}
-                  </h1>
                 </div>
               </div>
             </SwiperSlide>
