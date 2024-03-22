@@ -46,9 +46,6 @@ const sendEmail = async (email : string, name : string, token : string, next : N
   // transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    tls: {
-      ciphers: 'SSLv3',
-    },
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
@@ -93,6 +90,9 @@ const sendEmailPWReset = async (email : string, name : string, token : string, n
   // transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    tls: {
+      ciphers: 'SSLv3',
+    },
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,

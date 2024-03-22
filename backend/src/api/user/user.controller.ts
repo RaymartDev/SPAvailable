@@ -117,7 +117,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
      */
     if (userCreated) {
       if (!userCreated.active) {
-        sendEmail(userCreated.email, userCreated.name, generateVerificationToken(userCreated.email), next);
+        await sendEmail(userCreated.email, userCreated.name, generateVerificationToken(userCreated.email), next);
       }
 
       res.status(201).json({
@@ -476,7 +476,7 @@ export const sendForgotPassword = async (req : Request, res : Response, next : N
       return;
     }
 
-    sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '10m'), next);
+    await sendEmailPWReset(email, searchUser.name, generateVerificationToken(email, '10m'), next);
     res.status(200).json({ message: 'Successfully resent the verification code' });
   } catch (err) {
     next(err);
