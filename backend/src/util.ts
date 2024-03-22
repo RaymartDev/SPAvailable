@@ -41,11 +41,14 @@ const generateVerificationToken = (email : string, expiry: string = '1d') : stri
   return token;
 };
 
-const sendEmail = (email : string, name : string, token : string, next : NextFunction) => {
+const sendEmail = async (email : string, name : string, token : string, next : NextFunction) => {
 
   // transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    tls: {
+      ciphers: 'SSLv3',
+    },
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
@@ -63,7 +66,7 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
       <p>Dear <b>${name},</b></p>
       <p>Thank you for registering with our service. To complete your registration, please click the button below to verify your email address:</p>
       <p>
-      <a href="http://localhost:5173/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
+      <a href="https://spavailable.vercel.app/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
       </p>
       <p>If you didn't sign up for an account with us, you can safely ignore this email.</p>
       <p><b>Thank you,<br> SPAvailable Team</b></p>
@@ -72,15 +75,20 @@ const sendEmail = (email : string, name : string, token : string, next : NextFun
   };
 
   // Send the email
-  transporter.sendMail(mailOptions, (err : Error | null) => {
-    if (err) {
-      next(err);
-      return;
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err : Error | null, info) => {
+      if (err) {
+        next(err);
+        reject(err);
+        return;
+      } else {
+        resolve(info);
+      }
+    });
   });
 };
 
-const sendEmailPWReset = (email : string, name : string, token : string, next : NextFunction) => {
+const sendEmailPWReset = async (email : string, name : string, token : string, next : NextFunction) => {
 
   // transporter
   const transporter = nodemailer.createTransport({
@@ -103,10 +111,10 @@ const sendEmailPWReset = (email : string, name : string, token : string, next : 
       <p>We received a request to reset your password. If you did not request this, please ignore this email.</p>
       <p>To reset your password, please click the button below:</p>
       <p>
-      <a href="http://localhost:5173/user/reset?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Reset Password</a>
+      <a href="https://spavailable.vercel.app/user/reset?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Reset Password</a>
       </p>
       <p>If the button above does not work, you can also copy and paste the following link into your browser:</p>
-      <p>http://localhost:5173/user/reset?token=${token}</p>
+      <p>https://spavailable.vercel.app/user/reset?token=${token}</p>
       <p>This link will expire in 5 minutes for security reasons.</p>
       <p>If you did not request a password reset or need further assistance, please contact our support team.</p>
       <p><b>Thank you,<br> SPAvailable Team</b></p>
@@ -116,11 +124,16 @@ const sendEmailPWReset = (email : string, name : string, token : string, next : 
 
 
   // Send the email
-  transporter.sendMail(mailOptions, (err : Error | null) => {
-    if (err) {
-      next(err);
-      return;
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err : Error | null, info) => {
+      if (err) {
+        next(err);
+        reject(err);
+        return;
+      } else {
+        resolve(info);
+      }
+    });
   });
 };
 
