@@ -25,6 +25,8 @@ const PrivacyPolicy = lazy(() => import('./views/user/PrivacyPolicy'));
 const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const Swiper = lazy(() => import('./components/ProductSwiper'));
 
+const SpaLocation = lazy(() => import('./views/user/SpaLocation'));
+
 function App() {
   return (
     <BrowserRouter>
@@ -78,6 +80,10 @@ function App() {
         <Route
           path="/about/service"
           element={<Page component={AboutService} />}
+        />
+        <Route
+          path="/spa/location"
+          element={<Page component={SpaLocation} />}
         />
 
         <Route path="/swiper" element={<Page component={Swiper} />} />
