@@ -11,28 +11,24 @@ const protect = async (req: Request, res: Response, next : NextFunction) => {
     try {
       const decoded = jwt.verify(token, `${process.env.SECRET_KEY}`) as JwtPayload;
       (req as UserRequest).user = await prismaFetch(async (prisma : PrismaClient) => {
-        try {
-          const user = await prisma.user.findUnique({
-            where: {
-              email: decoded.email,
-            },
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              contact: true,
-              birth_date: true,
-              password: false,
-              created_at: false,
-              updated_at: false,
-              active: true,
-              gender: true,
-            },
-          });
-          return user || undefined;
-        } catch (err) {
-          next(err);
-        }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: decoded.email,
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+            birth_date: true,
+            password: false,
+            created_at: false,
+            updated_at: false,
+            active: true,
+            gender: true,
+          },
+        });
+        return user || undefined;
       }, next);
       // Check if user is undefined
       if (!(req as UserRequest).user) { 

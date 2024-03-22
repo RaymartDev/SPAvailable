@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoCameraSharp } from 'react-icons/io5';
+import axios, { AxiosError } from 'axios';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
 import ServiceSwiper from '../../components/ServiceSwiper';
@@ -15,9 +16,11 @@ import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
 import Loader from '../../components/Loader Component/Loader';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import SpaState from '../../interface/SpaState';
 import SavePhotoModal from '../../components/Modal/SavePhotoModal';
+import { useToast } from '../../hooks/useToast';
+import { updateSpa } from '../../store/reducer/spaSlice';
 
 function AboutSpa() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +32,8 @@ function AboutSpa() {
     (itemSpa) => itemSpa?.id === parseInt(id as string, 10)
   ) as SpaState;
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { showSuccessToast, showErrorToast } = useToast();
   const [coverPhoto, setCoverPhoto] = useState<string>(item?.cover_photo || '');
 
   useEffect(() => {
@@ -40,14 +45,53 @@ function AboutSpa() {
   const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const newCoverPhoto = URL.createObjectURL(file);
-      setCoverPhoto(newCoverPhoto);
-      setShowModal(true);
+      if (file.size > 3 * 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 3MB or less.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setCoverPhoto(base64String);
+        setShowModal(true);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSaveChanges = () => {
     setShowModal(false);
+    const updatedSpa: SpaState = {
+      id: item?.id,
+      cover_photo: coverPhoto,
+    };
+    if (updatedSpa.cover_photo === item?.cover_photo) {
+      delete updatedSpa.cover_photo;
+    }
+    if (!updatedSpa.cover_photo) {
+      setShowModal(false);
+      return;
+    }
+    const saveChanges = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.put('/api/v1/spa/control', updatedSpa);
+        if (response.status >= 200 && response.status < 300) {
+          dispatch(updateSpa(updatedSpa));
+          showSuccessToast('Updated Successfully');
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to fetch Spa List');
+        }
+      } finally {
+        setShowModal(false);
+        setLoading(false);
+      }
+    };
+    saveChanges();
   };
 
   const handleCancel = () => {
@@ -92,11 +136,12 @@ function AboutSpa() {
       <MapLocation />
       <Menu />
       <Footer />
-      <SavePhotoModal
-        isOpen={showModal}
-        onCancel={handleCancel}
-        onSaveChanges={handleSaveChanges}
-      />
+      {showModal && (
+        <SavePhotoModal
+          onCancel={handleCancel}
+          onSaveChanges={handleSaveChanges}
+        />
+      )}
     </div>
   );
 }

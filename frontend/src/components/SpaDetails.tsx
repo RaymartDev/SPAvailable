@@ -66,19 +66,56 @@ function SpaDetails({
   const dispatch = useAppDispatch();
   const { showSuccessToast, showErrorToast } = useToast();
 
-  const handleDisplayPhotoChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleDisplayPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const newDisplayPhoto = URL.createObjectURL(file);
-      setDisplayPhoto(newDisplayPhoto);
-      setShowModal(true);
+      if (file.size > 2 * 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 2MB or less.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setDisplayPhoto(base64String);
+        setShowModal(true);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSaveChanges = () => {
     setShowModal(false);
+    const updatedSpa: SpaState = {
+      id: item?.id,
+      display_photo: displayPhoto,
+    };
+    if (updatedSpa.display_photo === item?.display_photo) {
+      delete updatedSpa.display_photo;
+    }
+    if (!updatedSpa.display_photo) {
+      setShowModal(false);
+      return;
+    }
+    const saveChanges = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.put('/api/v1/spa/control', updatedSpa);
+        if (response.status >= 200 && response.status < 300) {
+          dispatch(updateSpa(updatedSpa));
+          showSuccessToast('Updated Successfully');
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to fetch Spa List');
+        }
+      } finally {
+        setShowModal(false);
+        setLoading(false);
+      }
+    };
+    saveChanges();
   };
 
   const handleCancel = () => {
@@ -441,11 +478,12 @@ function SpaDetails({
           </div>
         </div>
       </div>
-      <SavePhotoModal
-        isOpen={showModal}
-        onCancel={handleCancel}
-        onSaveChanges={handleSaveChanges}
-      />
+      {showModal && (
+        <SavePhotoModal
+          onCancel={handleCancel}
+          onSaveChanges={handleSaveChanges}
+        />
+      )}
     </div>
   );
 }
