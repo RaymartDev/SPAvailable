@@ -442,7 +442,7 @@ export const resendVerification = async (req: UserRequest, res : Response, next 
       next(new Error('User already verified'));
       return;
     }
-    sendEmail(req.user.email, req.user.name, generateVerificationToken(req.user.email), next);
+    await sendEmail(req.user.email, req.user.name, generateVerificationToken(req.user.email), next);
     res.status(200).json({ message: 'Successfully resent the verification code' });
   } catch (err) {
     next(err);

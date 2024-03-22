@@ -45,11 +45,24 @@ const sendEmail = async (email : string, name : string, token : string, next : N
 
   // transporter
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    port: 465,
+    host: 'smtp.gmail.com',
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
     },
+    secure: true,
+  });
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(success);
+      }
+    });
   });
 
   // Define email options
@@ -89,14 +102,24 @@ const sendEmailPWReset = async (email : string, name : string, token : string, n
 
   // transporter
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    tls: {
-      ciphers: 'SSLv3',
-    },
+    port: 465,
+    host: 'smtp.gmail.com',
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
     },
+    secure: true,
+  });
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(success);
+      }
+    });
   });
 
   // Define email options
