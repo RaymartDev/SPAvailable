@@ -43,20 +43,63 @@ function SpaInfo({
   handleChange,
 }: SpaInfoProps) {
   const { showErrorToast } = useToast();
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     if (file.size > 4 * 1024 * 1024) {
+  //       showErrorToast('File is too large. Please upload 4MB or less.');
+  //       return;
+  //     }
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const base64String = reader.result as string;
+  //       setFormData({
+  //         ...formData,
+  //         coverPhoto: base64String,
+  //       });
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const handleFileChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (file.size > 4 * 1024 * 1024) {
-        showErrorToast('File is too large. Please upload 4MB or less.');
+      if (file.size > 3 * 1024 * 1024) {
+        showErrorToast('File is too large. Please upload 3MB or less.');
         return;
       }
       const reader = new FileReader();
       reader.onload = () => {
-        const base64String = reader.result as string;
-        setFormData({
-          ...formData,
-          coverPhoto: base64String,
-        });
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(
+              (blob) => {
+                if (blob) {
+                  const newReader = new FileReader(); // Corrected line
+                  newReader.onloadend = () => {
+                    const base64String = newReader.result as string;
+                    setFormData({
+                      ...formData,
+                      coverPhoto: base64String,
+                    });
+                  };
+                  newReader.readAsDataURL(blob);
+                }
+              },
+              'image/webp',
+              0.7
+            ); // Adjust the quality (0.7 is 70% quality)
+          }
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -85,7 +128,7 @@ function SpaInfo({
                 accept="image/*"
                 className="hidden"
                 id="coverPhoto"
-                onChange={handleFileChange}
+                onChange={handleFileChange2}
               />
               <div className="border-dashed border-2 w-full h-full flex items-center justify-center relative bg-[#FCFCFB]">
                 {formData.coverPhoto ? (
