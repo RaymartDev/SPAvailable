@@ -32,29 +32,22 @@ function MainHome() {
   const { showErrorToast } = useToast();
 
   useEffect(() => {
-    if (spaList.length > 0) {
-      return () => {};
-    }
-    const source = axios.CancelToken.source();
     const handleFetch = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/v1/spa/control', {
-          cancelToken: source.token,
-        });
-        const responseState: SpaState[] = response.data;
-        if (response.status === 304) {
-          setLoading(false);
-          return;
-        }
-        if (responseState.length > 0) {
-          dispatch(setSpa(responseState));
+        const response = await axios.get('/api/v1/spa/control');
+        if (response.status >= 200 && response.status < 300) {
+          if (response.data.length > 0) {
+            dispatch(setSpa(response.data));
+          }
         }
       } catch (err) {
-        if (err instanceof AxiosError) {
-          showErrorToast(err);
-        } else {
-          showErrorToast('Unable to fetch Spa List');
+        if (err) {
+          if (err instanceof AxiosError) {
+            showErrorToast(err);
+          } else {
+            showErrorToast('Unable to fetch Spa List');
+          }
         }
       } finally {
         setLoading(false);
@@ -62,12 +55,8 @@ function MainHome() {
     };
 
     handleFetch();
-
-    return () => {
-      source.cancel('Request canceled by cleanup');
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spaList]);
+  }, []);
 
   const handleAddSpaClick = () => {
     navigate('/user/add-spa');
@@ -81,7 +70,7 @@ function MainHome() {
           return isOwnedByUser;
         }
         return item;
-      }).length / 9
+      }).length / 6
     ),
     1
   );
@@ -184,7 +173,7 @@ function MainHome() {
           setLoading={setLoading}
           searchSpa={debouncedSearchTerm}
           spaItems={spaList}
-          spaItemCount={9}
+          spaItemCount={6}
           searchMode={searchMode}
           page={page}
         />
