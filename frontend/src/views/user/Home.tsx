@@ -56,7 +56,7 @@ function MainHome() {
 
     handleFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spaList]);
+  }, []);
 
   const handleAddSpaClick = () => {
     navigate('/user/add-spa');
