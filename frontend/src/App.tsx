@@ -26,6 +26,7 @@ const Terms = lazy(() => import('./views/user/TermsAndCondition'));
 const Swiper = lazy(() => import('./components/ProductSwiper'));
 
 const SpaLocation = lazy(() => import('./views/user/SpaLocation'));
+const Admin = lazy(() => import('./views/admin/Admin'));
 
 function App() {
   return (
@@ -85,6 +86,8 @@ function App() {
           path="/spa/location"
           element={<Page component={SpaLocation} />}
         />
+
+        <Route path="/admin" element={<Page component={Admin} />} />
 
         <Route path="/swiper" element={<Page component={Swiper} />} />
       </Routes>
