@@ -103,7 +103,7 @@ function BasicInfo({
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col min-h-full">
       <div className="bg-white flex flex-row justify-center gap-x-10 p-6">
         <div>
           <hr className="h-2 w-[300px] bg-[#41924B] rounded-full" />

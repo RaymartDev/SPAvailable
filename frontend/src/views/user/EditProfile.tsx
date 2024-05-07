@@ -131,10 +131,10 @@ function EditProfile() {
   }
 
   return (
-    <div className="max-w-screen-2xl max-h-screen mx-auto px-4 md:overflow-hidden">
+    <div className="max-w-screen-2xl min-h-screen mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
-      <div className="flex flex-col md:flex-row">
-        <div className="flex flex-col gap-y-10 md:w-4/12 md:h-screen p-10 bg-[#41924B] items-center">
+      <div className="flex flex-col md:flex-row ">
+        <div className="flex flex-col gap-y-10 w-4/12 min-h-screen p-10 bg-[#41924B] items-center overflow-auto">
           <div className="flex text-slate-50">
             <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>

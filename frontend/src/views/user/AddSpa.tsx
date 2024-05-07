@@ -145,35 +145,39 @@ function AddSpa() {
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
-      <div className="flex flex-col h-screen bg-white">
-        <div className="bg-white h-full">
-          <div className="h-5/6">
-            {showBasicInfo ? (
-              <BasicInfo
-                onNextClick={() => {
-                  if (!formData.spaName) {
-                    showErrorToast('Name of the spa is required field.');
-                    return;
-                  }
-                  if (!formData.spaDesc) {
-                    showErrorToast('Description of the spa is required field.');
-                    return;
-                  }
-                  setShowBasicInfo(false);
-                }}
-                handleChange={handleChange}
-                setFormData={setFormData}
-                formData={formData}
-              />
-            ) : (
-              <SpaInfo
-                onReturnClick={() => setShowBasicInfo(true)}
-                setFormData={setFormData}
-                formData={formData}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            )}
+      <div className="flex flex-col min-h-screen bg-white">
+        <div className="bg-white flex flex-grow">
+          <div className="flex-grow">
+            <div className="h-full">
+              {showBasicInfo ? (
+                <BasicInfo
+                  onNextClick={() => {
+                    if (!formData.spaName) {
+                      showErrorToast('Name of the spa is required field.');
+                      return;
+                    }
+                    if (!formData.spaDesc) {
+                      showErrorToast(
+                        'Description of the spa is required field.'
+                      );
+                      return;
+                    }
+                    setShowBasicInfo(false);
+                  }}
+                  handleChange={handleChange}
+                  setFormData={setFormData}
+                  formData={formData}
+                />
+              ) : (
+                <SpaInfo
+                  onReturnClick={() => setShowBasicInfo(true)}
+                  setFormData={setFormData}
+                  formData={formData}
+                  handleChange={handleChange}
+                  handleSubmit={handleSubmit}
+                />
+              )}
+            </div>
           </div>
         </div>
         <Menu />
