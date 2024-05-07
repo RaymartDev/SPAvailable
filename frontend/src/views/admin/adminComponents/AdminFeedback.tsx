@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { FaSearch } from 'react-icons/fa';
 import { FaTrash, FaArrowTrendUp } from 'react-icons/fa6';
 import DefaultPp from '../../../img/defaultPp.png';
@@ -22,7 +23,7 @@ function AdminFeedback() {
         <div className="w-4/5">
           <div className="grid grid-rows-1">
             <div className="flex flex-col border-2 bg-white rounded-lg">
-              <div className="flex space-x-5 px-5 py-8">
+              <div className="flex space-x-5 px-5 py-8 border-b-2">
                 <div className="flex items-center">
                   <img
                     src={DefaultPp}
@@ -37,7 +38,7 @@ function AdminFeedback() {
                 </div>
               </div>
               <div className="px-5 py-8 flex items-center justify-center">
-                <p>User-friendly website!</p>
+                <p>"User-friendly website!"</p>
               </div>
               <div className="flex items-center justify-center bg-[#41924B] py-5 rounded-b-lg space-x-3">
                 <button type="button" className="text-white">
