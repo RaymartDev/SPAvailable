@@ -38,7 +38,10 @@ function Admin() {
   return (
     <div className="flex">
       <div className="w-1/5">
-        <SideBar setActiveContent={setActiveContent} />
+        <SideBar
+          setActiveContent={setActiveContent}
+          activeContent={activeContent}
+        />
       </div>
       <div className="py-6 px-10 w-4/5">
         <ContentComponent />

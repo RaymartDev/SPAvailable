@@ -17,6 +17,7 @@ import { useToast } from '../hooks/useToast';
 import DefaultPp from '../img/defaultPp.png';
 import UserState from '../interface/UserState';
 import SavePhotoModal from './Modal/SavePhotoModal';
+import RatingSpaModal from './Modal/RatingSpaModal';
 
 function SpaDetails({
   item,
@@ -62,6 +63,7 @@ function SpaDetails({
     item?.display_photo || ''
   );
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showRatingModal, setShowRatingModal] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const { showSuccessToast, showErrorToast } = useToast();
@@ -253,6 +255,10 @@ function SpaDetails({
     }
   };
 
+  const handleStarRatingClick = () => {
+    setShowRatingModal(true); // Display the rating modal when the star rating is clicked
+  };
+
   if (!item) {
     return null;
   }
@@ -341,7 +347,9 @@ function SpaDetails({
             </div>
             <div className="flex items-center">
               <p className="text-2xl mr-2 font-semibold">5.0</p>
-              <StarRating totalStars={5} />
+              <div className="cursor-pointer">
+                <StarRating totalStars={5} onClick={handleStarRatingClick} />
+              </div>
               <p className="text-lg ml-2">(10,020 reviews)</p>
             </div>
           </div>
@@ -483,6 +491,9 @@ function SpaDetails({
           onCancel={handleCancel}
           onSaveChanges={handleSaveChanges}
         />
+      )}
+      {showRatingModal && (
+        <RatingSpaModal onClose={() => setShowRatingModal(false)} />
       )}
     </div>
   );

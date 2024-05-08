@@ -9,9 +9,10 @@ import Logo from '../../img/logo.png';
 
 interface SidebarProps {
   setActiveContent: (content: string) => void;
+  activeContent: string;
 }
 
-function Sidebar({ setActiveContent }: SidebarProps) {
+function Sidebar({ setActiveContent, activeContent }: SidebarProps) {
   const handleButtonClick = (content: string) => {
     setActiveContent(content);
   };
@@ -30,7 +31,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Dashboard' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Dashboard')}
             >
               <AiOutlineHome size={30} />
@@ -41,7 +42,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Users' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Users')}
             >
               <LuUserCircle size={30} />
@@ -52,7 +53,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Spa' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Spa')}
             >
               <PiFlowerLotusLight size={30} />
@@ -63,7 +64,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Feedback' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Feedback')}
             >
               <RiFeedbackLine size={30} />
@@ -74,7 +75,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Products' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Products')}
             >
               <TfiDropbox size={30} />
@@ -85,7 +86,7 @@ function Sidebar({ setActiveContent }: SidebarProps) {
           <li>
             <button
               type="button"
-              className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full"
+              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Services' ? 'bg-white rounded-md' : ''}`}
               onClick={() => handleButtonClick('Services')}
             >
               <MdOutlineRoomService size={30} />
