@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import {
   FaArrowTrendUp,
@@ -7,9 +8,13 @@ import {
 import DefaultPp from '../../../img/defaultPp.png';
 
 function Dashboard() {
-  const [userCount, setUserCount] = useState(900);
-  const [spaCount, setSpaCount] = useState(2000);
-  const [feedbackCount, setFeedbackCount] = useState(2000);
+  const [userCount, setUserCount] = useState(0);
+  const [spaCount, setSpaCount] = useState(0);
+  const [feedbackCount, setFeedbackCount] = useState(0);
+
+  setUserCount(900);
+  setSpaCount(2000);
+  setFeedbackCount(2000);
 
   const showUserIcon = () => {
     if (userCount > 1000) {
