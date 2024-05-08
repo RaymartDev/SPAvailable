@@ -5,7 +5,7 @@ import DefaultPp from '../../../img/defaultPp.png';
 
 function AdminFeedback() {
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="flex flex-col space-y-10 min-w-full">
       <div className="flex items-center justify-between">
         <div className="flex space-x-8">
           <h1 className="text-5xl font-bold">Feedback</h1>
@@ -20,27 +20,37 @@ function AdminFeedback() {
       </div>
 
       <div className="flex w-full space-x-10">
-        <div className="w-4/5">
-          <div className="grid grid-rows-1">
-            <div className="flex flex-col border-2 bg-white rounded-lg">
-              <div className="flex space-x-5 px-5 py-8 border-b-2">
-                <div className="flex items-center">
-                  <img
-                    src={DefaultPp}
-                    alt="profilePicture"
-                    className="size-16"
-                  />
+        <div className="flex w-4/5">
+          <div className="grid grid-rows-1 w-full h-fit">
+            <div className="flex flex-col border-2 bg-white rounded-lg ">
+              <div className="flex px-5 py-8 ">
+                <div className="flex space-x-5 items-center w-4/12">
+                  <div className="flex w-1/3 items-center justify-center">
+                    <div className="flex items-center size-16 rounded-full border-2">
+                      <img
+                        src={DefaultPp}
+                        alt="profilePicture"
+                        className="w-full h-full object-cover rounded-full object-center"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-2/3">
+                    <p className="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                      James Allan
+                    </p>
+                    <p>04/11/2024</p>
+                    <p>3 hours ago</p>
+                  </div>
                 </div>
-                <div>
-                  <p>James Allan</p>
-                  <p>04/11/2024</p>
-                  <p>3 hours ago</p>
+                <div className="flex w-8/12">
+                  <div className="flex items-center justify-center w-full">
+                    <p className="text-center whitespace-pre-wrap break-words">
+                      "User-friendly"
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="px-5 py-8 flex items-center justify-center">
-                <p>"User-friendly website!"</p>
-              </div>
-              <div className="flex items-center justify-center bg-[#41924B] py-5 rounded-b-lg space-x-3">
+              <div className="flex items-center justify-center bg-[#41924B] py-3 rounded-b-lg space-x-3">
                 <button type="button" className="text-white">
                   Delete
                 </button>

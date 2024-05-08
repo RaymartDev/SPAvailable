@@ -36,7 +36,7 @@ function Admin() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-w-full">
       <div className="w-1/5">
         <SideBar
           setActiveContent={setActiveContent}

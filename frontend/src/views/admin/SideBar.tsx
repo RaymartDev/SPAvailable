@@ -4,7 +4,6 @@ import { PiFlowerLotusLight } from 'react-icons/pi';
 import { RiFeedbackLine } from 'react-icons/ri';
 import { TfiDropbox } from 'react-icons/tfi';
 import { MdOutlineRoomService, MdLogout } from 'react-icons/md';
-import { IoSettingsOutline } from 'react-icons/io5';
 import Logo from '../../img/logo.png';
 
 interface SidebarProps {
@@ -96,11 +95,6 @@ function Sidebar({ setActiveContent, activeContent }: SidebarProps) {
         </ul>
 
         <ul className="flex flex-col">
-          <li className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3">
-            <IoSettingsOutline size={30} />
-            <h1 className="text-lg md:text-xl">Settings</h1>
-          </li>
-
           <li className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3">
             <MdLogout size={30} />
             <h1 className="text-lg md:text-xl">Logout</h1>
