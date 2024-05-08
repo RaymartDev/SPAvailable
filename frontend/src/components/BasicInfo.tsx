@@ -116,7 +116,7 @@ function BasicInfo({
       <div className="grid grid-cols-2 h-full items-center justify-center px-10 pt-5">
         <div className="card h-full flex flex-col justify-center px-8">
           <div className="rounded border-2 px-8 pt-5 pb-14 h-5/6">
-            <div className="w-full flex mb-3">
+            <div className="w-full flex mb-5">
               <h1 className="font-semibold text-xl">
                 Upload Spa Display Photo:
               </h1>
@@ -186,7 +186,7 @@ function BasicInfo({
                 Description <Required />
               </h1>
               <textarea
-                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-full"
+                className="rounded px-3 py-2 border-2 bg-[#FCFCFB] resize-none h-96"
                 name="spaDesc"
                 value={formData.spaDesc}
                 onChange={handleChange}

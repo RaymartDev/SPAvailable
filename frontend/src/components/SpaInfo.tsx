@@ -122,7 +122,7 @@ function SpaInfo({
             <div className="w-full flex mb-5">
               <h1 className="font-semibold text-xl">Upload Spa Cover Photo:</h1>
             </div>
-            <div className="flex justify-center items-center px-10 pb-5 w-full h-full">
+            <div className="flex justify-center items-center px-10 py-5 w-full h-full">
               <input
                 type="file"
                 accept="image/*"

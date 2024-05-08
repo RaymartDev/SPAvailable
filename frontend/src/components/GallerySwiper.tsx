@@ -71,7 +71,7 @@ function GallerySwiper() {
   return (
     <div className="bg-white py-8 px-12 max-h-screen ">
       <h1 className="text-4xl font-semibold text-center mb-8 w-fit">Gallery</h1>
-      <div className="border-b-4 border-black pb-10">
+      <div className="pb-10">
         <Swiper
           effect="coverflow"
           grabCursor
@@ -84,7 +84,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 50,
+                depth: 150,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -95,7 +95,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 100,
+                depth: 200,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -106,7 +106,7 @@ function GallerySwiper() {
               coverflowEffect: {
                 rotate: 0,
                 stretch: 0,
-                depth: 150,
+                depth: 250,
                 modifier: 1,
                 slideShadows: false,
               },
@@ -127,7 +127,7 @@ function GallerySwiper() {
                   <img
                     src={gallery.imageUrl}
                     alt={gallery.title}
-                    className="h-[400px] w-[500px] object-cover rounded-t-xl"
+                    className="h-[300px] w-[400px] object-cover rounded-xl"
                   />
                 </div>
               </div>
