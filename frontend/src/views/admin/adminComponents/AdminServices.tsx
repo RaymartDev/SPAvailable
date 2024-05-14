@@ -4,7 +4,6 @@ import { GoPlus } from 'react-icons/go';
 import Image11 from '../../../img/image11.png';
 import Image13 from '../../../img/image13.png';
 import Image14 from '../../../img/image14.png';
-import DefaultPp from '../../../img/defaultPp.png';
 
 function AdminServices() {
   const items = [
@@ -108,11 +107,6 @@ function AdminServices() {
           </div>
         </div>
         <div className="w-1/5 space-y-5">
-          <div className="flex flex-col h-48 items-center justify-center border-2 rounded-lg py-8 space-y-3 shadow-lg bg-white">
-            <img src={DefaultPp} alt="profilePicture" className="size-16" />
-            <h1 className="text-xl">James Allan</h1>
-          </div>
-
           <div className="flex flex-col h-48 justify-between  border-2 rounded-lg shadow-lg bg-white">
             <div className="flex justify-between px-5 py-6">
               <div>
