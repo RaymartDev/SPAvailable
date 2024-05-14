@@ -70,7 +70,9 @@ function Admin() {
     return <Loader />;
   }
 
-  let ContentComponent: React.FC;
+  let ContentComponent: React.FC<{
+    setActiveContent: (content: string) => void;
+  }>;
 
   switch (activeContent) {
     case 'Dashboard':
@@ -104,7 +106,7 @@ function Admin() {
         />
       </div>
       <div className="py-6 px-10 w-4/5">
-        <ContentComponent />
+        <ContentComponent setActiveContent={setActiveContent} />
       </div>
     </div>
   );

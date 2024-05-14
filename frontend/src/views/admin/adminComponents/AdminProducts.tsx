@@ -1,5 +1,4 @@
 import { FaSearch } from 'react-icons/fa';
-import { FaArrowTrendUp, FaArrowRightLong } from 'react-icons/fa6';
 import { GoPlus } from 'react-icons/go';
 import Image11 from '../../../img/image11.png';
 import Image13 from '../../../img/image13.png';
@@ -81,7 +80,7 @@ function AdminProducts() {
       </div>
 
       <div className="flex w-full">
-        <div className="w-4/5">
+        <div className="w-full">
           <div className="px-10 pb-10">
             <div className="grid grid-cols-3">
               {items.map((item, index) => (
@@ -103,21 +102,6 @@ function AdminProducts() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-        <div className="w-1/5 space-y-5">
-          <div className="flex flex-col h-48 justify-between  border-2 rounded-lg shadow-lg bg-white">
-            <div className="flex justify-between px-5 py-6">
-              <div>
-                <h1 className="font-bold text-2xl">Total Products</h1>
-                <p>58</p>
-              </div>
-              <FaArrowTrendUp size={50} color="green" />
-            </div>
-            <div className="flex rounded-b-lg items-center justify-between bg-[#41924B] text-white py-4 px-5">
-              <h1>View More</h1>
-              <FaArrowRightLong size={30} />
             </div>
           </div>
         </div>
