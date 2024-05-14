@@ -1,10 +1,19 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { AiOutlineHome } from 'react-icons/ai';
 import { LuUserCircle } from 'react-icons/lu';
 import { PiFlowerLotusLight } from 'react-icons/pi';
 import { RiFeedbackLine } from 'react-icons/ri';
 import { TfiDropbox } from 'react-icons/tfi';
 import { MdOutlineRoomService, MdLogout } from 'react-icons/md';
+import axios, { AxiosError } from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../img/logo.png';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useToast } from '../../hooks/useToast';
+import { logout } from '../../store/reducer/userSlice';
+import Loader from '../../components/Loader Component/Loader';
 
 interface SidebarProps {
   setActiveContent: (content: string) => void;
@@ -15,6 +24,40 @@ function Sidebar({ setActiveContent, activeContent }: SidebarProps) {
   const handleButtonClick = (content: string) => {
     setActiveContent(content);
   };
+
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
+  const user = useAppSelector((state) => state.user);
+
+  const { showSuccessToast, showErrorToast } = useToast();
+  const navigate = useNavigate();
+
+  const handleLogout = async (e: React.MouseEvent<HTMLLIElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    if (user) {
+      try {
+        const response = await axios.post('/api/v1/user/logout');
+        if (response.status === 200) {
+          showSuccessToast('Successfully logged out');
+          dispatch(logout());
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          showErrorToast(err);
+        } else {
+          showErrorToast('Unable to logout');
+        }
+      } finally {
+        setLoading(false);
+      }
+      navigate('/');
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col fixed w-1/5 h-full bg-[#41924B33] py-6 px-4 overflow-y-auto">
@@ -95,7 +138,10 @@ function Sidebar({ setActiveContent, activeContent }: SidebarProps) {
         </ul>
 
         <ul className="flex flex-col">
-          <li className="flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3">
+          <li
+            onClick={handleLogout}
+            className="flex items-center space-x-4 hover:bg-white hover:rounded-md cursor-pointer px-5 py-3"
+          >
             <MdLogout size={30} />
             <h1 className="text-lg md:text-xl">Logout</h1>
           </li>

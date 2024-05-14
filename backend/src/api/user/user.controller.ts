@@ -272,6 +272,24 @@ export const getProfile = async (req: UserRequest, res : Response<UserResponse>,
   }
 };
 
+export const getUsers = async (req: UserRequest, res: Response<UserResponse[]>, next: NextFunction) => {
+  try {
+    if (req.user) {
+      const user: UserResponse[] | undefined = await prismaFetch(async (prisma : PrismaClient) => {
+        try {
+          return await prisma.user.findMany();
+        } catch (err) {
+          next(err);
+        }
+      }, next);
+
+      res.status(200).json(user);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 /**
  * 
  * @param req User object request

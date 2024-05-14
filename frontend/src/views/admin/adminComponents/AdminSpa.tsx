@@ -1,22 +1,11 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
+import { useAppSelector } from '../../../store/store';
+import SpaState from '../../../interface/SpaState';
 
 function AdminSpa() {
-  const spa = [
-    {
-      id: 0,
-      spaName: 'Mandarin Spa',
-      username: 'john_doe',
-      email: 'john@example.com',
-    },
-    {
-      id: 1,
-      spaName: 'Big Cedar Lodge',
-      username: 'jane_doe',
-      email: 'jane@example.com',
-    },
-  ];
+  const spa: SpaState[] = useAppSelector((state) => state.spa);
 
   return (
     <div className="flex flex-col space-y-10">
@@ -50,27 +39,27 @@ function AdminSpa() {
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
-              >
-                ID NUMBER
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
                 SPA NAME
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                SPA OWNER
+                POSTED BY
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
                 EMAIL ADDRESS
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
+              >
+                ADDRESS
               </th>
               <th scope="col" className="relative px-6 py-3">
                 <span className="sr-only">Delete</span>
@@ -79,18 +68,18 @@ function AdminSpa() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {spa.map((spa) => (
-              <tr key={spa.id}>
+              <tr key={spa?.id}>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {spa.id}
+                  {spa?.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {spa.spaName}
+                  {spa?.owner?.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {spa.username}
+                  {spa?.email}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {spa.email}
+                  {spa?.address}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                   <button

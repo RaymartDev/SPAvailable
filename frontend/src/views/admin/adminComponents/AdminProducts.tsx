@@ -126,20 +126,6 @@ function AdminProducts() {
               <FaArrowRightLong size={30} />
             </div>
           </div>
-
-          <div className="flex flex-col h-48 justify-between  border-2 rounded-lg shadow-lg bg-white">
-            <div className="flex justify-between px-5 py-6">
-              <div>
-                <h1 className="font-bold text-2xl">Total Orders</h1>
-                <p>103</p>
-              </div>
-              <FaArrowTrendUp size={50} color="green" />
-            </div>
-            <div className="flex rounded-b-lg items-center justify-between bg-[#41924B] text-white py-4 px-5">
-              <h1>View More</h1>
-              <FaArrowRightLong size={30} />
-            </div>
-          </div>
         </div>
       </div>
     </div>

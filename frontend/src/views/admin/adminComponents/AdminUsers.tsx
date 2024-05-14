@@ -4,16 +4,16 @@ import { GoPlus } from 'react-icons/go';
 function AdminUsers() {
   const users = [
     {
-      id: 0,
-      username: 'john_doe',
       email: 'john@example.com',
-      password: '*********',
+      fullName: 'Raymart Sarmiento',
+      gender: 'Male',
+      admin: 'YES',
     },
     {
-      id: 1,
-      username: 'jane_doe',
-      email: 'jane@example.com',
-      password: '*********',
+      email: 'john@example.com',
+      fullName: 'Raymart Sarmiento',
+      gender: 'Male',
+      admin: 'YES',
     },
   ];
 
@@ -49,27 +49,27 @@ function AdminUsers() {
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                ID NUMBER
+                Email
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                USERNAME
+                Full Name
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                EMAIL ADDRESS
+                Gender
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
+                className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                PASSWORD
+                Admin
               </th>
               <th scope="col" className="relative px-6 py-3">
                 <span className="sr-only">Delete</span>
@@ -78,18 +78,18 @@ function AdminUsers() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {users.map((user) => (
-              <tr key={user.id}>
-                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.id}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.username}
-                </td>
+              <tr key={user.email}>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                   {user.email}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.password}
+                  {user.fullName}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {user.gender}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {user.admin}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                   <button

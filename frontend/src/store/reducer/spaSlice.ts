@@ -37,9 +37,14 @@ export const SpaSlice = createSlice({
     setSpa: (_state: SpaState[], action: PayloadAction<SpaState[]>) => {
       return action.payload;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    clearSpa: (_state: SpaState[]) => {
+      return initialState;
+    },
   },
 });
 
-export const { createSpa, setSpa, updateSpa, deleteSpa } = SpaSlice.actions;
+export const { createSpa, setSpa, updateSpa, deleteSpa, clearSpa } =
+  SpaSlice.actions;
 
 export default SpaSlice.reducer;

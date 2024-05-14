@@ -65,10 +65,6 @@ function AdminFeedback() {
             <img src={DefaultPp} alt="profilePicture" className="size-16" />
             <h1 className="text-xl">James Allan</h1>
           </div>
-          <div className="flex justify-between px-5 py-6 row-span-2 border-2 rounded-lg shadow-lg bg-white">
-            <h1 className="font-bold text-2xl">Filter Feedback</h1>
-            <FaArrowTrendUp size={40} color="green" />
-          </div>
         </div>
       </div>
     </div>
