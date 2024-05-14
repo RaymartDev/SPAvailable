@@ -116,14 +116,6 @@ function MainHome() {
                   onChange={(e) => setSearchSpa(e.target.value)}
                 />
               </div>
-              <div>
-                <button
-                  type="button"
-                  className="bg-[#41924B] py-3 px-10 rounded-full text-slate-50"
-                >
-                  Advanced Search
-                </button>
-              </div>
             </div>
           </div>
         </div>
