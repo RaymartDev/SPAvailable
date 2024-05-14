@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
 import {
   FaArrowTrendUp,
   FaArrowTrendDown,
@@ -13,11 +12,11 @@ import UserState from '../../../interface/UserState';
 function Dashboard() {
   const spaList: SpaState[] = useAppSelector((state) => state.spa);
   const user: UserState = useAppSelector((state) => state.user);
-  const [userCount, setUserCount] = useState(0);
-  const [feedbackCount, setFeedbackCount] = useState(0);
+  const users: UserState[] = useAppSelector((state) => state.users);
+  const feedbackCount = 0;
 
   const showUserIcon = () => {
-    if (userCount > 1000) {
+    if (users.length > 1000) {
       return <FaArrowTrendUp size={50} color="green" />;
     }
     return <FaArrowTrendDown size={50} color="red" />;
@@ -50,7 +49,7 @@ function Dashboard() {
               <div className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white">
                 <div className="flex justify-between items-center py-4 px-5">
                   <div>
-                    <h1 className="text-4xl font-bold">{userCount}</h1>
+                    <h1 className="text-4xl font-bold">{users.length}</h1>
                     <h2>Users</h2>
                   </div>
                   <div>{showUserIcon()}</div>

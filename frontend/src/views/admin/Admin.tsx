@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { setSpa } from '../../store/reducer/spaSlice';
 import { useToast } from '../../hooks/useToast';
 import Loader from '../../components/Loader Component/Loader';
+import { setUsers } from '../../store/reducer/usersSlice';
 
 function Admin() {
   const [activeContent, setActiveContent] = useState<string>('Dashboard');
@@ -35,10 +36,17 @@ function Admin() {
     const handleFetch = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/v1/spa/control');
-        if (response.status >= 200 && response.status < 300) {
-          if (response.data.length > 0) {
-            dispatch(setSpa(response.data));
+        const response1 = await axios.get('/api/v1/spa/control');
+        if (response1.status >= 200 && response1.status < 300) {
+          if (response1.data.length > 0) {
+            dispatch(setSpa(response1.data));
+          }
+        }
+
+        const response2 = await axios.get('/api/v1/user/users');
+        if (response2.status >= 200 && response2.status < 300) {
+          if (response2.data.length > 0) {
+            dispatch(setUsers(response2.data));
           }
         }
       } catch (err) {
@@ -46,7 +54,7 @@ function Admin() {
           if (err instanceof AxiosError) {
             showErrorToast(err);
           } else {
-            showErrorToast('Unable to fetch Spa List');
+            showErrorToast('Unable to fetch data');
           }
         }
       } finally {

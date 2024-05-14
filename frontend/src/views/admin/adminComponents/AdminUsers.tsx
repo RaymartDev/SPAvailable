@@ -1,21 +1,10 @@
 import { FaSearch } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
+import UserState from '../../../interface/UserState';
+import { useAppSelector } from '../../../store/store';
 
 function AdminUsers() {
-  const users = [
-    {
-      email: 'john@example.com',
-      fullName: 'Raymart Sarmiento',
-      gender: 'Male',
-      admin: 'YES',
-    },
-    {
-      email: 'john@example.com',
-      fullName: 'Raymart Sarmiento',
-      gender: 'Male',
-      admin: 'YES',
-    },
-  ];
+  const users: UserState[] = useAppSelector((state) => state.users);
 
   return (
     <div className="flex flex-col space-y-10">
@@ -63,7 +52,7 @@ function AdminUsers() {
                 scope="col"
                 className="px-6 py-3 text-left text-lg font-bold uppercase tracking-wider"
               >
-                Gender
+                Contact Number
               </th>
               <th
                 scope="col"
@@ -78,18 +67,18 @@ function AdminUsers() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {users.map((user) => (
-              <tr key={user.email}>
+              <tr key={user?.email}>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.email}
+                  {user?.email}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.fullName}
+                  {user?.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.gender}
+                  {user?.contact}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {user.admin}
+                  YES
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                   <button
