@@ -27,6 +27,7 @@ const Swiper = lazy(() => import('./components/ProductSwiper'));
 
 const SpaLocation = lazy(() => import('./views/user/SpaLocation'));
 const Admin = lazy(() => import('./views/admin/Admin'));
+const Feedback = lazy(() => import('./views/user/Feedback'));
 
 function App() {
   return (
@@ -90,6 +91,8 @@ function App() {
         <Route path="/admin" element={<Page component={Admin} />} />
 
         <Route path="/swiper" element={<Page component={Swiper} />} />
+
+        <Route path="/feedback" element={<Page component={Feedback} />} />
       </Routes>
     </BrowserRouter>
   );

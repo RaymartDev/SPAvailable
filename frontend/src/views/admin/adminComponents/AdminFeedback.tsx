@@ -45,7 +45,10 @@ function AdminFeedback() {
                 <div className="flex w-9/12">
                   <div className="flex items-center justify-center w-full">
                     <p className="text-center whitespace-pre-wrap break-words font-bold">
-                      "User-friendly"
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Maiores ipsum itaque debitis unde nostrum. Obcaecati odio
+                      debitis maiores vitae excepturi ipsum adipisci veritatis
+                      iusto dicta, natus, ut qui tempore consequuntur!
                     </p>
                   </div>
                 </div>

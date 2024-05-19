@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import { FaTrash } from 'react-icons/fa6';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import axios, { AxiosError } from 'axios';
+import { addYears, differenceInYears } from 'date-fns';
 import Navbar from '../../components/Navbar/Navbar';
 import 'react-datepicker/dist/react-datepicker.css';
 import DefaultPp from '../../img/defaultPp.png';
@@ -49,6 +50,7 @@ function Registration() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [genderError, setGenderError] = useState('');
+  const [dateError, setDateError] = useState('');
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -142,6 +144,7 @@ function Registration() {
     setLastNameError('');
     setEmailError('');
     setPasswordError('');
+    setDateError('');
     setGenderError('');
   };
 
@@ -208,6 +211,12 @@ function Registration() {
     }
     if (password !== retypePassword) {
       setPasswordMismatch(true);
+      setLoading(false);
+      return;
+    }
+
+    if (!selectedDate || differenceInYears(new Date(), selectedDate) < 18) {
+      setDateError('The required age is not met.');
       setLoading(false);
       return;
     }
@@ -394,8 +403,10 @@ function Registration() {
                   placeholderText="Select Your Birthday"
                   selected={selectedDate}
                   onChange={handleDateChange}
+                  maxDate={addYears(new Date(), -18)}
                 />
               </div>
+              {dateError && <p className="text-red-500">{dateError}</p>}
             </div>
             <div className="card">
               <h2 className="text-xl font-semibold mb-3">
