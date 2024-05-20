@@ -58,32 +58,32 @@ function Feedback() {
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
-      <div className="flex relative h-[450px] md:h-[598px]">
+      <div className="flex relative h-[250px] md:h-[450px] lg:h-[598px]">
         <img alt="cover" src={Image22} className="object-cover h-full w-full" />
         <div className="absolute flex flex-col top-0 left-0 justify-center items-center h-full w-full">
-          <h1 className="font-bold text-slate-50 text-5xl text-center md:text-8xl text-stroke-black">
+          <h1 className="font-bold text-slate-50 text-3xl md:text-5xl lg:text-8xl text-center text-stroke-black">
             Customers Feedback
           </h1>
         </div>
       </div>
-      <div className="py-20 px-10 bg-white min-h-fit flex flex-col">
+      <div className="py-10 px-4 lg:py-20 lg:px-10 bg-white min-h-fit flex flex-col">
         <div className="flex w-full flex-col space-y-8">
-          <div className="flex flex-col">
-            <div className="flex items-center space-x-5">
-              <img
-                src={DefaultPp}
-                alt="profilePicture"
-                className="size-16 object-cover rounded-full object-center"
-              />
-              <h1 className="text-xl">James Allan</h1>
-            </div>
-            <div className="pl-20">
-              <div className="flex">{renderStars()}</div>
+          <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-start lg:space-x-5 w-full">
+            <img
+              src={DefaultPp}
+              alt="profilePicture"
+              className="w-16 h-16 object-cover rounded-full object-center"
+            />
+            <h1 className="text-lg md:text-xl mt-4 md:mt-0">James Allan</h1>
+          </div>
+          <div className="pl-0 lg:scroll-pl-20">
+            <div className="flex justify-center lg:justify-start items-center">
+              {renderStars()}
             </div>
           </div>
-          <div className="pl-20">
-            <div className="border-2 border-black px-6 py-8 bg-[#CCD3CA] rounded-2xl">
-              <p className=" whitespace-pre-wrap break-words">
+          <div className="pl-0 lg:pl-20">
+            <div className="border-2 border-black px-4 py-6 md:px-6 md:py-8 bg-[#CCD3CA] rounded-2xl ">
+              <p className="whitespace-pre-wrap break-words">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia,
                 harum? A est temporibus accusamus fugit, incidunt natus? Facere
                 aut, tenetur a doloribus ducimus ut illo itaque animi, adipisci
@@ -92,7 +92,9 @@ function Feedback() {
             </div>
           </div>
           <div className="flex justify-end">
-            <p className="text-lg">{timeSincePosted(feedbackTimestamp)}</p>
+            <p className="text-sm md:text-lg">
+              {timeSincePosted(feedbackTimestamp)}
+            </p>
           </div>
         </div>
       </div>

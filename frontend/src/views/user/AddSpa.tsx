@@ -148,7 +148,7 @@ function AddSpa() {
       <div className="flex flex-col min-h-screen bg-white">
         <div className="bg-white flex flex-grow">
           <div className="flex-grow">
-            <div className="h-full">
+            <div className="h-full w-full">
               {showBasicInfo ? (
                 <BasicInfo
                   onNextClick={() => {

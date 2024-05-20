@@ -25,15 +25,15 @@ function PasswordModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20 ">
-      <div className="flex flex-col items-center w-[464px] h-[659px] bg-slate-50 rounded-2xl">
-        <div className="flex justify-end items-start w-full h-fit">
-          <button type="button" onClick={onClose} className="m-3">
+    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20 p-4 sm:p-0">
+      <div className="flex flex-col items-center w-full max-w-md bg-slate-50 rounded-2xl p-6 sm:w-[464px] sm:h-[580px]">
+        <div className="flex justify-end items-start w-full">
+          <button type="button" onClick={onClose}>
             <IoClose size={30} />
           </button>
         </div>
 
-        <div className="flex flex-col justify-center items-center w-[300px] h-fit mt-5">
+        <div className="flex flex-col justify-center items-center w-full mt-5 md:px-16">
           <div className="flex flex-col justify-center items-center ">
             <h1 className="font-bold text-xl">Log In</h1>
             <p className="mt-2 text-sm">

@@ -124,7 +124,7 @@ function ServiceSwiper() {
         >
           {serviceData.map((service) => (
             <SwiperSlide key={service.id}>
-              <div className="flex flex-col pb-20 px-5 items-center justify-center">
+              <div className="flex flex-col pb-20 items-center justify-center">
                 <div className="bg-[#41924B] rounded-xl flex flex-col items-center justify-center">
                   <img
                     src={service.imageUrl}

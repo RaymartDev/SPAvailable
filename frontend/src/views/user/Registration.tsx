@@ -243,8 +243,8 @@ function Registration() {
           handleRegister={handleRegister}
         />
       )}
-      <div className="flex ">
-        <div className="flex flex-col w-4/12 p-10 bg-[#41924B] items-center">
+      <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:w-4/12 p-10 bg-[#41924B] items-center">
           <div className="relative mb-10" id="profilePicture">
             <div className="size-40 rounded-full overflow-hidden flex justify-center items-center border-2 p-1">
               <img
@@ -287,12 +287,12 @@ function Registration() {
           </div>
         </div>
 
-        <div className="flex w-full flex-col pl-20 bg-slate-50 p-5">
-          <div className="border-b-2 pb-5 my-10">
+        <div className="flex w-full flex-col lg:pl-20 bg-slate-50 p-5">
+          <div className="border-b-2 pb-5 my-4">
             <h1 className="text-3xl font-bold">Basic Details</h1>
           </div>
 
-          <div className="grid grid-cols-2 mx-10 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 mx-0 lg:mx-10 ">
             <div className="card mb-8">
               <h2 className="text-xl font-semibold mb-3">
                 First Name <Required />
@@ -301,7 +301,7 @@ function Registration() {
                 type="text"
                 value={firstName}
                 onChange={handleFirstNameChange}
-                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${firstNameError ? 'border-red-500' : ''}`}
+                className={`w-full lg:w-9/12 border-b-2 px-1 py-2 bg-transparent ${firstNameError ? 'border-red-500' : ''}`}
               />
               {firstNameError && (
                 <p className="text-red-500">{firstNameError}</p>
@@ -315,7 +315,7 @@ function Registration() {
                 type="text"
                 value={lastName}
                 onChange={handleLastNameChange}
-                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${lastNameError ? 'border-red-500' : ''}`}
+                className={`w-full lg:w-9/12 border-b-2 px-1 py-2 bg-transparent ${lastNameError ? 'border-red-500' : ''}`}
               />
               {lastNameError && <p className="text-red-500">{lastNameError}</p>}
             </div>
@@ -328,13 +328,13 @@ function Registration() {
                 disabled={location.state?.google}
                 value={email}
                 onChange={handleEmailChange}
-                className={`w-9/12 border-b-2 px-1 py-2 bg-transparent ${emailError ? 'border-red-500' : ''}`}
+                className={`w-full lg:w-9/12 border-b-2 px-1 py-2 bg-transparent ${emailError ? 'border-red-500' : ''}`}
               />
               {emailError && <p className="text-red-500">{emailError}</p>}
             </div>
             <div className="card mb-8">
               <h2 className="text-xl font-semibold mb-3">Contact</h2>
-              <div className="flex w-9/12 border-b-2">
+              <div className="flex w-full lg:w-9/12 border-b-2">
                 <div className="flex w-1/12 items-center">+63</div>
                 <input
                   type="tel"
@@ -351,7 +351,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">
                 Password <Required />
               </h2>
-              <div className="flex items-center w-9/12 border-b-2 relative">
+              <div className="flex items-center w-full lg:w-9/12 border-b-2 relative">
                 <input
                   type={visiblePass === false ? 'password' : 'text'}
                   value={password}
@@ -374,7 +374,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">
                 Retype Password <Required />
               </h2>
-              <div className="flex items-center w-9/12 border-b-2 relative">
+              <div className="flex items-center w-full lg:w-9/12 border-b-2 relative">
                 <input
                   type={visibleRePass === false ? 'password' : 'text'}
                   value={retypePassword}
@@ -397,7 +397,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">
                 Birthday <Required />
               </h2>
-              <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
+              <div className="flex items-center w-full lg:w-9/12 border-b-2 px-1 py-2 ">
                 <DatePicker
                   className="px-1 py-2 bg-transparent "
                   placeholderText="Select Your Birthday"
@@ -412,7 +412,7 @@ function Registration() {
               <h2 className="text-xl font-semibold mb-3">
                 Gender <Required />
               </h2>
-              <div className="flex items-center w-9/12 border-b-2 px-1 py-2 ">
+              <div className="flex items-center w-full lg:w-9/12 border-b-2 px-1 py-2 ">
                 <select
                   name="gender"
                   id="gender"
@@ -431,20 +431,20 @@ function Registration() {
             </div>
           </div>
 
-          <div className="flex justify-end pb-40 mx-10 mt-20">
-            <div className="flex items-center justify-center mr-10 ">
+          <div className="flex flex-col lg:flex-row justify-end pb-20 lg:pb-40 mx-0 lg:mx-10 mt-10 lg:mt-20">
+            <div className="flex items-center justify-center mb-4 lg:mb-0 lg:mr-10">
               <button
                 type="button"
-                className="text-lg font-semibold text-neutral-400 rounded-full border-2 px-16 py-3"
+                className="text-lg font-semibold text-neutral-400 rounded-full border-2 px-10 lg:px-16 py-3"
                 onClick={handleResetAll}
               >
                 Reset All
               </button>
             </div>
-            <div className="bg-[#41924B] rounded-full mr-[126px]">
+            <div className="flex items-center justify-center mb-4 lg:mb-0 lg:mr-10">
               <button
                 type="button"
-                className="text-slate-50 font-semibold px-16 py-3 text-lg"
+                className="text-lg font-semibold bg-[#41924B] text-white rounded-full border-2 px-10 lg:px-16 py-3"
                 onClick={handleSubmit}
               >
                 Sign Up

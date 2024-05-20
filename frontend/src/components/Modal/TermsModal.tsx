@@ -9,25 +9,25 @@ interface TermsModalProps {
 function TermsModal({ onClose, handleRegister }: TermsModalProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
-      <div className="flex flex-col items-center w-[464px] h-[659px] bg-slate-50 rounded-2xl pb-10">
-        <div className="flex justify-end items-start w-full h-fit">
+      <div className="flex flex-col items-center w-11/12 max-w-md lg:max-w-lg h-5/6 lg:h-[659px] bg-slate-50 rounded-2xl pb-5 lg:pb-10">
+        <div className="flex justify-end items-start w-full">
           <button type="button" onClick={onClose} className="m-3">
             <IoClose size={30} />
           </button>
         </div>
 
-        <div className="flex flex-col justify-center items-center w-[300px] h-fit pb-5">
+        <div className="flex flex-col justify-center items-center w-full px-5 lg:px-0 lg:w-[300px] h-fit pb-5">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-2xl">Terms and Condition</h1>
+            <h1 className="font-bold text-2xl">Terms and Conditions</h1>
           </div>
         </div>
 
-        <div className="flex flex-col overflow-y-scroll h-full px-10 text-sm">
+        <div className="flex flex-col overflow-y-scroll h-full px-5 lg:px-10 text-sm">
           <div className="flex flex-col gap-y-3">
             <div className="pb-3">
               <p className="text-md text-balance indent-5">
                 Welcome to SPAvailable. These Terms and Conditions govern your
-                use our online platform for scheduling spa appointments. By
+                use of our online platform for scheduling spa appointments. By
                 accessing or using any part of our website, you agree to be
                 bound by these terms. If you do not agree to all the terms and
                 conditions of this agreement, then you may not access the
@@ -39,7 +39,7 @@ function TermsModal({ onClose, handleRegister }: TermsModalProps) {
               <h1 className="font-semibold text-lg">User Responsibilities:</h1>
               <p>
                 a. Users are responsible for providing accurate and up-to-date
-                information when scheduling appointments
+                information when scheduling appointments.
               </p>
               <p>
                 b. Users must adhere to the cancellation and rescheduling
@@ -116,14 +116,14 @@ function TermsModal({ onClose, handleRegister }: TermsModalProps) {
             <div className="flex justify-between p-5">
               <button
                 type="button"
-                className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50"
+                className="bg-[#41924B] py-3 rounded-lg w-24 lg:w-28 text-slate-50"
                 onClick={handleRegister}
               >
                 Accept
               </button>
               <button
                 type="button"
-                className="bg-red-500 py-3 rounded-lg w-28 text-slate-50"
+                className="bg-red-500 py-3 rounded-lg w-24 lg:w-28 text-slate-50"
                 onClick={onClose}
               >
                 Decline

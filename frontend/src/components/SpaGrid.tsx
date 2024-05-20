@@ -141,7 +141,7 @@ function SpaGrid({
         className={`max-w-screen-2xl mx-auto grid my-5 justify-center items-center grid-cols-1 ${
           filteredItemsOwned.length === 0 || filteredItems.length === 0
             ? 'place-items-center'
-            : 'md:grid-cols-2 lg:grid-cols-3'
+            : 'sm:grid-cols-2 lg:grid-cols-3'
         }`}
       >
         {filteredItemsOwned.length > 0 || filteredItems.length > 0 ? (
@@ -225,7 +225,11 @@ function SpaGrid({
   return (
     <div>
       <div
-        className={`max-w-screen-2xl mx-auto grid grid-cols-1 my-5 justify-center items-center ${items.length === 0 || filteredItemsOwned.length === 0 ? 'place-items-center' : 'md:grid-cols-2 lg:grid-cols-3'}`}
+        className={`max-w-screen-2xl mx-auto grid grid-cols-1 my-5 justify-center items-center ${
+          items.length === 0 || filteredItemsOwned.length === 0
+            ? 'place-items-center'
+            : 'sm:grid-cols-2 lg:grid-cols-3'
+        }`}
       >
         {filteredItemsOwned.length > 0 &&
           filteredItemsOwned.map((item) => (
