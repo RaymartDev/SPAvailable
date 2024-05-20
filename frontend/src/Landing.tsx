@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FiMenu } from 'react-icons/fi'; // Importing an icon for the burger menu
 import { setCredentials } from './store/reducer/userSlice';
 import { useToast } from './hooks/useToast';
 import { useAppDispatch, useAppSelector } from './store/store';
@@ -30,6 +31,7 @@ function Landing() {
   const [password, setPassword] = useState('');
   const { showErrorToast, showSuccessToast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -120,17 +122,26 @@ function Landing() {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 ">
-      <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg ">
+    <div className="max-w-screen-2xl mx-auto px-4">
+      <div className="flex sticky top-0 justify-between items-center py-2 md:py-4 z-20 bg-white px-5 shadow-lg">
         <div className="flex items-center">
           <div className="mr-2">
             <img src={Logo} className="size-16 md:size-14" alt="Logo" />
           </div>
           <div className="flex text-2xl md:text-3xl font-bold text-[#05bc64] cursor-pointer">
-            SPA <h1 className="text-neutral-950">vailable</h1>{' '}
+            SPA <h1 className="text-neutral-950">vailable</h1>
           </div>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center md:hidden">
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="focus:outline-none"
+          >
+            <FiMenu className="text-2xl" />
+          </button>
+        </div>
+        <div className="hidden md:flex items-center">
           <button
             type="button"
             onClick={() => setOpenLoginModal(true)}
@@ -138,18 +149,6 @@ function Landing() {
           >
             Login
           </button>
-          <LoginModal
-            open={openLoginModal}
-            setUser={setUser}
-            user={user}
-            onClose={() => {
-              setOpenLoginModal(false);
-              setUser('');
-            }}
-            onContinueToPasswordModal={handleContinueToPasswordModal}
-            onSwitchToSignUp={switchToSignUp}
-            setLoading={setLoading}
-          />
           <button
             type="button"
             onClick={() => setOpenSignUpModal(true)}
@@ -157,44 +156,77 @@ function Landing() {
           >
             Sign Up
           </button>
-          {openSignUpModal && (
-            <SignUpModal
-              onClose={() => setOpenSignUpModal(false)}
-              onSwitchToLogin={switchToLogIn}
-            />
-          )}
-
-          {passwordModalOpen && (
-            <PasswordModal
-              setPassword={setPassword}
-              password={password}
-              onClose={() => {
-                setPasswordModalOpen(false);
-                setPassword('');
-              }}
-              handleSubmit={handleSubmit}
-              handleKeyPress={handleKeyPress}
-              handleForgotPassword={() => {
-                setPasswordModalOpen(false);
-                setPassword('');
-                setForgotPModalOpen(true);
-              }}
-            />
-          )}
-
-          {forgotPModal && (
-            <ForgotPModal
-              email={user}
-              onClose={() => {
-                setForgotPModalOpen(false);
-                setPassword('');
-                setUser('');
-              }}
-            />
-          )}
         </div>
       </div>
-
+      {menuOpen && (
+        <div className="md:hidden bg-white py-3 shadow-lg w-full flex flex-col items-center z-20  top-[64px] left-0 right-0 sticky">
+          <button
+            type="button"
+            onClick={() => {
+              setOpenLoginModal(true);
+              setMenuOpen(false);
+            }}
+            className="mb-3 font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50 w-full text-center border-b-2 "
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setOpenSignUpModal(true);
+              setMenuOpen(false);
+            }}
+            className="font-bold hover:rounded p-3 hover:bg-[#41924B] hover:text-slate-50 w-full text-center"
+          >
+            Sign Up
+          </button>
+        </div>
+      )}
+      <LoginModal
+        open={openLoginModal}
+        setUser={setUser}
+        user={user}
+        onClose={() => {
+          setOpenLoginModal(false);
+          setUser('');
+        }}
+        onContinueToPasswordModal={handleContinueToPasswordModal}
+        onSwitchToSignUp={switchToSignUp}
+        setLoading={setLoading}
+      />
+      {openSignUpModal && (
+        <SignUpModal
+          onClose={() => setOpenSignUpModal(false)}
+          onSwitchToLogin={switchToLogIn}
+        />
+      )}
+      {passwordModalOpen && (
+        <PasswordModal
+          setPassword={setPassword}
+          password={password}
+          onClose={() => {
+            setPasswordModalOpen(false);
+            setPassword('');
+          }}
+          handleSubmit={handleSubmit}
+          handleKeyPress={handleKeyPress}
+          handleForgotPassword={() => {
+            setPasswordModalOpen(false);
+            setPassword('');
+            setForgotPModalOpen(true);
+          }}
+        />
+      )}
+      {forgotPModal && (
+        <ForgotPModal
+          email={user}
+          onClose={() => {
+            setForgotPModalOpen(false);
+            setPassword('');
+            setUser('');
+          }}
+        />
+      )}
       <div className="flex relative md:h-[602px]">
         <img src={Suite} alt="Suite" className="object-cover h-full w-full" />
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full z-10">
@@ -203,15 +235,14 @@ function Landing() {
           </h1>
         </div>
       </div>
-
       <div className="py-8 md:py-12 bg-white">
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <div className="flex justify-center items-center mb-6">
-            <h1 className="text-xl md:text-2xl">
+            <h1 className="text-xl md:text-2xl text-center">
               MASSAGE, AESTHETICS, WELLNESS & VITALITY
             </h1>
           </div>
-          <div className="flex mb-10 text-center  justify-center items-center">
+          <div className="flex mb-10 text-center justify-center items-center">
             <p className="w-3/5 md:w-3/5">
               SPAvailable featured establishments provide a comprehensive range
               of services and classes aimed at promoting your well-being,
@@ -226,7 +257,6 @@ function Landing() {
                 FIND A MASSAGE
               </h1>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-10">
               <LandingComp />
             </div>
@@ -249,10 +279,9 @@ function Landing() {
             <img
               src={Image9}
               alt="Image9"
-              className=" object-cover w-full h-full"
+              className="object-cover w-full h-full"
             />
           </div>
-
           <div className="flex bg-[#41924B] h-52 justify-center items-center">
             <p className="font-bold text-center w-3/5 text-4xl md:text-6xl text-slate-50">
               YOUR RELAXATION AWAITS.
@@ -260,7 +289,6 @@ function Landing() {
           </div>
         </div>
       </div>
-
       <Menu />
       <Footer />
     </div>

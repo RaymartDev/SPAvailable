@@ -20,31 +20,31 @@ function RatingSpaModal({ onClose }: RatingSpaModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
-      <div className="flex flex-col items-center w-[464px] h-[475px] bg-slate-50 rounded-2xl pb-10 text-black">
-        <div className="flex justify-end items-start w-full h-fit">
-          <button type="button" onClick={onClose} className="m-3">
+      <div className="flex flex-col items-center w-[90%] max-w-[464px] bg-slate-50 rounded-2xl pb-6 md:pb-10 text-black">
+        <div className="flex justify-end items-start w-full h-fit p-3 md:p-4">
+          <button type="button" onClick={onClose} className="text-2xl">
             <IoClose size={30} />
           </button>
         </div>
 
         <div className="flex flex-col justify-center items-center pt-5 h-fit">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-3xl">Rate Our Spa</h1>
+            <h1 className="font-bold text-xl md:text-3xl">Rate Our Spa</h1>
           </div>
         </div>
 
-        <div className="flex flex-col h-full px-10 text-sm items-center justify-center">
+        <div className="flex flex-col h-full px-5 md:px-10 text-sm items-center justify-center">
           <div className="flex flex-col gap-y-5">
             <div>
-              <h1 className="text-xl text-center font-semibold">
+              <h1 className="text-lg md:text-xl text-center font-semibold">
                 How would you rate your spa experience?
               </h1>
             </div>
             <div className="flex items-center justify-center">
               <ModalStar totalStars={5} />
             </div>
-            <h1 className="text-md font-semibold">
-              Do you have have any additional comment?
+            <h1 className="text-sm md:text-md font-semibold">
+              Do you have any additional comments?
             </h1>
             <div className="overflow-hidden">
               <textarea
@@ -57,16 +57,16 @@ function RatingSpaModal({ onClose }: RatingSpaModalProps) {
                 {feedback.length}/300 characters
               </p>
             </div>
-            <div className="flex gap-x-5 items-center justify-center">
+            <div className="flex gap-x-3 md:gap-x-5 items-center justify-center">
               <button
                 type="button"
-                className="bg-[#41924B] py-3 rounded-lg w-28 text-slate-50 border-2 font-semibold"
+                className="bg-[#41924B] py-2 md:py-3 rounded-lg w-24 md:w-28 text-slate-50 border-2 font-semibold"
               >
                 Submit
               </button>
               <button
                 type="button"
-                className="bg-gray-100 py-3 rounded-lg w-28 text-black border-2 font-semibold"
+                className="bg-gray-100 py-2 md:py-3 rounded-lg w-24 md:w-28 text-black border-2 font-semibold"
                 onClick={onClose}
               >
                 Cancel

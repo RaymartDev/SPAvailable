@@ -1,39 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  FaArrowTrendUp,
-  FaArrowTrendDown,
-  FaArrowRightLong,
-} from 'react-icons/fa6';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 import DefaultPp from '../../../img/defaultPp.png';
 import SpaState from '../../../interface/SpaState';
 import { useAppSelector } from '../../../store/store';
 import UserState from '../../../interface/UserState';
 
-function Dashboard() {
+interface DashboardProps {
+  setActiveContent: (content: string) => void;
+}
+
+function Dashboard({ setActiveContent }: DashboardProps) {
   const spaList: SpaState[] = useAppSelector((state) => state.spa);
   const user: UserState = useAppSelector((state) => state.user);
   const users: UserState[] = useAppSelector((state) => state.users);
   const feedbackCount = 0;
+  const navigate = useNavigate();
 
-  const showUserIcon = () => {
-    if (users.length > 1000) {
-      return <FaArrowTrendUp size={50} color="green" />;
-    }
-    return <FaArrowTrendDown size={50} color="red" />;
-  };
-
-  const showSpaIcon = () => {
-    if (spaList.length > 1000) {
-      return <FaArrowTrendUp size={50} color="green" />;
-    }
-    return <FaArrowTrendDown size={50} color="red" />;
-  };
-
-  const showFeedbackIcon = () => {
-    if (feedbackCount > 1000) {
-      return <FaArrowTrendUp size={50} color="green" />;
-    }
-    return <FaArrowTrendDown size={50} color="red" />;
+  const handleNavigation = (content: string) => {
+    setActiveContent(content);
+    navigate('/admin');
   };
 
   return (
@@ -46,47 +32,56 @@ function Dashboard() {
         <div className="w-4/5 h-full space-y-10">
           <div className="h-1/5">
             <div className="grid grid-cols-3 space-x-10">
-              <div className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white">
+              <button
+                className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white"
+                onClick={() => handleNavigation('Users')}
+                type="button"
+              >
                 <div className="flex justify-between items-center py-4 px-5">
                   <div>
                     <h1 className="text-4xl font-bold">{users.length}</h1>
                     <h2>Users</h2>
                   </div>
-                  <div>{showUserIcon()}</div>
                 </div>
                 <div className="flex rounded-b-lg items-center justify-between bg-[#41924B] text-white py-4 px-5">
                   <h1>View More</h1>
                   <FaArrowRightLong size={30} />
                 </div>
-              </div>
+              </button>
 
-              <div className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white">
+              <button
+                className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white"
+                onClick={() => handleNavigation('Spa')}
+                type="button"
+              >
                 <div className="flex justify-between items-center py-4 px-5">
                   <div>
                     <h1 className="text-4xl font-bold">{spaList.length}</h1>
                     <h2>Spa</h2>
                   </div>
-                  <div>{showSpaIcon()}</div>
                 </div>
                 <div className="flex rounded-b-lg items-center justify-between bg-[#41924B] text-white py-4 px-5">
                   <h1>View More</h1>
                   <FaArrowRightLong size={30} />
                 </div>
-              </div>
+              </button>
 
-              <div className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white">
+              <button
+                className="rounded-lg shadow-lg border-2 hover:scale-105 duration-150 bg-white"
+                onClick={() => handleNavigation('Feedback')}
+                type="button"
+              >
                 <div className="flex justify-between items-center py-4 px-5">
                   <div>
                     <h1 className="text-4xl font-bold">{feedbackCount}</h1>
                     <h2>Feedback</h2>
                   </div>
-                  <div>{showFeedbackIcon()}</div>
                 </div>
                 <div className="flex rounded-b-lg items-center justify-between bg-[#41924B] text-white py-4 px-5">
                   <h1>View More</h1>
                   <FaArrowRightLong size={30} />
                 </div>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -100,7 +95,7 @@ function Dashboard() {
             <img
               src={user?.profile || DefaultPp}
               alt="profilePicture"
-              className="size-16"
+              className="size-16 object-cover rounded-full object-center"
             />
             <h1 className="text-xl">{user?.name}</h1>
           </div>

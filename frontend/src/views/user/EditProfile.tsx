@@ -133,17 +133,19 @@ function EditProfile() {
   return (
     <div className="max-w-screen-2xl min-h-screen mx-auto px-4">
       <NavbarLogged setLoading={setLoading} user={user} />
-      <div className="flex flex-col md:flex-row ">
-        <div className="flex flex-col gap-y-10 w-4/12 min-h-screen p-10 bg-[#41924B] items-center overflow-auto">
-          <div className="flex text-slate-50">
+      <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col gap-y-10 w-full md:w-4/12 min-h-screen p-5 md:p-10 bg-[#41924B] items-center overflow-auto">
+          <div className="text-slate-50">
             <h1 className="text-3xl font-bold text-center">{user?.name}</h1>
           </div>
           <div className="relative" id="profilePicture">
-            <div className="size-48 rounded-full overflow-hidden flex justify-center items-center border-4 p-1">
+            <div className="w-48 h-48 rounded-full overflow-hidden flex justify-center items-center border-4 p-1">
               <img
                 alt="profilePicture"
                 src={profilePicture || DefaultPp}
-                className={`w-full h-full object-cover rounded-full object-center  ${profilePicture || DefaultPp ? 'bg-white' : ''}`}
+                className={`w-full h-full object-cover rounded-full object-center ${
+                  profilePicture || DefaultPp ? 'bg-white' : ''
+                }`}
               />
             </div>
             <FaTrash
@@ -182,26 +184,26 @@ function EditProfile() {
           </div>
         </div>
 
-        <div className="flex w-full flex-col pl-20 bg-white p-5">
+        <div className="flex w-full flex-col lg:pl-20 bg-slate-50 p-5">
           <div className="border-b-2 pb-5 my-10">
             <h1 className="text-3xl font-bold text-neutral-950">
               Edit Profile
             </h1>
           </div>
 
-          <div className="grid grid-cols-2 mx-10 ">
-            <div className="card mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mx-2 md:mx-10">
+            <div className="card mb-8">
               <div className="flex items-center mb-3 text-neutral-400">
                 <h2 className="text-xl font-semibold pr-2">Full Name</h2>
               </div>
               <input
                 type="text"
                 value={name}
-                className="w-9/12 border-b-2 px-1 py-2"
+                className="w-full border-b-2 px-1 py-2 bg-transparent"
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="card mb-16">
+            <div className="card mb-8">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Email Address
               </h2>
@@ -210,15 +212,15 @@ function EditProfile() {
                 readOnly
                 value={user?.email}
                 disabled
-                className="w-9/12 border-b-2 px-1 py-2 cursor-not-allowed bg-transparent"
+                className="w-full border-b-2 px-1 py-2 cursor-not-allowed bg-transparent"
               />
             </div>
-            <div className="card mb-16">
+            <div className="card mb-8">
               <div className="flex items-center mb-3 text-neutral-400">
                 <h2 className="text-xl font-semibold pr-2">New Password</h2>
               </div>
 
-              <div className="flex items-center w-9/12 border-b-2 relative">
+              <div className="flex items-center w-full border-b-2 relative">
                 <input
                   value={pass}
                   onChange={(e) => setPass(e.target.value)}
@@ -234,13 +236,13 @@ function EditProfile() {
                 </div>
               </div>
             </div>
-            <div className="card mb-16">
+            <div className="card mb-8">
               <div className="flex items-center mb-3 text-neutral-400">
-                <h2 className="text-xl  font-semibold pr-2">
+                <h2 className="text-xl font-semibold pr-2">
                   Confirm New Password
                 </h2>
               </div>
-              <div className="flex items-center w-9/12 border-b-2 relative">
+              <div className="flex items-center w-full border-b-2 relative">
                 <input
                   value={pass2}
                   onChange={(e) => setPass2(e.target.value)}
@@ -256,24 +258,27 @@ function EditProfile() {
                 </div>
               </div>
             </div>
-            <div className="card mb-16">
+            <div className="card mb-8">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Contact
               </h2>
-              <input
-                type="tel"
-                value={contact}
-                maxLength={10}
-                className="w-9/12 border-b-2 px-1 py-2 cursor-default bg-transparent"
-                onChange={(e) => {
-                  const input = e.target.value;
-                  if (/^\d*$/.test(input)) {
-                    setContact(input);
-                  }
-                }}
-              />
+              <div className="border-b-2 flex items-center">
+                <p className="px-2">+63</p>
+                <input
+                  type="tel"
+                  value={contact}
+                  maxLength={10}
+                  className="px-1 py-2 w-full bg-transparent"
+                  onChange={(e) => {
+                    const input = e.target.value;
+                    if (/^\d*$/.test(input)) {
+                      setContact(input);
+                    }
+                  }}
+                />
+              </div>
             </div>
-            <div className="card mb-16">
+            <div className="card mb-8">
               <h2 className="text-xl text-neutral-400 font-semibold mb-3">
                 Gender
               </h2>
@@ -282,12 +287,12 @@ function EditProfile() {
                 value={user?.gender ? 'Male' : 'Female'}
                 readOnly
                 disabled
-                className="w-9/12 border-b-2 px-1 py-2 cursor-not-allowed bg-transparent"
+                className="w-full border-b-2 px-1 py-2 cursor-not-allowed bg-transparent"
               />
             </div>
           </div>
-          <div className="flex justify-end mx-10 mt-10">
-            <div className="bg-[#41924B] rounded-full mr-[126px]">
+          <div className="flex justify-center md:justify-end mx-2 md:mx-10 mt-10">
+            <div className="bg-[#41924B] rounded-full">
               <button
                 type="button"
                 className="text-slate-50 font-semibold px-16 py-3 text-lg"

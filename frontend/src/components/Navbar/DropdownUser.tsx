@@ -52,20 +52,22 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
         className="flex items-center focus:outline-none"
         onClick={toggleMenu}
       >
-        <h1 className="font-semibold mr-2 text-lg">{user?.name}</h1>
+        <h1 className="font-semibold mr-2 text-lg hidden md:block">
+          {user?.name}
+        </h1>
         <img
           src={user?.profile || DefaultPp}
           alt="User Avatar"
-          className="size-12 rounded-full object-cover object-center border-2 border-[#41924B] p-1"
+          className="w-12 h-12 rounded-full object-cover object-center border-2 border-[#41924B] p-1"
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-[350px] bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-10 pb-5 flex flex-col gap-y-5">
-          <div className="flex items-center w-full pl-5 py-3 border-2 rounded-lg shadow-2xl bg-slate-50">
+        <div className="absolute right-0 mt-2 w-64 bg-[#41924B] text-slate-50 rounded-md shadow-lg px-5 pt-4 lg:pt-10 pb-4 lg:pb-5 flex flex-col gap-y-5 sm:w-96">
+          <div className="hidden md:flex items-center w-full pl-5 py-3 border-2 rounded-lg shadow-2xl bg-slate-50">
             <img
               src={user?.profile || DefaultPp}
               alt="User Avatar"
-              className="size-12 rounded-full object-cover object-center border-[2px] border-[#41924B] p-[1px]"
+              className="w-12 h-12 rounded-full object-cover object-center border-[2px] border-[#41924B] p-[1px]"
             />
             <h1 className="ml-2 font-semibold text-md text-neutral-950">
               {user?.name}
@@ -77,7 +79,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               className="flex items-center py-2 pl-2 hover:bg-slate-50 hover:text-neutral-950 w-full rounded-md"
               onClick={() => navigate('/user/profile')}
             >
-              <div className="bg-slate-50 rounded-full p-2 shadow-xl ">
+              <div className="bg-slate-50 rounded-full p-2 shadow-xl">
                 <CgProfile color="black" size={25} />
               </div>
               <h1 className="text-md ml-2">Profile</h1>
@@ -88,7 +90,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               className="flex items-center py-2 pl-2 hover:bg-gray-100 hover:text-neutral-950 w-full rounded-md"
               onClick={() => setOpenWebsiteRatingModal(true)}
             >
-              <div className="bg-slate-50  rounded-full p-2">
+              <div className="bg-slate-50 rounded-full p-2">
                 <MdOutlineFeedback color="black" size={25} />
               </div>
               <h1 className="text-md ml-2">Feedback</h1>
@@ -110,7 +112,7 @@ function DropdownUserMenu({ setLoading, user }: DropdownProps) {
               className="flex items-center py-2 pl-2 hover:bg-gray-100 hover:text-neutral-950 w-full rounded-md"
               onClick={handleLogout}
             >
-              <div className="bg-slate-50  rounded-full p-2">
+              <div className="bg-slate-50 rounded-full p-2">
                 <IoIosLogOut color="black" size={25} />
               </div>
               <h1 className="text-md ml-2">Logout</h1>

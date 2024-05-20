@@ -7,23 +7,25 @@ function PrivacyPolicy() {
   return (
     <div className="max-w-screen-2xl mx-auto px-4">
       <Navbar />
-      <div className="flex bg-[#41924B] h-52 justify-center items-center ">
-        <h1 className="font-bold text-center text-4xl md:text-7xl text-slate-50 w-fit font-poppins">
+      <div className="flex bg-[#41924B] h-32 md:h-52 justify-center items-center ">
+        <h1 className="font-bold text-center text-3xl md:text-5xl lg:text-7xl text-slate-50 font-poppins">
           Privacy Policy
         </h1>
       </div>
-      <div className="px-40 bg-white">
-        <p className="word-spacing-wide text-xl text-center font-poppins py-10">
+      <div className="px-4 md:px-20 lg:px-40 bg-white">
+        <p className="word-spacing-wide text-base md:text-lg lg:text-xl text-center font-poppins py-10">
           Thank you for using SPAvailable. This Privacy Policy explains how we
           collect, use, and protect your personal information when you use our
           website to discover and schedule spa appointments. By using our
           website, you consent to the data practices described in this policy.
         </p>
       </div>
-      <div className="px-40 py-10 bg-white">
-        <div className="flex flex-col bg-[#CCD3CA] justify-center items-start p-10 gap-y-5 rounded-xl">
+      <div className="px-4 md:px-20 lg:px-40 py-10 bg-white">
+        <div className="flex flex-col bg-[#CCD3CA] justify-center items-start p-4 md:p-10 gap-y-5 rounded-xl">
           <div>
-            <h1 className="font-semibold text-xl">Information We Collect:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Information We Collect:
+            </h1>
             <p>
               a. Personal Information: When you create an account or book a spa
               appointment through our website, we may collect personal
@@ -38,7 +40,9 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Use of Information:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Use of Information:
+            </h1>
             <p>
               a. We use the information we collect to facilitate spa bookings,
               communicate with you about your appointments, and personalize your
@@ -51,7 +55,9 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Sharing of Information:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Sharing of Information:
+            </h1>
             <p>
               a. We may share your personal information with spa providers to
               facilitate your bookings and provide the services you request.
@@ -63,7 +69,7 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Data Security:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">Data Security:</h1>
             <p>
               a. We employ industry-standard security measures to protect your
               personal information from unauthorized access, disclosure,
@@ -77,7 +83,9 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Third-Party Services:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Third-Party Services:
+            </h1>
             <p>
               a. Our website may contain links to third-party websites or
               services that are not owned or controlled by us. We are not
@@ -91,7 +99,7 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Your Choices:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">Your Choices:</h1>
             <p>
               a. You have the right to access, update, or delete your personal
               information. You can manage your account settings or contact us
@@ -104,7 +112,9 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Children's Privacy:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Children's Privacy:
+            </h1>
             <p>
               a. Our website is not intended for children under the age of 13.
               We do not knowingly collect or solicit personal information from
@@ -113,7 +123,9 @@ function PrivacyPolicy() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-xl">Changes to This Policy:</h1>
+            <h1 className="font-semibold text-lg md:text-xl">
+              Changes to This Policy:
+            </h1>
             <p>
               a. We reserve the right to update or revise this Privacy Policy at
               any time. Any changes will be effective immediately upon posting
@@ -127,8 +139,8 @@ function PrivacyPolicy() {
         </div>
       </div>
 
-      <div className="px-40 py-10 bg-white">
-        <h1 className="font-semibold text-center text-xl font-poppins">
+      <div className="px-4 md:px-20 lg:px-40 py-10 bg-white">
+        <h1 className="font-semibold text-center text-lg md:text-xl font-poppins">
           If you have any questions or concerns about our Privacy Policy, please
           contact us at (+63) 967-947-2818.
         </h1>
@@ -138,4 +150,5 @@ function PrivacyPolicy() {
     </div>
   );
 }
+
 export default PrivacyPolicy;

@@ -264,20 +264,20 @@ function SpaDetails({
   }
 
   return (
-    <div className="bg-white ">
-      <div className="grid grid-cols-2 items-center justify-center ">
-        <div className="card flex justify-start items-center pl-12 ">
-          <div className="flex flex-col  justify-start border-b-4 border-black pb-20">
+    <div className="bg-white">
+      <div className="grid lg:grid-cols-2 grid-cols-1 items-center justify-center gap-y-10 lg:gap-y-0">
+        <div className="card flex justify-start items-center px-4 py-6 lg:pl-12">
+          <div className="flex flex-col justify-start border-b-4 border-black pb-8 lg:pb-20 w-full">
             <div className="flex items-center mb-5 gap-x-4">
               {isEditing ? (
                 <input
                   type="text"
                   value={nameText}
                   onChange={(e) => setNameText(e.target.value)}
-                  className="border-b-2 text-5xl focus:outline-none"
+                  className="border-b-2 text-3xl lg:text-5xl focus:outline-none w-full"
                 />
               ) : (
-                <h1 className="text-5xl font-bold">{item?.name}</h1>
+                <h1 className="text-3xl lg:text-5xl font-bold">{item?.name}</h1>
               )}
               {item?.owner?.id === user?.id && (
                 <button type="button" onClick={() => setIsEditing(!isEditing)}>
@@ -297,13 +297,11 @@ function SpaDetails({
                   className="border-b-2 text-xl w-full focus:outline-none"
                 />
               ) : (
-                <p className="text-xl ml-2 ">{item?.address}</p>
+                <p className="text-xl ml-2">{item?.address}</p>
               )}
             </div>
             <div className="flex items-center mb-5">
-              <div>
-                <IoTimeOutline size={25} />
-              </div>
+              <IoTimeOutline size={25} />
               {isEditing ? (
                 <>
                   <input
@@ -322,51 +320,49 @@ function SpaDetails({
                 </>
               ) : (
                 <>
-                  <p className="text-xl ml-2 ">
+                  <p className="text-xl ml-2">
                     {item?.openTime ? formatTime(item.openTime) : ''}
                   </p>
                   <span className="text-xl mx-2">-</span>
-                  <p className="text-xl ">
+                  <p className="text-xl">
                     {item?.closeTime ? formatTime(item.closeTime) : ''}
                   </p>
                 </>
               )}
             </div>
-            <div>
-              {isEditing && (
-                <div className="w-full flex justify-end">
-                  <button
-                    type="button"
-                    onClick={handleFirstSave}
-                    className="mt-3 px-4 py-2 bg-[#41924B] text-white rounded-lg"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center">
+            {isEditing && (
+              <div className="w-full flex justify-start">
+                <button
+                  type="button"
+                  onClick={handleFirstSave}
+                  className="mt-3 mb-6 px-4 py-2 bg-[#41924B] text-white rounded-lg"
+                >
+                  Save Changes
+                </button>
+              </div>
+            )}
+            <div className="flex items-center w-full">
               <p className="text-2xl mr-2 font-semibold">5.0</p>
               <div className="cursor-pointer">
                 <StarRating totalStars={5} onClick={handleStarRatingClick} />
               </div>
-              <p className="text-lg ml-2">(10,020 reviews)</p>
+              <p className="text-sm lg:text-lg ml-2">(10,020 reviews)</p>
             </div>
           </div>
         </div>
 
         <div className="card flex items-center justify-center z-10 relative">
-          <div className="h-[400px] w-7/12 rounded-lg relative">
+          <div className="h-[300px] lg:h-[400px] w-10/12 lg:w-7/12 rounded-lg relative">
             <img
               alt=""
               src={displayPhoto || Image12}
-              className="w-full h-full object-cover -mt-20 rounded-lg shadow-xl"
+              className="w-full h-full object-cover lg:-mt-10 rounded-full lg:rounded-lg shadow-xl"
               id="displayPhoto"
             />
             {item?.owner?.id === user?.id && (
               <label
                 htmlFor="fileInputDisplayPhoto"
-                className="absolute bottom-24 right-4 p-2 bg-[#41924B] rounded-full cursor-pointer"
+                className="absolute bottom-4 lg:bottom-14 right-4 p-2 bg-[#41924B] rounded-full cursor-pointer"
               >
                 <input
                   type="file"
@@ -382,10 +378,10 @@ function SpaDetails({
         </div>
       </div>
 
-      <div className="px-12 pb-10 ">
+      <div className="px-4 lg:px-12 pb-10 mt-10 lg:mt-0">
         <div className="border-b-4 border-black pb-10">
           <div className="flex items-center mb-5 gap-x-4">
-            <h1 className="text-4xl font-semibold ">About Us</h1>
+            <h1 className="text-3xl lg:text-4xl font-semibold">About Us</h1>
             {item?.owner?.id === user?.id && (
               <button type="button">
                 <FaEdit
@@ -402,7 +398,7 @@ function SpaDetails({
               className="w-full h-32 border rounded-lg px-3 py-2 resize-none"
             />
           ) : (
-            <p className="text-xl leading-10 italic">{item?.desc}</p>
+            <p className="lg:text-xl leading-10 italic">{item?.desc}</p>
           )}
           {isEditingAbout && (
             <div className="w-full flex justify-end">
@@ -418,10 +414,10 @@ function SpaDetails({
         </div>
       </div>
 
-      <div className="px-12 pb-10 ">
+      <div className="px-4 lg:px-12 pb-10">
         <div className="border-b-4 border-black pb-10">
           <div className="flex items-center mb-5 gap-x-4">
-            <h1 className="text-4xl font-semibold ">Contact Us</h1>
+            <h1 className="text-3xl lg:text-4xl font-semibold">Contact Us</h1>
             {item?.owner?.id === user?.id && (
               <button
                 type="button"
@@ -449,14 +445,14 @@ function SpaDetails({
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     placeholder="New Email"
-                    className="border-b-2 text-xl w-[30%] focus:outline-none"
+                    className="border-b-2 text-xl w-full lg:w-[30%] focus:outline-none"
                   />
                   <input
                     type="tel"
                     value={newContact}
                     onChange={(e) => setNewContact(e.target.value)}
                     placeholder="New Contact Number"
-                    className="border-b-2 text-xl w-[30%] focus:outline-none"
+                    className="border-b-2 text-xl w-full lg:w-[30%] focus:outline-none"
                   />
                   <div className="w-full flex justify-end">
                     <button
@@ -471,13 +467,15 @@ function SpaDetails({
               ) : (
                 <div className="flex flex-col gap-y-5">
                   <div className="flex items-center gap-x-2">
-                    <MdOutlineMail size={25} />
+                    <div>
+                      <MdOutlineMail size={25} />
+                    </div>
                     <h1 className="text-xl">{item?.email || 'Creator'}</h1>
                   </div>
                   <div className="flex items-center gap-x-2">
                     <LuPhone size={25} />
                     <h1 className="text-xl">
-                      {item?.contact || 'Contact Number'}{' '}
+                      {item?.contact || 'Contact Number'}
                     </h1>
                   </div>
                 </div>
