@@ -41,6 +41,13 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
     /**
      * validation
      */
+
+    if (password.length <= 6) {
+      res.status(400);
+      next(new Error('Please provide password that is at least 6 characters'));
+      return;
+    }
+
     if (!email || !name || !birth_date || !password) {
       res.status(400);
       next(new Error('Please provide all required fields'));
