@@ -26,6 +26,7 @@ const protect = async (req: Request, res: Response, next : NextFunction) => {
             updated_at: false,
             active: true,
             gender: true,
+            admin: true,
           },
         });
         return user || undefined;

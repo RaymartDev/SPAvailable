@@ -3,6 +3,7 @@ import { protect } from './authMiddleware';
 import MessageResponse from '../interfaces/MessageResponse';
 import user from './user/user.router';
 import spa from './spa/spa.router';
+import general from './general/general.router';
 import UserRequest from '../interfaces/user/UserRequest';
 import { prismaFetch } from '../prisma';
 import { PrismaClient } from '@prisma/client';
@@ -18,6 +19,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 
 router.use('/user', user);
 router.use('/spa', spa);
+router.use('/general', general);
 router.post('/feedback', protect, async (req: UserRequest, res: Response<Feedback>, next: NextFunction) => {
   try {
     if (!req.user) {

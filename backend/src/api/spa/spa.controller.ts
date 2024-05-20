@@ -1,4 +1,4 @@
-import { Request, NextFunction, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import UserRequest from '../../interfaces/user/UserRequest';
 import SpaObject from '../../interfaces/spa/SpaInterface';
 import { validateEmail, validatePhone } from '../../util';

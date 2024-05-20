@@ -12,4 +12,5 @@ export default interface UserResponse {
   gender: boolean;
   created_at?: Date;
   profile?: string | null;
+  admin: boolean;
 }

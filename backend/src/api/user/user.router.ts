@@ -16,6 +16,7 @@ router.route('/profile')
 router.get('/verify', UserController.verify);
 router.get('/resend', protect, UserController.resendVerification);
 router.get('/users', protect, UserController.getUsers);
+router.get('/feedbacks', protect, UserController.getFeedbacks);
 
 router.route('/reset')
   .post(UserController.sendForgotPassword)

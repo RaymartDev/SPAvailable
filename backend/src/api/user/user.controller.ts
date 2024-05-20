@@ -111,6 +111,7 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
             gender,
             active: active ?? false,
             profile,
+            admin: false,
           },
         });
       } catch (err) {
@@ -138,11 +139,40 @@ export const register = async (req: Request<{}, UserAuthResponse, RegisterBody>,
         gender: userCreated.gender,
         created_at: userCreated.created_at,
         profile: userCreated.profile,
+        admin: userCreated.admin,
       });
     } else {
       res.status(400);
       next(new Error('Invalid user data'));
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getFeedbacks = async (req: UserRequest, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user) {
+      res.status(400);
+      next(new Error('User not found'));
+      return;
+    }
+
+    const feedback = await prismaFetch(async (prisma: PrismaClient) => {
+      return prisma.feedback.findMany({
+        include: {
+          owner: true,
+        },
+      });
+    }, next);
+
+    if (!feedback) {
+      res.status(404);
+      next(new Error('No feedback found'));
+      return;
+    }
+
+    res.status(200).json(feedback);
   } catch (err) {
     next(err);
   }
@@ -242,6 +272,7 @@ export const login = async (req: Request<{}, UserAuthResponse, LoginBody>, res: 
       gender: user.gender,
       created_at: user.created_at,
       profile: user.profile,
+      admin: user.admin,
     });
   } catch (err) {
     next(err);
@@ -367,6 +398,7 @@ export const updateProfile = async (req: UserRequest, res : Response<UserRespons
               active: true,
               gender: true,
               profile: true,
+              admin: true,
             },
           });
           return user;

@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { FaSearch } from 'react-icons/fa';
-import { GoPlus } from 'react-icons/go';
 import { useState } from 'react';
 import { useAppSelector } from '../../../store/store';
 import SpaState from '../../../interface/SpaState';
 import DeleteModal from '../adminModal/DeleteModal';
-import SpaModal from '../adminModal/SpaModal';
 
 function AdminSpa() {
   const spa: SpaState[] = useAppSelector((state) => state.spa);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [spaToDelete, setSpaToDelete] = useState<SpaState | null>(null);
-  const [showSpaModal, setShowSpaModal] = useState<boolean>(false);
 
   const handleCancel = () => {
     setShowModal(false);
@@ -29,14 +26,6 @@ function AdminSpa() {
     setShowModal(true);
   };
 
-  const handleSpaCancel = () => {
-    setShowSpaModal(false);
-  };
-
-  const openSpaModal = () => {
-    setShowSpaModal(true);
-  };
-
   return (
     <div className="flex flex-col">
       <div className="space-y-10">
@@ -50,18 +39,6 @@ function AdminSpa() {
                 className="rounded-full py-3 pl-12 pr-5 w-full md:w-[450px] border-2 border-[#41924B]"
               />
             </div>
-          </div>
-          <div>
-            <button
-              type="button"
-              onClick={openSpaModal}
-              className="bg-[#41924B] border-2 border-[#41924B] text-white rounded-full w-36 flex justify-center items-center font-semibold py-3"
-            >
-              ADD SPA{' '}
-              <p>
-                <GoPlus size={20} />
-              </p>{' '}
-            </button>
           </div>
         </div>
 
@@ -139,7 +116,6 @@ function AdminSpa() {
       {showModal && (
         <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
       )}
-      {showSpaModal && <SpaModal onCancel={handleSpaCancel} />}
     </div>
   );
 }

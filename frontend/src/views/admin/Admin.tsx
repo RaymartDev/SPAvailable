@@ -13,6 +13,7 @@ import { setSpa } from '../../store/reducer/spaSlice';
 import { useToast } from '../../hooks/useToast';
 import Loader from '../../components/Loader Component/Loader';
 import { setUsers } from '../../store/reducer/usersSlice';
+import { setFeedbacks } from '../../store/reducer/feedbackSlice';
 
 function Admin() {
   const [activeContent, setActiveContent] = useState<string>('Dashboard');
@@ -47,6 +48,13 @@ function Admin() {
         if (response2.status >= 200 && response2.status < 300) {
           if (response2.data.length > 0) {
             dispatch(setUsers(response2.data));
+          }
+        }
+
+        const response3 = await axios.get('/api/v1/user/feedbacks');
+        if (response2.status >= 200 && response2.status < 300) {
+          if (response2.data.length > 0) {
+            dispatch(setFeedbacks(response3.data));
           }
         }
       } catch (err) {

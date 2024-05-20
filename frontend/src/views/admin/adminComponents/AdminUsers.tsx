@@ -1,5 +1,4 @@
 import { FaSearch } from 'react-icons/fa';
-import { GoPlus } from 'react-icons/go';
 import { useState } from 'react';
 import UserState from '../../../interface/UserState';
 import { useAppSelector } from '../../../store/store';
@@ -11,6 +10,8 @@ function AdminUsers() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [userToDelete, setUserToDelete] = useState<UserState | null>(null);
   const [showUserModal, setUserSpaModal] = useState<boolean>(false);
+  const [editingUser, setEditingUser] = useState<UserState>(null);
+  const [search, setSearch] = useState<string>('');
 
   const handleCancel = () => {
     setShowModal(false);
@@ -45,21 +46,12 @@ function AdminUsers() {
             <div className="relative">
               <FaSearch className="absolute top-1/2 left-5 transform -translate-y-1/2 text-black" />
               <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 type="search"
                 className="rounded-full py-3 pl-12 pr-5 w-full md:w-[450px] border-2 border-[#41924B]"
               />
             </div>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="bg-[#41924B] border-2 border-[#41924B] text-white rounded-full w-36 flex justify-center items-center font-semibold py-3"
-            >
-              ADD USER{' '}
-              <p>
-                <GoPlus size={20} />
-              </p>{' '}
-            </button>
           </div>
         </div>
 
@@ -97,40 +89,57 @@ function AdminUsers() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
-                <tr key={user?.email}>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    {user?.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    {user?.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    {user?.contact}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    YES
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
-                    <button
-                      className="bg-[#41924B] hover:bg-green-900 border-2 rounded-full w-28 py-2 text-white"
-                      aria-label="Edit"
-                      type="button"
-                      onClick={openUserModal}
-                    >
-                      EDIT
-                    </button>
-                    <button
-                      onClick={() => openModal(user)}
-                      className="bg-red-600 hover:bg-red-900 border-2 rounded-full w-28 py-2 text-white"
-                      aria-label="Delete"
-                      type="button"
-                    >
-                      DELETE
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {users
+                .filter((user) => {
+                  if (
+                    user?.email?.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return true;
+                  }
+                  if (
+                    user?.name?.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return true;
+                  }
+                  return false;
+                })
+                .map((user) => (
+                  <tr key={user?.email}>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      {user?.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      {user?.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      {user?.contact}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      {(user?.admin ? 'YES' : 'NO') || 'NO'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
+                      <button
+                        className="bg-[#41924B] hover:bg-green-900 border-2 rounded-full w-28 py-2 text-white"
+                        aria-label="Edit"
+                        type="button"
+                        onClick={() => {
+                          openUserModal();
+                          setEditingUser(user);
+                        }}
+                      >
+                        EDIT
+                      </button>
+                      <button
+                        onClick={() => openModal(user)}
+                        className="bg-red-600 hover:bg-red-900 border-2 rounded-full w-28 py-2 text-white"
+                        aria-label="Delete"
+                        type="button"
+                      >
+                        DELETE
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -138,7 +147,9 @@ function AdminUsers() {
       {showModal && (
         <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
       )}
-      {showUserModal && <UserModal onCancel={handleUserCancel} />}
+      {showUserModal && (
+        <UserModal user={editingUser} onCancel={handleUserCancel} />
+      )}
     </div>
   );
 }

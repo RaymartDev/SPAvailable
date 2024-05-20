@@ -13,6 +13,7 @@ export default interface UserRequest extends Request {
     birth_date: Date;
     active: boolean;
     gender: boolean;
+    admin: boolean;
     // Add other properties as needed
   }
 }

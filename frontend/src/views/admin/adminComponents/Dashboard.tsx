@@ -5,6 +5,7 @@ import DefaultPp from '../../../img/defaultPp.png';
 import SpaState from '../../../interface/SpaState';
 import { useAppSelector } from '../../../store/store';
 import UserState from '../../../interface/UserState';
+import FeedbackState from '../../../interface/FeedbackState';
 
 interface DashboardProps {
   setActiveContent: (content: string) => void;
@@ -14,7 +15,7 @@ function Dashboard({ setActiveContent }: DashboardProps) {
   const spaList: SpaState[] = useAppSelector((state) => state.spa);
   const user: UserState = useAppSelector((state) => state.user);
   const users: UserState[] = useAppSelector((state) => state.users);
-  const feedbackCount = 0;
+  const feedbacks: FeedbackState[] = useAppSelector((state) => state.feedback);
   const navigate = useNavigate();
 
   const handleNavigation = (content: string) => {
@@ -73,7 +74,7 @@ function Dashboard({ setActiveContent }: DashboardProps) {
               >
                 <div className="flex justify-between items-center py-4 px-5">
                   <div>
-                    <h1 className="text-4xl font-bold">{feedbackCount}</h1>
+                    <h1 className="text-4xl font-bold">{feedbacks.length}</h1>
                     <h2>Feedback</h2>
                   </div>
                 </div>
@@ -98,9 +99,6 @@ function Dashboard({ setActiveContent }: DashboardProps) {
               className="size-16 object-cover rounded-full object-center"
             />
             <h1 className="text-xl">{user?.name}</h1>
-          </div>
-          <div className="flex flex-col px-5 py-6 row-span-3 border-2 rounded-lg shadow-lg bg-white">
-            <h1 className="font-bold text-2xl">Latest Spa</h1>
           </div>
         </div>
       </div>

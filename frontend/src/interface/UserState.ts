@@ -10,6 +10,7 @@ interface UserStateRaw {
   active: boolean;
   created_at: string;
   profile: string;
+  admin: boolean;
 }
 
 type UserState = Nullable<Partial<UserStateRaw>>;
