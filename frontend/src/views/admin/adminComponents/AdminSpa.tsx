@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useAppSelector } from '../../../store/store';
 import SpaState from '../../../interface/SpaState';
 import DeleteModal from '../adminModal/DeleteModal';
+import SpaModal from '../adminModal/SpaModal';
 
 function AdminSpa() {
   const spa: SpaState[] = useAppSelector((state) => state.spa);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showSpaModal, setShowSpaModal] = useState<boolean>(false);
   const [spaToDelete, setSpaToDelete] = useState<SpaState | null>(null);
 
   const handleCancel = () => {
@@ -24,6 +26,14 @@ function AdminSpa() {
   const openModal = (spa: SpaState) => {
     setSpaToDelete(spa);
     setShowModal(true);
+  };
+
+  const handleSpaCancel = () => {
+    setShowSpaModal(false);
+  };
+
+  const openSpaModal = () => {
+    setShowSpaModal(true);
   };
 
   return (
@@ -92,6 +102,7 @@ function AdminSpa() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                     <button
+                      onClick={openSpaModal}
                       className="bg-[#41924B] hover:bg-green-900 border-2 rounded-full w-28 py-2 text-white"
                       aria-label="Edit"
                       type="button"
@@ -116,6 +127,7 @@ function AdminSpa() {
       {showModal && (
         <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
       )}
+      {showSpaModal && <SpaModal onCancel={handleSpaCancel} />}
     </div>
   );
 }
