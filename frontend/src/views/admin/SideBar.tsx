@@ -4,8 +4,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { LuUserCircle } from 'react-icons/lu';
 import { PiFlowerLotusLight } from 'react-icons/pi';
 import { RiFeedbackLine } from 'react-icons/ri';
-import { TfiDropbox } from 'react-icons/tfi';
-import { MdOutlineRoomService, MdLogout } from 'react-icons/md';
+import { MdLogout } from 'react-icons/md';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -111,28 +110,6 @@ function Sidebar({ setActiveContent, activeContent }: SidebarProps) {
             >
               <RiFeedbackLine size={30} />
               <h1 className="text-lg md:text-xl">Feedback</h1>
-            </button>
-          </li>
-
-          <li>
-            <button
-              type="button"
-              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Products' ? 'bg-white rounded-md' : ''}`}
-              onClick={() => handleButtonClick('Products')}
-            >
-              <TfiDropbox size={30} />
-              <h1 className="text-lg md:text-xl">Products</h1>
-            </button>
-          </li>
-
-          <li>
-            <button
-              type="button"
-              className={`flex items-center space-x-4 hover:bg-white hover:rounded-md px-5 py-3 w-full ${activeContent === 'Services' ? 'bg-white rounded-md' : ''}`}
-              onClick={() => handleButtonClick('Services')}
-            >
-              <MdOutlineRoomService size={30} />
-              <h1 className="text-lg md:text-xl">Services</h1>
             </button>
           </li>
         </ul>

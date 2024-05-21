@@ -8,9 +8,6 @@ import { IoCameraSharp } from 'react-icons/io5';
 import axios, { AxiosError } from 'axios';
 import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import SpaDetails from '../../components/SpaDetails';
-import ServiceSwiper from '../../components/ServiceSwiper';
-import ProductSwiper from '../../components/ProductSwiper';
-import GallerySwiper from '../../components/GallerySwiper';
 import Menu from '../../components/Menu';
 import Footer from '../../components/Footer';
 import Image11 from '../../img/image11.png';
@@ -129,9 +126,6 @@ function AboutSpa() {
         )}
       </div>
       <SpaDetails setLoading={setLoading} item={item} user={user} />
-      <ServiceSwiper />
-      <ProductSwiper />
-      <GallerySwiper />
       <Menu />
       <Footer />
       {showModal && (
