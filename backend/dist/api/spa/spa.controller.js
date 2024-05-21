@@ -249,7 +249,7 @@ const deleteSpa = async (req, res, next) => {
             next(new Error('No SPA found'));
             return;
         }
-        if (searchSpa.ownerId !== req.user?.id) {
+        if (searchSpa.ownerId !== req.user?.id && !req.user?.admin) {
             res.status(400);
             next(new Error('You have no permission to do that'));
             return;

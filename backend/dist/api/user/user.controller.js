@@ -3,10 +3,61 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyReset = exports.resetPassword = exports.sendForgotPassword = exports.resendVerification = exports.verify = exports.updateProfile = exports.getUsers = exports.getProfile = exports.logout = exports.login = exports.getFeedbacks = exports.register = void 0;
+exports.verifyReset = exports.resetPassword = exports.sendForgotPassword = exports.resendVerification = exports.verify = exports.updateProfile = exports.getUsers = exports.getProfile = exports.logout = exports.login = exports.getFeedbacks = exports.register = exports.del = void 0;
 const prisma_1 = require("../../prisma");
 const util_1 = require("../../util");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const del = async (req, res, next) => {
+    try {
+        if (!req.user) {
+            res.status(400);
+            next(new Error('Not permitted to do that!'));
+            return;
+        }
+        const { id } = req.params;
+        const searchSpa = await (0, prisma_1.prismaFetch)(async (prisma) => {
+            try {
+                return await prisma.user.findUnique({
+                    where: {
+                        id: parseInt(id),
+                    },
+                });
+            }
+            catch (err) {
+                next(err);
+            }
+        }, next);
+        if (!searchSpa) {
+            res.status(404);
+            next(new Error('No User found'));
+            return;
+        }
+        if (!req.user?.admin) {
+            res.status(400);
+            next(new Error('You have no permission to do that'));
+            return;
+        }
+        await (0, prisma_1.prismaQuery)(async (prisma) => {
+            try {
+                await prisma.user.delete({
+                    where: {
+                        id: parseInt(id),
+                    },
+                });
+            }
+            catch (err) {
+                next(err);
+            }
+        }, next);
+        res.status(200).json({
+            message: 'Successfully deleted User',
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+};
+exports.del = del;
 /**
  * @param req Request body should contain User's info
  * @param res Response body should be User's final info

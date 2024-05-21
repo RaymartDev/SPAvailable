@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteService = exports.getServices = exports.addService = exports.deleteProduct = exports.getProducts = exports.addProduct = void 0;
+exports.deleteFeedback = exports.deleteService = exports.getServices = exports.addService = exports.deleteProduct = exports.getProducts = exports.addProduct = void 0;
 const prisma_1 = require("../../prisma");
 const addProduct = async (req, res, next) => {
     try {
@@ -188,4 +188,36 @@ const deleteService = async (req, res, next) => {
     }
 };
 exports.deleteService = deleteService;
+const deleteFeedback = async (req, res, next) => {
+    try {
+        if (!req.user) {
+            res.status(400);
+            next(new Error('User not found'));
+            return;
+        }
+        const { id } = req.params;
+        const feedbackExists = await (0, prisma_1.prismaFetch)(async (prisma) => {
+            return prisma.feedback.findFirst({
+                where: {
+                    id: req.body.id || -1,
+                },
+            });
+        }, next);
+        if (!feedbackExists) {
+            res.status(404);
+            next(new Error('Feedback not found'));
+        }
+        await (0, prisma_1.prismaQuery)(async (prisma) => {
+            prisma.feedback.delete({
+                where: {
+                    id: parseInt(id),
+                },
+            });
+        }, next);
+    }
+    catch (err) {
+        next(err);
+    }
+};
+exports.deleteFeedback = deleteFeedback;
 //# sourceMappingURL=general.controller.js.map

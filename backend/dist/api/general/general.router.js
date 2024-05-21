@@ -37,5 +37,6 @@ router
     .get(authMiddleware_1.protect, GeneralController.getServices)
     .post(authMiddleware_1.protect, GeneralController.addService)
     .delete(authMiddleware_1.protect, GeneralController.deleteService);
+router.delete('/feedback/:id', authMiddleware_1.protect, GeneralController.deleteFeedback);
 exports.default = router;
 //# sourceMappingURL=general.router.js.map

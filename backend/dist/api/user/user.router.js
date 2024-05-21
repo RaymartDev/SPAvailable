@@ -30,6 +30,7 @@ const router = (0, express_1.Router)();
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.post('/logout', UserController.logout);
+router.delete('/delete/:id', authMiddleware_1.protect, UserController.del);
 // protected routes
 router.route('/profile')
     .get(authMiddleware_1.protect, UserController.getProfile)
