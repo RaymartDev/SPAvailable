@@ -8,6 +8,7 @@ import UserRequest from '../interfaces/user/UserRequest';
 import { prismaFetch } from '../prisma';
 import { PrismaClient } from '@prisma/client';
 import Feedback from '../interfaces/Feedback';
+import * as GeneralController from './general/general.controller';
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 router.use('/user', user);
 router.use('/spa', spa);
 router.use('/general', general);
+router.delete('/feedback/:id', protect, GeneralController.deleteFeedback);
 router.post('/feedback', protect, async (req: UserRequest, res: Response<Feedback>, next: NextFunction) => {
   try {
     if (!req.user) {

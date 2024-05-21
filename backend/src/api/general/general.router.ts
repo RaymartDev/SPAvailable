@@ -15,7 +15,6 @@ router
   .get(protect, GeneralController.getServices)
   .post(protect, GeneralController.addService)
   .delete(protect, GeneralController.deleteService);
-  
-router.delete('/feedback/:id', protect, GeneralController.deleteFeedback);
+
 
 export default router;

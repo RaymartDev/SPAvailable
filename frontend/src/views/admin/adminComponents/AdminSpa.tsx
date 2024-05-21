@@ -57,7 +57,7 @@ function AdminSpa() {
   };
 
   if (loading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (

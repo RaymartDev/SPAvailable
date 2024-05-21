@@ -51,7 +51,7 @@ function AdminUsers() {
   };
 
   if (loading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (

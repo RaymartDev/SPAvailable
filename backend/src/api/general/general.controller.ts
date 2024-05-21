@@ -204,6 +204,7 @@ export const deleteService = async (req: UserRequest, res: Response, next: NextF
 
 export const deleteFeedback = async (req: UserRequest, res: Response, next: NextFunction) => {
   try {
+    console.log('called');
     if (!req.user) {
       res.status(400);
       next(new Error('User not found'));
@@ -211,11 +212,12 @@ export const deleteFeedback = async (req: UserRequest, res: Response, next: Next
     }
   
     const { id } = req.params;
+    console.log(`deleting ${id}`);
   
     const feedbackExists = await prismaFetch(async (prisma: PrismaClient) => {
-      return prisma.feedback.findFirst({
+      return prisma.feedback.findUnique({
         where: {
-          id: req.body.id || -1,
+          id: parseInt(id as string),
         },
       });
     }, next);
@@ -223,6 +225,7 @@ export const deleteFeedback = async (req: UserRequest, res: Response, next: Next
     if (!feedbackExists) {
       res.status(404);
       next(new Error('Feedback not found'));
+      return;
     }
   
     await prismaQuery(async (prisma: PrismaClient) => {
@@ -232,6 +235,7 @@ export const deleteFeedback = async (req: UserRequest, res: Response, next: Next
         },
       });
     }, next);
+    res.status(201).json({ message: 'Feedback deleted successfully' });
   } catch (err) {
     next(err);
   }

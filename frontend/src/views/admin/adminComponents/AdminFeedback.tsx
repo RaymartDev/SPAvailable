@@ -26,9 +26,8 @@ function AdminFeedback() {
     setShowModal(false);
     setLoading(true);
     try {
-      const response = await axios.delete(
-        `/api/v1/general/feedback/${toDelete?.id}`
-      );
+      const response = await axios.delete(`/api/v1/feedback/${toDelete?.id}`);
+      console.log(response);
       if (response.status >= 200 && response.status < 300) {
         dispatch(deleteFeedback(toDelete));
         showSuccessToast('Deleted successfully');
@@ -49,7 +48,7 @@ function AdminFeedback() {
   };
 
   if (loading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (
@@ -96,8 +95,7 @@ function AdminFeedback() {
                       type="button"
                       className="flex items-center justify-center w-full bg-red-600 py-3 rounded-b-lg space-x-3 text-white"
                       aria-label="Delete"
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
                         openModal();
                         setToDelete(feedback);
                       }}
