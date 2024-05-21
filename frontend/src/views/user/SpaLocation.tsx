@@ -3,7 +3,6 @@ import NavbarLogged from '../../components/Navbar/NavbarLogged';
 import { useAppSelector } from '../../store/store';
 import Loader from '../../components/Loader Component/Loader';
 import Image22 from '../../img/image22.png';
-import Loc1 from '../../img/Loc1.png';
 import Loc2 from '../../img/Loc2.png';
 import Loc3 from '../../img/Loc3.png';
 import Loc4 from '../../img/Loc4.png';
@@ -47,7 +46,7 @@ function SpaLocation() {
             <div className="flex flex-col gap-y-10">
               <div className="flex flex-col rounded-3xl bg-[#41924B]">
                 <div>
-                  <img src={Loc1} alt="" className="rounded-t-3xl" />
+                  <img src={Loc2} alt="" className="rounded-t-3xl" />
                 </div>
                 <div className="flex gap-3 items-center text-white py-5">
                   <h1 className="text-2xl px-10 py-3">1</h1>
