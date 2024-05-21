@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react';
-import { useAppSelector } from '../../../store/store';
+import axios, { AxiosError } from 'axios';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import SpaState from '../../../interface/SpaState';
 import DeleteModal from '../adminModal/DeleteModal';
 import SpaModal from '../adminModal/SpaModal';
+import Loader from '../../../components/Loader Component/Loader';
+import { useToast } from '../../../hooks/useToast';
+import { deleteSpa } from '../../../store/reducer/spaSlice';
 
 function AdminSpa() {
   const spa: SpaState[] = useAppSelector((state) => state.spa);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showSpaModal, setShowSpaModal] = useState<boolean>(false);
   const [spaToDelete, setSpaToDelete] = useState<SpaState | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { showSuccessToast, showErrorToast } = useToast();
+  const dispatch = useAppDispatch();
 
   const handleCancel = () => {
-    setShowModal(false);
-    setSpaToDelete(null);
-  };
-
-  const handleDelete = () => {
-    console.log('Deleting user:', spaToDelete);
     setShowModal(false);
     setSpaToDelete(null);
   };
@@ -32,9 +34,31 @@ function AdminSpa() {
     setShowSpaModal(false);
   };
 
-  const openSpaModal = () => {
-    setShowSpaModal(true);
+  const handleDeleteSpa = async () => {
+    setShowModal(false);
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/v1/spa/control/${spaToDelete?.id}`
+      );
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(deleteSpa(spaToDelete));
+        showSuccessToast('Deleted successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to delete spa');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    <Loader />;
+  }
 
   return (
     <div className="flex flex-col">
@@ -102,15 +126,10 @@ function AdminSpa() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                     <button
-                      onClick={openSpaModal}
-                      className="bg-[#41924B] hover:bg-green-900 border-2 rounded-full w-28 py-2 text-white"
-                      aria-label="Edit"
-                      type="button"
-                    >
-                      EDIT
-                    </button>
-                    <button
-                      onClick={() => openModal(spa)}
+                      onClick={() => {
+                        openModal(spa);
+                        setSpaToDelete(spa);
+                      }}
                       className="bg-red-600 hover:bg-red-900 border-2 rounded-full w-28 py-2 text-white"
                       aria-label="Delete"
                       type="button"
@@ -125,7 +144,7 @@ function AdminSpa() {
         </div>
       </div>
       {showModal && (
-        <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
+        <DeleteModal onCancel={handleCancel} onDelete={handleDeleteSpa} />
       )}
       {showSpaModal && <SpaModal onCancel={handleSpaCancel} />}
     </div>

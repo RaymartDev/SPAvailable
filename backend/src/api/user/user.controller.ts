@@ -19,6 +19,60 @@ import UserResponse from '../../interfaces/user/UserResponse';
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
 
+export const del = async (req: UserRequest, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user) {
+      res.status(400);
+      next(new Error('Not permitted to do that!'));
+      return;
+    }
+
+    const { id } = req.params;
+  
+    const searchSpa = await prismaFetch(async (prisma : PrismaClient) => {
+      try {
+        return await prisma.user.findUnique({
+          where: {
+            id: parseInt(id as string),
+          },
+        });
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+  
+    if (!searchSpa) {
+      res.status(404);
+      next(new Error('No User found'));
+      return;
+    }
+
+    if (!req.user?.admin) {
+      res.status(400);
+      next(new Error('You have no permission to do that'));
+      return;
+    }
+
+    await prismaQuery(async (prisma : PrismaClient) => {
+      try {
+        await prisma.user.delete({
+          where: {
+            id: parseInt(id as string),
+          },
+        });
+      } catch (err) {
+        next(err);
+      }
+    }, next);
+    
+    res.status(200).json({
+      message: 'Successfully deleted User',
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 /**
  * @param req Request body should contain User's info
  * @param res Response body should be User's final info

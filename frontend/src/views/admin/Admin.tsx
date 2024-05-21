@@ -27,7 +27,7 @@ function Admin() {
 
   useEffect(() => {
     if (user) {
-      navigate(user.active ? '/admin' : '/');
+      navigate(user.active && user.admin ? '/admin' : '/');
       return;
     }
     navigate('/');

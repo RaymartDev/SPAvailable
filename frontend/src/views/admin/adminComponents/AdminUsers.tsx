@@ -1,25 +1,24 @@
 import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import UserState from '../../../interface/UserState';
-import { useAppSelector } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import DeleteModal from '../adminModal/DeleteModal';
-import UserModal from '../adminModal/UserModal';
+import { useToast } from '../../../hooks/useToast';
+import Loader from '../../../components/Loader Component/Loader';
+import { deleteUser } from '../../../store/reducer/usersSlice';
 
 function AdminUsers() {
   const users: UserState[] = useAppSelector((state) => state.users);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [userToDelete, setUserToDelete] = useState<UserState | null>(null);
-  const [showUserModal, setUserSpaModal] = useState<boolean>(false);
-  const [editingUser, setEditingUser] = useState<UserState>(null);
   const [search, setSearch] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const { showErrorToast, showSuccessToast } = useToast();
 
   const handleCancel = () => {
-    setShowModal(false);
-    setUserToDelete(null);
-  };
-
-  const handleDelete = () => {
-    console.log('Deleting user:', userToDelete);
     setShowModal(false);
     setUserToDelete(null);
   };
@@ -29,13 +28,31 @@ function AdminUsers() {
     setShowModal(true);
   };
 
-  const handleUserCancel = () => {
-    setUserSpaModal(false);
+  const handleDeleteUser = async () => {
+    setShowModal(false);
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/v1/user/delete/${userToDelete?.id}`
+      );
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(deleteUser(userToDelete));
+        showSuccessToast('Deleted successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to delete spa');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const openUserModal = () => {
-    setUserSpaModal(true);
-  };
+  if (loading) {
+    <Loader />;
+  }
 
   return (
     <div className="flex flex-col">
@@ -119,18 +136,10 @@ function AdminUsers() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right font-medium space-x-10">
                       <button
-                        className="bg-[#41924B] hover:bg-green-900 border-2 rounded-full w-28 py-2 text-white"
-                        aria-label="Edit"
-                        type="button"
                         onClick={() => {
-                          openUserModal();
-                          setEditingUser(user);
+                          openModal(user);
+                          setUserToDelete(user);
                         }}
-                      >
-                        EDIT
-                      </button>
-                      <button
-                        onClick={() => openModal(user)}
                         className="bg-red-600 hover:bg-red-900 border-2 rounded-full w-28 py-2 text-white"
                         aria-label="Delete"
                         type="button"
@@ -145,10 +154,7 @@ function AdminUsers() {
         </div>
       </div>
       {showModal && (
-        <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
-      )}
-      {showUserModal && (
-        <UserModal user={editingUser} onCancel={handleUserCancel} />
+        <DeleteModal onCancel={handleCancel} onDelete={handleDeleteUser} />
       )}
     </div>
   );
