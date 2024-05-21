@@ -201,3 +201,38 @@ export const deleteService = async (req: UserRequest, res: Response, next: NextF
     next(err);
   }
 };
+
+export const deleteFeedback = async (req: UserRequest, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user) {
+      res.status(400);
+      next(new Error('User not found'));
+      return;
+    }
+  
+    const { id } = req.params;
+  
+    const feedbackExists = await prismaFetch(async (prisma: PrismaClient) => {
+      return prisma.feedback.findFirst({
+        where: {
+          id: req.body.id || -1,
+        },
+      });
+    }, next);
+  
+    if (!feedbackExists) {
+      res.status(404);
+      next(new Error('Feedback not found'));
+    }
+  
+    await prismaQuery(async (prisma: PrismaClient) => {
+      prisma.feedback.delete({
+        where: {
+          id: parseInt(id as string),
+        },
+      });
+    }, next);
+  } catch (err) {
+    next(err);
+  }
+};

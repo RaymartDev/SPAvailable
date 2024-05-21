@@ -1,25 +1,56 @@
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa6';
+import axios, { AxiosError } from 'axios';
 import FeedbackState from '../../../interface/FeedbackState';
-import { useAppSelector } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import DeleteModal from '../adminModal/DeleteModal';
+import { useToast } from '../../../hooks/useToast';
+import Loader from '../../../components/Loader Component/Loader';
+import { deleteFeedback } from '../../../store/reducer/feedbackSlice';
 
 function AdminFeedback() {
   const feedbacks: FeedbackState[] = useAppSelector((state) => state.feedback);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [toDelete, setToDelete] = useState<FeedbackState>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { showSuccessToast, showErrorToast } = useToast();
+
+  const dispatch = useAppDispatch();
 
   const handleCancel = () => {
     setShowModal(false);
   };
 
-  const handleDelete = () => {
-    console.log('Deleting user:');
+  const handleDeleteFeedback = async () => {
     setShowModal(false);
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/v1/general/feedback/${toDelete?.id}`
+      );
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(deleteFeedback(toDelete));
+        showSuccessToast('Deleted successfully');
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        showErrorToast(err);
+      } else {
+        showErrorToast('Unable to delete spa');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const openModal = () => {
     setShowModal(true);
   };
+
+  if (loading) {
+    <Loader />;
+  }
 
   return (
     <div className="flex flex-col min-w-full">
@@ -65,7 +96,11 @@ function AdminFeedback() {
                       type="button"
                       className="flex items-center justify-center w-full bg-red-600 py-3 rounded-b-lg space-x-3 text-white"
                       aria-label="Delete"
-                      onClick={openModal}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openModal();
+                        setToDelete(feedback);
+                      }}
                     >
                       <p>Delete</p>
                       <FaTrash color="white" size={20} />
@@ -78,7 +113,7 @@ function AdminFeedback() {
         </div>
       </div>
       {showModal && (
-        <DeleteModal onCancel={handleCancel} onDelete={handleDelete} />
+        <DeleteModal onCancel={handleCancel} onDelete={handleDeleteFeedback} />
       )}
     </div>
   );

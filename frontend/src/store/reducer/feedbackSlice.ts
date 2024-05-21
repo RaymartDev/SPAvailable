@@ -16,7 +16,7 @@ export const FeedbackSlice = createSlice({
       }
       return state;
     },
-    deleteUser: (
+    deleteFeedback: (
       state: FeedbackState[],
       action: PayloadAction<FeedbackState>
     ) => {
@@ -43,7 +43,7 @@ export const FeedbackSlice = createSlice({
   },
 });
 
-export const { addFeedback, setFeedbacks, deleteUser, clearFeedbacks } =
+export const { addFeedback, setFeedbacks, deleteFeedback, clearFeedbacks } =
   FeedbackSlice.actions;
 
 export default FeedbackSlice.reducer;
