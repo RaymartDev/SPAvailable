@@ -3,7 +3,6 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import { BsStarFill } from 'react-icons/bs';
 import Image12 from '../img/image12.png';
 import DefaultPp from '../img/defaultPp.png';
 import SpaState from '../interface/SpaState';
@@ -42,7 +41,6 @@ function SpaGrid({
   const user = useAppSelector((state) => state.user);
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
-  const rating = 1;
 
   const items = paginate(
     spaItems.filter((item) => {
@@ -124,17 +122,6 @@ function SpaGrid({
     }
   };
 
-  const renderStars = () => {
-    return [1, 2, 3, 4, 5].map((star) => (
-      <span
-        key={star}
-        className={`text-2xl ${star <= rating ? 'text-[#41924B]' : 'text-gray-400'}`}
-      >
-        <BsStarFill size={40} />
-      </span>
-    ));
-  };
-
   if (searchSpa) {
     return (
       <div
@@ -182,7 +169,6 @@ function SpaGrid({
                 <p className="text-sm my-2">
                   {limitString(item?.address || 'address', 30)}
                 </p>
-                <div className="flex">{renderStars()}</div>
                 <div className="flex items-center justify-center mt-5 w-full">
                   <button
                     key={item?.id}
@@ -270,7 +256,6 @@ function SpaGrid({
                 <p className="text-sm">
                   {limitString(item?.address || 'address', 30)}
                 </p>
-                <div className="flex">{renderStars()}</div>
                 <div className="flex items-center justify-center mt-5 w-full gap-x-5">
                   <div className="w-1/2">
                     <button

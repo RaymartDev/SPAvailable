@@ -8,7 +8,6 @@ import { FaEdit } from 'react-icons/fa';
 import { MdOutlineMail } from 'react-icons/md';
 import { LuPhone } from 'react-icons/lu';
 import axios, { AxiosError } from 'axios';
-import StarRating from './StarRating';
 import Image12 from '../img/image12.png';
 import SpaState from '../interface/SpaState';
 import { useAppDispatch } from '../store/store';
@@ -255,10 +254,6 @@ function SpaDetails({
     }
   };
 
-  const handleStarRatingClick = () => {
-    setShowRatingModal(true); // Display the rating modal when the star rating is clicked
-  };
-
   if (!item) {
     return null;
   }
@@ -341,13 +336,6 @@ function SpaDetails({
                 </button>
               </div>
             )}
-            <div className="flex items-center w-full">
-              <p className="text-2xl mr-2 font-semibold">5.0</p>
-              <div className="cursor-pointer">
-                <StarRating totalStars={5} onClick={handleStarRatingClick} />
-              </div>
-              <p className="text-sm lg:text-lg ml-2">(10,020 reviews)</p>
-            </div>
           </div>
         </div>
 
