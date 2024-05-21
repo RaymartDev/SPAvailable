@@ -24,23 +24,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const UserController = __importStar(require("./user.controller"));
 const authMiddleware_1 = require("../authMiddleware");
+const GeneralController = __importStar(require("./general.controller"));
 const router = (0, express_1.Router)();
-router.post('/register', UserController.register);
-router.post('/login', UserController.login);
-router.post('/logout', UserController.logout);
-// protected routes
-router.route('/profile')
-    .get(authMiddleware_1.protect, UserController.getProfile)
-    .put(authMiddleware_1.protect, UserController.updateProfile);
-router.get('/verify', UserController.verify);
-router.get('/resend', authMiddleware_1.protect, UserController.resendVerification);
-router.get('/users', authMiddleware_1.protect, UserController.getUsers);
-router.get('/feedbacks', authMiddleware_1.protect, UserController.getFeedbacks);
-router.route('/reset')
-    .post(UserController.sendForgotPassword)
-    .get(UserController.verifyReset)
-    .put(UserController.resetPassword);
+router
+    .route('/products')
+    .get(authMiddleware_1.protect, GeneralController.getProducts)
+    .post(authMiddleware_1.protect, GeneralController.addProduct)
+    .delete(authMiddleware_1.protect, GeneralController.deleteProduct);
+router
+    .route('/services')
+    .get(authMiddleware_1.protect, GeneralController.getServices)
+    .post(authMiddleware_1.protect, GeneralController.addService)
+    .delete(authMiddleware_1.protect, GeneralController.deleteService);
 exports.default = router;
-//# sourceMappingURL=user.router.js.map
+//# sourceMappingURL=general.router.js.map

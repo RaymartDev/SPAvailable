@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const authMiddleware_1 = require("./authMiddleware");
 const user_router_1 = __importDefault(require("./user/user.router"));
 const spa_router_1 = __importDefault(require("./spa/spa.router"));
+const general_router_1 = __importDefault(require("./general/general.router"));
 const prisma_1 = require("../prisma");
 const router = express_1.default.Router();
 router.get('/', (req, res) => {
@@ -16,6 +17,7 @@ router.get('/', (req, res) => {
 });
 router.use('/user', user_router_1.default);
 router.use('/spa', spa_router_1.default);
+router.use('/general', general_router_1.default);
 router.post('/feedback', authMiddleware_1.protect, async (req, res, next) => {
     try {
         if (!req.user) {

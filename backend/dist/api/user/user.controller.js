@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyReset = exports.resetPassword = exports.sendForgotPassword = exports.resendVerification = exports.verify = exports.updateProfile = exports.getProfile = exports.logout = exports.login = exports.register = void 0;
+exports.verifyReset = exports.resetPassword = exports.sendForgotPassword = exports.resendVerification = exports.verify = exports.updateProfile = exports.getUsers = exports.getProfile = exports.logout = exports.login = exports.getFeedbacks = exports.register = void 0;
 const prisma_1 = require("../../prisma");
 const util_1 = require("../../util");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -20,6 +20,11 @@ const register = async (req, res, next) => {
         /**
          * validation
          */
+        if (password.length <= 6) {
+            res.status(400);
+            next(new Error('Please provide password that is at least 6 characters'));
+            return;
+        }
         if (!email || !name || !birth_date || !password) {
             res.status(400);
             next(new Error('Please provide all required fields'));
@@ -79,6 +84,7 @@ const register = async (req, res, next) => {
                         gender,
                         active: active ?? false,
                         profile,
+                        admin: false,
                     },
                 });
             }
@@ -92,7 +98,7 @@ const register = async (req, res, next) => {
          */
         if (userCreated) {
             if (!userCreated.active) {
-                (0, util_1.sendEmail)(userCreated.email, userCreated.name, (0, util_1.generateVerificationToken)(userCreated.email), next);
+                await (0, util_1.sendEmail)(userCreated.email, userCreated.name, (0, util_1.generateVerificationToken)(userCreated.email), next);
             }
             res.status(201).json({
                 id: userCreated.id,
@@ -105,6 +111,7 @@ const register = async (req, res, next) => {
                 gender: userCreated.gender,
                 created_at: userCreated.created_at,
                 profile: userCreated.profile,
+                admin: userCreated.admin,
             });
         }
         else {
@@ -117,6 +124,32 @@ const register = async (req, res, next) => {
     }
 };
 exports.register = register;
+const getFeedbacks = async (req, res, next) => {
+    try {
+        if (!req.user) {
+            res.status(400);
+            next(new Error('User not found'));
+            return;
+        }
+        const feedback = await (0, prisma_1.prismaFetch)(async (prisma) => {
+            return prisma.feedback.findMany({
+                include: {
+                    owner: true,
+                },
+            });
+        }, next);
+        if (!feedback) {
+            res.status(404);
+            next(new Error('No feedback found'));
+            return;
+        }
+        res.status(200).json(feedback);
+    }
+    catch (err) {
+        next(err);
+    }
+};
+exports.getFeedbacks = getFeedbacks;
 /**
  * @param req Request body should contain Login's info
  * @param res Response body should be User's final info
@@ -202,6 +235,7 @@ const login = async (req, res, next) => {
             gender: user.gender,
             created_at: user.created_at,
             profile: user.profile,
+            admin: user.admin,
         });
     }
     catch (err) {
@@ -240,6 +274,25 @@ const getProfile = async (req, res, next) => {
     }
 };
 exports.getProfile = getProfile;
+const getUsers = async (req, res, next) => {
+    try {
+        if (req.user) {
+            const user = await (0, prisma_1.prismaFetch)(async (prisma) => {
+                try {
+                    return await prisma.user.findMany();
+                }
+                catch (err) {
+                    next(err);
+                }
+            }, next);
+            res.status(200).json(user);
+        }
+    }
+    catch (err) {
+        next(err);
+    }
+};
+exports.getUsers = getUsers;
 /**
  *
  * @param req User object request
@@ -297,6 +350,7 @@ const updateProfile = async (req, res, next) => {
                             active: true,
                             gender: true,
                             profile: true,
+                            admin: true,
                         },
                     });
                     return user;
@@ -393,7 +447,7 @@ const resendVerification = async (req, res, next) => {
             next(new Error('User already verified'));
             return;
         }
-        (0, util_1.sendEmail)(req.user.email, req.user.name, (0, util_1.generateVerificationToken)(req.user.email), next);
+        await (0, util_1.sendEmail)(req.user.email, req.user.name, (0, util_1.generateVerificationToken)(req.user.email), next);
         res.status(200).json({ message: 'Successfully resent the verification code' });
     }
     catch (err) {
@@ -426,7 +480,7 @@ const sendForgotPassword = async (req, res, next) => {
             next(new Error('No account associated with this email'));
             return;
         }
-        (0, util_1.sendEmailPWReset)(email, searchUser.name, (0, util_1.generateVerificationToken)(email, '10m'), next);
+        await (0, util_1.sendEmailPWReset)(email, searchUser.name, (0, util_1.generateVerificationToken)(email, '10m'), next);
         res.status(200).json({ message: 'Successfully resent the verification code' });
     }
     catch (err) {

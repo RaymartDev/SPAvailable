@@ -12,29 +12,25 @@ const protect = async (req, res, next) => {
         try {
             const decoded = jsonwebtoken_1.default.verify(token, `${process.env.SECRET_KEY}`);
             req.user = await (0, prisma_1.prismaFetch)(async (prisma) => {
-                try {
-                    const user = await prisma.user.findUnique({
-                        where: {
-                            email: decoded.email,
-                        },
-                        select: {
-                            id: true,
-                            name: true,
-                            email: true,
-                            contact: true,
-                            birth_date: true,
-                            password: false,
-                            created_at: false,
-                            updated_at: false,
-                            active: true,
-                            gender: true,
-                        },
-                    });
-                    return user || undefined;
-                }
-                catch (err) {
-                    next(err);
-                }
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: decoded.email,
+                    },
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        contact: true,
+                        birth_date: true,
+                        password: false,
+                        created_at: false,
+                        updated_at: false,
+                        active: true,
+                        gender: true,
+                        admin: true,
+                    },
+                });
+                return user || undefined;
             }, next);
             // Check if user is undefined
             if (!req.user) {

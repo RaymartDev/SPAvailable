@@ -43,14 +43,27 @@ const generateVerificationToken = (email, expiry = '1d') => {
     return token;
 };
 exports.generateVerificationToken = generateVerificationToken;
-const sendEmail = (email, name, token, next) => {
+const sendEmail = async (email, name, token, next) => {
     // transporter
     const transporter = nodemailer_1.default.createTransport({
-        service: 'gmail',
+        port: 465,
+        host: 'smtp.gmail.com',
         auth: {
             user: process.env.EMAIL_ADDRESS,
             pass: process.env.EMAIL_PASSWORD,
         },
+        secure: true,
+    });
+    await new Promise((resolve, reject) => {
+        // verify connection configuration
+        transporter.verify(function (error, success) {
+            if (error) {
+                reject(error);
+                next(error);
+                return;
+            }
+            resolve(success);
+        });
     });
     // Define email options
     const mailOptions = {
@@ -63,7 +76,7 @@ const sendEmail = (email, name, token, next) => {
       <p>Dear <b>${name},</b></p>
       <p>Thank you for registering with our service. To complete your registration, please click the button below to verify your email address:</p>
       <p>
-      <a href="http://localhost:5173/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
+      <a href="https://spavailable.vercel.app/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>
       </p>
       <p>If you didn't sign up for an account with us, you can safely ignore this email.</p>
       <p><b>Thank you,<br> SPAvailable Team</b></p>
@@ -71,22 +84,39 @@ const sendEmail = (email, name, token, next) => {
   `,
     };
     // Send the email
-    transporter.sendMail(mailOptions, (err) => {
-        if (err) {
-            next(err);
-            return;
-        }
+    await new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                next(err);
+                reject(err);
+                return;
+            }
+            resolve(info);
+        });
     });
 };
 exports.sendEmail = sendEmail;
-const sendEmailPWReset = (email, name, token, next) => {
+const sendEmailPWReset = async (email, name, token, next) => {
     // transporter
     const transporter = nodemailer_1.default.createTransport({
-        service: 'gmail',
+        port: 465,
+        host: 'smtp.gmail.com',
         auth: {
             user: process.env.EMAIL_ADDRESS,
             pass: process.env.EMAIL_PASSWORD,
         },
+        secure: true,
+    });
+    await new Promise((resolve, reject) => {
+        // verify connection configuration
+        transporter.verify(function (error, success) {
+            if (error) {
+                reject(error);
+                next(error);
+                return;
+            }
+            resolve(success);
+        });
     });
     // Define email options
     const mailOptions = {
@@ -100,10 +130,10 @@ const sendEmailPWReset = (email, name, token, next) => {
       <p>We received a request to reset your password. If you did not request this, please ignore this email.</p>
       <p>To reset your password, please click the button below:</p>
       <p>
-      <a href="http://localhost:5173/user/reset?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Reset Password</a>
+      <a href="https://spavailable.vercel.app/user/reset?token=${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Reset Password</a>
       </p>
       <p>If the button above does not work, you can also copy and paste the following link into your browser:</p>
-      <p>http://localhost:5173/user/reset?token=${token}</p>
+      <p>https://spavailable.vercel.app/user/reset?token=${token}</p>
       <p>This link will expire in 5 minutes for security reasons.</p>
       <p>If you did not request a password reset or need further assistance, please contact our support team.</p>
       <p><b>Thank you,<br> SPAvailable Team</b></p>
@@ -111,11 +141,15 @@ const sendEmailPWReset = (email, name, token, next) => {
   `,
     };
     // Send the email
-    transporter.sendMail(mailOptions, (err) => {
-        if (err) {
-            next(err);
-            return;
-        }
+    await new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                next(err);
+                reject(err);
+                return;
+            }
+            resolve(info);
+        });
     });
 };
 exports.sendEmailPWReset = sendEmailPWReset;
